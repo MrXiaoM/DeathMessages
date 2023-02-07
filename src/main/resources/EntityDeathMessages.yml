@@ -1,0 +1,67 @@
+# DeathMessages by Joshb_ (Original DeathMessagesPrime by CosmoConsole)
+# All configs from this plugin has an auto updater. Meaning if I add a value in the config from updates,
+# the value will be automatically added without regenerating the configs.
+#
+# Entity Death Messages Config
+# This config lets you configure death messages of mobs. (I.E: Enderdragon,
+#
+#Placeholders:
+# %killer% - returns the player name
+# %killer_display% - returns the custom display name of the player
+# %owner% - returns the entities owner's name (Dog, cat, Parrot...) Only works in Tamed sections.
+# %weapon% - returns a tooltip of the item name, lore, and enchantments
+# %entity% - returns the entity's type. (Defined in Messages.yml in the Mobs section)
+# %entity_display% - returns the entity's custom name. If it has no name, it will default to %entity%
+# %biome% - returns the biome the player was in
+# %world% - returns the world name
+# %world_environment% - returns the environment of the world (normal, nether, the_end) (These are configurable in Messages.yml (Environment))
+# %x% - returns the x position the player died at.
+# %y% - returns the y position the player died at.
+# %z% - returns the z position the player died at.
+#
+#Text components:
+#
+# Using "::" in the messages will create text components.
+# Format as followed: Base text::Hover text::Action
+# Actions must start with either COMMAND:, or SUGGEST_COMMAND:
+# You can add lines in the hover messages like so "line one\nLine Two....."
+# Examples:
+# "%player% was killed by %killer%::&cLocations: X:%x%, Y:%y%, Z:%z%::COMMAND:tppos %x% %y% %z%"
+# "%player% was killed by %killer%::&cLocations: X:%x%, Y:%y%, Z:%z%"
+# "%player% was killed by %killer%::&cLocations: X:%x%, Y:%y%, Z:%z%::SUGGEST_COMMAND:msg %player% lol noob"
+#
+# !!!!!!!!!!!!!!!!!!!!LOOK HERE :EYES: :EYES:!!!!!!!!!!!!!!!!!!!!!!!!!
+# If you do not want to use this feature of the plugin. Setup this config like so:
+#
+# Entities: []
+#
+# That's it.
+
+#Vanilla Entities
+Entities:
+  # Below is an example of how this section is setup. You can use any death-type like in PlayerDeathMessages.yml
+  wolf:
+    Tamed:
+      - "&e%killer% &f杀死了 &e%owner% &f的 &e%entity%"
+    Projectile-Arrow:
+      - "&e%killer% &f用 &e%weapon% &f射杀了一只可爱的狗勾"
+    Weapon:
+      - "&e%killer% &f用 &e%weapon% &f杀死了一只狗"
+    Melee:
+      - "&e%killer% &f杀死了一只狗"
+    Void:
+      - "&e%killer% &f将一只狗推下了虚空"
+    TNT:
+      - "&e%killer% &f炸死了一只狗!"
+    Respawn-Anchor:
+      - "&e%killer% &f使用重生锚炸死了一只狗"
+  enderdragon:
+    Projectile-Arrow:
+      - "&e%killer% &f使用 &e%weapon% &f射杀了&9&l末影龙&f!"
+    Weapon:
+      - "&e%killer% &f用 &e%weapon% &f杀死了&9&l末影龙&f!"
+    Melee:
+      - '&e%killer% &f杀死了&9&l末影龙&f!'
+
+#Mythic-Mob Entities https:
+Mythic-Mobs-Entities: []

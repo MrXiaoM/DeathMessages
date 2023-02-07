@@ -1,0 +1,1319 @@
+# DeathMessages by Joshb_ (Original DeathMessagesPrime by CosmoConsole)
+# All configs from this plugin has an auto updater. Meaning if I add a value in the config from updates,
+# the value will be automatically added without regenerating the configs.
+#
+# Player Death Messages Config
+#
+#Placeholders:
+# %player% - returns the player name
+# %player_display% - returns the custom display name of the player
+# &e%weapon% &f- returns a tooltip of the item name, lore, and enchantments
+# %killer% - returns the entity's name. If there is no name set, it will be the entity type.
+# %killer_display% - if the killer is a player, returns the display name of the player
+# %killer_type% - returns the entity type from Mobs.<Mob> in Messages.yml
+# %biome% - returns the biome the player was in
+# %world% - returns the world name
+# %world_environment% - returns the environment of the world (normal, nether, the_end) (These are configurable in Messages.yml (Environment))
+# %x% - returns the x position the player died at.
+# %y% - returns the y position the player died at.
+# %z% - returns the z position the player died at.
+#
+#Text components:
+#
+# Using "::" in the messages will create text components.
+# Format as followed: Base text::Hover text::Action
+# Actions must start with either COMMAND:, or SUGGEST_COMMAND:
+# You can add lines in the hover messages like so "line one\nLine Two....."
+# Examples:
+# "&e%player% &fwas killed by %killer%::&cLocations: X:%x%, Y:%y%, Z:%z%::COMMAND:tppos %x% %y% %z%"
+# "&e%player% &fwas killed by %killer%::&cLocations: X:%x%, Y:%y%, Z:%z%"
+# "&e%player% &fwas killed by %killer%::&cLocations: X:%x%, Y:%y%, Z:%z%::SUGGEST_COMMAND:msg &e%player% &flol noob"
+#
+# Permissions Based Messages
+#
+# For victims that have a specific permission set, EX: deathmessages.premium, the death message
+# will be sent that is formatted as followed:
+# PERMISSION[YOUR.PERM.HERE]&e%player% &fdead lol
+#
+# For killers that have a specific permission set, EX: deathmessages.premium, the death message
+# will be sent that is formatted as followed:
+# PERMISSION_KILLER[YOUR.PERM.HERE]&e%killer% &fREKT %player%
+#
+# Players that are in a region (With WorldGuard hook enabled) and is defined below, will be sending a custom
+# region messages.
+# Formatted as followed: "REGION[REGION_NAME]&e%player% &fdied in a region"
+# Example:
+#
+# Mobs:
+#   player:
+#     Melee:
+#       - "&e%player% &fwas slain by %killer%"
+#       - "PERMISSION[deathmessages.premium]&6Premium &e%player% &f&fdied to %killer%
+#       - "REGION[spawn]Idiot &e%player% &fdied in spawn lol"
+#       If the player has permission and in a region
+#       - "REGION[spawn]PERMISSION[deathmessages.premium]Idiot premium &e%player% &fdied in spawn lol"
+#
+# To completely remove the message for a certain death. Configure as followed:
+# Natrual-Death:
+#   Bed: []
+# or
+# Mobs:
+#   Creeper:
+#     Solo:
+#       Explosion: []
+
+# Due for there being no cure for laziness, this option ignores everything in the Mobs section and makes all messages
+# appear the same.
+
+Basic-Mode:
+  Enabled: false
+  Solo:
+    Projectile-Arrow:
+      - "&e&e%player% &f&f被 &e&e%killer% &f&f使用 &e&e%weapon% &f射杀"
+    Explosion:
+      - "&e%player% &f&f被 %killer% 炸死了"
+    Magic:
+      - "&e%player% &f被 &e%killer% &f使用魔法杀死了"
+    Weapon:
+      - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+    Melee:
+      - "&e%player% &f被 &e%killer% &f杀死了"
+  Gang:
+    Projectile-Arrow:
+      - "&e%player% &f被 &e%killer% &f一家子使用 &e%weapon% &f射杀"
+    Magic:
+      - "&e%player% &f被 &e%killer% &f一家子使用魔法杀死了"
+    Weapon:
+      - "&e%player% &f被 &e%killer% &f一家子最终使用 &e%weapon% &f杀死了"
+    Melee:
+      - "&e%player% &f被 &e%killer% &f一家子杀死了"
+
+Natural-Cause:
+  Bed:
+    - "&e%player% &f被刻意的游戏特性杀死了"
+  Respawn-Anchor:
+    - "&e%player% &f被重生锚炸死了"
+  Contact:
+    - "&e%player% &f被戳死了"
+  Melee:
+    - "&e%player% &f死了"
+  Projectile-Unknown:
+    - "&e%player% &f被未知物体射杀"
+  Projectile-Arrow:
+    - "&e%player% &f用 &e%weapon% &f将自己射杀了"
+  Projectile-Egg:
+    - "&e%player% &f用鸡蛋将自己砸死了"
+  Projectile-EnderPearl:
+    - "&e%player% &f用末影珍珠将自己杀死了"
+  Projectile-Fireball:
+    - "&e%player% &f用火焰弹将自己杀死了"
+  Projectile-FishHook:
+    - "&e%player% &f用钓竿将自己的脑袋勾了下来"
+  Projectile-Snowball:
+    - "&e%player% &f用雪球把自己砸了"
+  Projectile-Trident:
+    - "&e%player% &f用三叉戟将自己戳死了"
+  Suffocation:
+    - "&e%player% &f被压成了华夫饼"
+    #- "PERMISSION[deathmessages.premium]&e%player% &fwas mashed up pretty good."
+  Fall:
+    - "&e%player% &f从高处摔了下来"
+  Climbable:
+    - "&e%player% &f试图爬向高处， 但他从 &e%climbable% &f上摔下来了"
+  Fire:
+    - "&e%player% &f认为站在火中是个好主意"
+  Fire-Tick:
+    - "&e%player% &f尝试与火共舞"
+  Melting:
+    - "&e%player% &f融化了"
+  Lava:
+    - "&e%player% &f试图在岩浆里游泳"
+  Drowning:
+    - "&e%player% &f淹死了"
+  Explosion:
+    - "&e%player% &f爆炸了"
+  TNT:
+    - "&e%player% &f刚刚在玩TNT"
+  Firework:
+    - "&e%player% &f玩烟花玩脱了"
+  End-Crystal:
+    - "&e%player% &f看起来好像碰了一下末影水晶"
+  Void:
+    - "&e%player% &f坠入了虚空"
+  Lightning:
+    - "&e%player% &f渡劫失败了"
+  Suicide:
+    - "&e%player% &f自杀了"
+  Starvation:
+    - "&e%player% &f饿死了"
+  Poison:
+    - "&e%player% &f被活塞挤压而死"
+  Magic:
+    - "&e%player% &f使用魔法把自己毒死了"
+  Wither:
+    - "&e%player% &f凋零了"
+  Falling-Block:
+    - "&e%player% &f被 %block% 砸死了"
+  Dragon-Breath:
+    - "&e%player% &f被龙息淹没"
+  Custom:
+    - "&e%player% &f死了"
+  Fly-Into-Wall:
+    - "&e%player% &f飞进了墙里"
+  Hot-Floor:
+    - "&e%player% &f没有意识到他站在灼热的地板上"
+  Cramming:
+    - "&e%player% &f被挤压致死"
+  Dryout:
+    - "&e%player% &f淹死了"
+  Freeze:
+    - "&e%player% &f陷入细雪中， 冻死了"
+  Unknown:
+    - "&e%player% &f死了"
+Mobs:
+  elderguardian:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  witherskeleton:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  stray:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  husk:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  zombievillager:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  skeletonhorse:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  zombiehorse:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  armorstand:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  donkey:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  mule:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  evoker:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &fwas shot by a &e%killer% &fsomehow using &e%weapon% &f"
+      Magic:
+        - "&e%player% &fwas killed by a &e%killer% &fusing da magic"
+      Weapon:
+        - "&e%player% &fwas slain by a &e%killer% &fsomehow using &e%weapon% &f"
+      Melee:
+        - "&e%player% &fwas slain by a %killer%"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &fwas ganged up on by some %killer%! One shot them with &e%weapon% &f"
+      Weapon:
+        - "&e%player% &fwas ganed up on by some %killer%'s! One wacked them with &e%weapon% &f"
+      Melee:
+        - "&e%player% &fwas slain by a bunch of %killer%'s"
+  vex:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  vindicator:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  illusioner:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  creeper:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &fwas shot by a &e%killer% &fsomehow using &e%weapon% &f"
+      Weapon:
+        - "&e%player% &fwas slain by a &e%killer% &fsomehow using &e%weapon% &f"
+      Explosion:
+        - "&e%player% &fwas blown up by a %killer%"
+      Melee:
+        - "&e%player% &fwas slain by a %killer%"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &fwas ganged up on by some %killer%! One shot them with &e%weapon% &f"
+      Weapon:
+        - "&e%player% &fwas ganed up on by some %killer%'s! One wacked them with &e%weapon% &f"
+      Melee:
+        - "&e%player% &fwas slain by a bunch of %killer%'s"
+  skeleton:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  spider:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  giant:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  zombie:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  slime:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  ghast:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  pigzombie:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  enderman:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  cavespider:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  silverfish:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  blaze:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  magmacube:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  enderdragon:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  wither:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &fwas shot by a &e%killer% &fsomehow using &e%weapon% &f"
+      Weapon:
+        - "&e%player% &fwas slain by a &e%killer% &fsomehow using &e%weapon% &f"
+      Explosion:
+        - "&e%player% &fstood too close to a &e%killer% &fwhile it was spawning"
+      Projectile-Fireball:
+        - "&e%player% &fdied to a wither skull"
+      Melee:
+        - "&e%player% &fwas slain by a %killer%"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &fwas ganged up on by some %killer%! One shot them with &e%weapon% &f"
+      Weapon:
+        - "&e%player% &fwas ganed up on by some %killer%'s! One wacked them with &e%weapon% &f"
+      Melee:
+        - "&e%player% &fwas slain by a bunch of %killer%'s"
+  bat:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  witch:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  endermite:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  guardian:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  shulker:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  pig:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  sheep:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  cow:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  chicken:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  squid:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  wolf:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  mushroomcow:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  snowman:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  ocelot:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  irongolem:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  horse:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  rabbit:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  polarbear:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  llama:
+    Solo:
+      Projectile-LlamaSpit:
+        - "&e%player% &fwas spat on by a %killer%"
+      Weapon:
+        - "&e%player% &fwas slain by a &e%killer% &fsomehow using &e%weapon% &f"
+      Melee:
+        - "&e%player% &fwas slain by a %killer%"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &fwas ganged up on by some %killer%! One shot them with &e%weapon% &f"
+      Weapon:
+        - "&e%player% &fwas ganed up on by some %killer%'s! One wacked them with &e%weapon% &f"
+      Melee:
+        - "&e%player% &fwas slain by a bunch of %killer%'s"
+  parrot:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  villager:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  turtle:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  phantom:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  cod:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  salmon:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  pufferfish:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  tropicalfish:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  drowned:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  dolphin:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  cat:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  panda:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  pillager:
+    Solo:
+      Contact:
+        - "&e%player% &f被 &e%killer% &f推到了仙人掌上摩擦"
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  ravager:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  traderllama:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  wanderingtrader:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  fox:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  bee:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f蛰死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f蛰死了"
+  hoglin:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  piglin:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  strider:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  zoglin:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  piglinbrute:
+    Solo:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被一群 &e%killer% &f围殴! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f围殴死了"
+  player:
+    Solo:
+      Bed:
+        - "&e%player% &f站得离 &e%killer% &f的床太近， 被炸死了"
+      Respawn-Anchor:
+        - "&e%player% &f站得离 &e%killer% &f的重生锚太近， 被炸死了"
+      Contact:
+        - "&e%player% &f被 &e%killer% &f推到仙人掌上摩擦"
+      Projectile-Unknown:
+        - "&e%player% &f被 &e%killer% &f射杀"
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f射杀"
+      Projectile-Fireball:
+        - "&e%player% &f被 &e%killer% &f使用火焰弹炸死了"
+      Projectile-Snowball:
+        - "&e%player% &f被 &e%killer% &f使用雪球砸死了"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+      Suffocation:
+        - "&e%player% &f在与 &e%killer% &f战斗时卡进了墙里"
+      Fall:
+        - "&e%player% &f被 &e%killer% &f从高处推下"
+      Lava:
+        - "&e%player% &f被 &e%killer% &f推入岩浆"
+      Explosion:
+        - "&e%killer% &f炸死了 %player%"
+      TNT:
+        - "&e%killer% &f使用TNT炸死了 &e%player%"
+      Firework:
+        - "&e%player% &f离 &e%killer% &f的烟花太近了"
+      End-Crystal:
+        - "&e%killer% &f使用末影水晶将 &e%player% &f炸死了"
+      Void:
+        - "&e%player% &f被 &e%killer% &f推下了虚空"
+      Wither:
+        - "&e%player% &f被 &e%killer% &f的魔法凋零了"
+      Thorns:
+        - "&e%player% &f被 &e%killer% &f的荆棘反死了"
+      # Hook related deaths
+      CombatLogX-Kill:
+        - '&e%player% &flogged out during combat fighting %killer%, they died still -.-'
+    Gang:
+      Projectile-Arrow:
+        - "&e%player% &f被 &e%killer% &f等一群人追杀! 最后被使用 &e%weapon% &f射杀"
+      Weapon:
+        - "&e%player% &f被 &e%killer% &f等一群人追杀! 最后被使用 &e%weapon% &f杀死了"
+      Melee:
+        - "&e%player% &f被 &e%killer% &f等一群人杀死了"
+  goat:
+    Solo:
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+    Gang:
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f杀死了"
+  warden:
+    Solo:
+      Melee:
+        - "&e%player% &f被 &e%killer% &f杀死了"
+      Sonic-Boom:
+        - "&e%player% &f被潜声守卫的潜声尖叫淹没了"
+    Gang:
+      Melee:
+        - "&e%player% &f被一群 &e%killer% &f杀死了"
+      Sonic-Boom:
+        - "&e%player% &f被一群潜声守卫的潜声尖叫淹没了"
+
+Custom-Mobs:
+  Mythic-Mobs: []
