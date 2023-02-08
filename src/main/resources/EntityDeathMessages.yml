@@ -63,5 +63,12 @@ Entities:
     Melee:
       - '&e%killer% &f杀死了&9&l末影龙&f!'
 
-#Mythic-Mob Entities https:
-Mythic-Mobs-Entities: []
+#Mythic-Mob Entities https://www.spigotmc.org/resources/%E2%9A%94-mythicmobs-free-version-%E2%96%BAthe-1-custom-mob-creator%E2%97%84.5702/
+Mythic-Mobs-Entities:
+  SkeletalMinion:
+    Melee:
+      - '%killer% killed skele boss %entity_display% with their bare hands'
+    Weapon:
+      - '%killer% destroyed the boss mob %entity_display% with %weapon%'
+    TNT:
+      - '%killer% blew up the boss mob %entity_display% with TNT'

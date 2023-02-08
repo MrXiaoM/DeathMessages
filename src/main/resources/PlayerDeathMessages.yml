@@ -1316,4 +1316,8 @@ Mobs:
         - "&e%player% &f被一群潜声守卫的潜声尖叫淹没了"
 
 Custom-Mobs:
-  Mythic-Mobs: []
+  Mythic-Mobs:
+    SkeletalMinion:
+      Solo:
+        Projectile-Arrow:
+          - "%player% was shot by %killer%"
