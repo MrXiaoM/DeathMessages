@@ -70,7 +70,6 @@ public final class CommentedConfiguration extends YamlConfiguration {
 
     @NotNull
     public String saveToString() {
-        options().setHeader(new ArrayList<>());
         List<String> lines = new ArrayList<>(Arrays.asList(super.saveToString().split("\n")));
         int currentIndex = 0;
         String currentSection = "";
