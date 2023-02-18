@@ -120,7 +120,7 @@ public class Assets {
     }
 
     public static boolean isWeapon(ItemStack itemStack) {
-        return itemNameIsWeapon(itemStack) && itemMaterialIsWeapon(itemStack);
+        return itemStack != null && !itemStack.getType().isAir() && itemNameIsWeapon(itemStack) && itemMaterialIsWeapon(itemStack);
     }
 
     @SuppressWarnings({"deprecation"})
