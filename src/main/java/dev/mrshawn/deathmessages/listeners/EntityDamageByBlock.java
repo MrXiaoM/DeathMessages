@@ -20,13 +20,8 @@ import static dev.mrshawn.deathmessages.utils.Assets.classSimple;
 
 
 public class EntityDamageByBlock implements Listener {
-    public static void d(Entity e, String msg) {
-        if (e.getName().equalsIgnoreCase("LittleCatX"))
-            e.sendMessage(msg);
-    }
     @EventHandler(priority = EventPriority.HIGH)
     public void onEntityDeath(EntityDamageByBlockEvent e) {
-        d(e.getEntity(), "方块伤害");
         EntityManager entity;
         ConfigurationSection entitiesSection = EntityDeathMessages.getInstance().getConfig().getConfigurationSection("Entities");
         ConfigurationSection mmEntitiesSection = EntityDeathMessages.getInstance().getConfig().getConfigurationSection("Mythic-Mobs-Entities");
@@ -35,9 +30,7 @@ public class EntityDamageByBlock implements Listener {
             if (Bukkit.getOnlinePlayers().contains(p)) {
                 PlayerManager pm = PlayerManager.getPlayer(p);
                 pm.setLastDamageCause(e.getCause());
-                d(p, "已设置最后伤害原因为 "+e.getCause());
             }
-            else d(p, "玩家不在线?");
         } else if (entitiesSection != null) {
             Set<String> listenedMobs = entitiesSection.getKeys(false);
             if (mmEntitiesSection != null && DeathMessages.getInstance().mythicmobsEnabled) {

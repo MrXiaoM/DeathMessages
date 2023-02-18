@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import static dev.mrshawn.deathmessages.listeners.EntityDamageByBlock.d;
 import static dev.mrshawn.deathmessages.utils.Assets.classSimple;
 
 
@@ -28,7 +27,6 @@ public class EntityDamageByEntity implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void entityDamageByEntity(EntityDamageByEntityEvent e) {
-        d(e.getEntity(), "被 " + e.getDamager().getName() + " 伤害 " + e.getCause());
         EntityManager em;
         ConfigurationSection entitiesSection = EntityDeathMessages.getInstance().getConfig().getConfigurationSection("Entities");
         ConfigurationSection mmEntitiesSection = EntityDeathMessages.getInstance().getConfig().getConfigurationSection("Mythic-Mobs-Entities");
@@ -37,7 +35,6 @@ public class EntityDamageByEntity implements Listener {
             if (Bukkit.getOnlinePlayers().contains(p)) {
                 PlayerManager pm = PlayerManager.getPlayer(p);
                 if (e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION)) {
-                    d(p, "爆炸");
                     if ((e.getDamager() instanceof EnderCrystal) && explosions.containsKey(e.getDamager().getUniqueId())) {
                         pm.setLastEntityDamager(explosions.get(e.getDamager().getUniqueId()));
                         pm.setLastExplosiveEntity(e.getDamager());
@@ -61,23 +58,20 @@ public class EntityDamageByEntity implements Listener {
                         pm.setLastExplosiveEntity(e.getDamager());
                     }
                 } else if (e.getDamager() instanceof Projectile) {
-                    d(p, "弹射物");
                     Projectile projectile = (Projectile) e.getDamager();
                     if (projectile.getShooter() instanceof LivingEntity) {
                         pm.setLastEntityDamager((Entity) projectile.getShooter());
                     }
                     pm.setLastProjectileEntity(projectile);
                 } else if (e.getDamager() instanceof FallingBlock) {
-                    d(p, "被掉落方块攻击");
                     pm.setLastEntityDamager(e.getDamager());
                 } else if (e.getDamager().getType().isAlive()) {
-                    d(p, "被活体攻击");
                     pm.setLastEntityDamager(e.getDamager());
                 } else if (DeathMessages.majorVersion() >= 11 && (e.getDamager() instanceof EvokerFangs)) {
                     EvokerFangs evokerFangs = (EvokerFangs) e.getDamager();
                     pm.setLastEntityDamager(evokerFangs.getOwner());
                 }
-            } else d(p, "玩家不在线?");
+            }
         } else if (!(e.getEntity() instanceof Player) && (e.getDamager() instanceof Player)) {
             if (entitiesSection == null) {
                 return;

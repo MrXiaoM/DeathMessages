@@ -39,7 +39,6 @@ public class EntityDeath implements Listener {
         EntityManager em;
         if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
-            d(p, "玩家死亡");
             if (Bukkit.getOnlinePlayers().contains(p)) {
                 PlayerManager pm = PlayerManager.getPlayer(p);
 
@@ -48,7 +47,6 @@ public class EntityDeath implements Listener {
                 } else {
                     pm.setLastDamageCause(e.getEntity().getLastDamageCause().getCause());
                 }
-                d(p, "死因 "+pm.getLastDamage());
                 if (pm.isBlacklisted()) {
                     return;
                 }
@@ -120,7 +118,6 @@ public class EntityDeath implements Listener {
                 }
                 Entity ent = pm.getLastEntityDamager();
                 String mobName = classSimple(ent);
-                d(p, "生物("+ mobName +")攻击致死");
                 int radius = Gangs.getInstance().getConfig().getInt("Gang.Mobs." + mobName + ".Radius");
                 int amount = Gangs.getInstance().getConfig().getInt("Gang.Mobs." + mobName + ".Amount");
                 boolean gangKill = false;

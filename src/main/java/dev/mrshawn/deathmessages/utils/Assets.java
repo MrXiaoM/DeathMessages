@@ -137,7 +137,6 @@ public class Assets {
         //EntityDamageEvent.DamageCause[] values;
         LivingEntity mob = (LivingEntity) pm.getLastEntityDamager();
         boolean hasWeapon = hasWeapon(mob, pm.getLastDamage());
-        d(pm.getPlayer(), "有无武器: " + hasWeapon);
         if (pm.getLastDamage().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION)) {
             if (pm.getLastExplosiveEntity() instanceof EnderCrystal) {
                 return get(gang, pm, mob, "End-Crystal");

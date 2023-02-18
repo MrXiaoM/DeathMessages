@@ -15,7 +15,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.Set;
 
-import static dev.mrshawn.deathmessages.listeners.EntityDamageByBlock.d;
 import static dev.mrshawn.deathmessages.utils.Assets.classSimple;
 
 
@@ -23,10 +22,8 @@ public class EntityDamage implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityDamage(EntityDamageEvent e) {
         EntityManager entity;
-        d(e.getEntity(), "泛用死因" + e.getCause() + " 取消:" + e.isCancelled());
-        if (e.isCancelled()) {
-            return;
-        }
+        if (e.isCancelled()) return;
+
         ConfigurationSection entitiesSection = EntityDeathMessages.getInstance().getConfig().getConfigurationSection("Entities");
         ConfigurationSection mmEntitiesSection = EntityDeathMessages.getInstance().getConfig().getConfigurationSection("Mythic-Mobs-Entities");
         if (e.getEntity() instanceof Player) {
@@ -34,7 +31,7 @@ public class EntityDamage implements Listener {
             if (Bukkit.getOnlinePlayers().contains(p)) {
                 PlayerManager pm = PlayerManager.getPlayer(p);
                 pm.setLastDamageCause(e.getCause());
-            }else d(p, "玩家不在线?");
+            }
         } else if (!(e.getEntity() instanceof Player) && entitiesSection != null) {
             Set<String> listenedMobs = entitiesSection.getKeys(false);
             if (mmEntitiesSection != null && DeathMessages.getInstance().mythicmobsEnabled) {
