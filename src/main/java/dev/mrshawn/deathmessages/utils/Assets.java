@@ -934,7 +934,7 @@ public class Assets {
         String msg2 = colorize(msg
                 .replace("%entity%", getName(entity, player))
                 .replace("%entity_display%", getCustomName(entity, player))
-                .replace("%killer%", player.getName())
+                .replace("%killer%", getName(player))
                 .replace("%killer_display%", player.getDisplayName())
                 .replace("%world%", world.getName())
                 .replace("%world_environment%", getEnvironment(world.getEnvironment()))
@@ -944,7 +944,9 @@ public class Assets {
         if (owner && (entity instanceof Tameable)) {
             Tameable tameable = (Tameable) entity;
             if (tameable.getOwner() != null && tameable.getOwner().getName() != null) {
-                msg2 = msg2.replace("%owner%", tameable.getOwner().getName());
+                String tameOwner = tameable.getOwner().getName();
+                if (tameable.getOwner() instanceof Player) tameOwner = getName((Player) tameable);
+                msg2 = msg2.replace("%owner%", tameOwner);
             }
         }
         try {
