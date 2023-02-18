@@ -41,9 +41,6 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static dev.mrshawn.deathmessages.listeners.EntityDamageByBlock.d;
-
-
 public class Assets {
     private static final FileSettings<Config> config = FileSettings.CONFIG;
     private static final boolean addPrefix = config.getBoolean(Config.ADD_PREFIX_TO_ALL_MESSAGES);
@@ -128,8 +125,8 @@ public class Assets {
         EntityEquipment equipment = mob.getEquipment();
         return !damageCause.equals(EntityDamageEvent.DamageCause.THORNS) && equipment != null &&
                 (DeathMessages.majorVersion() < 9 ?
-                    isWeapon(equipment.getItemInHand()) :
-                    isWeapon(equipment.getItemInMainHand())
+                        isWeapon(equipment.getItemInHand()) :
+                        isWeapon(equipment.getItemInMainHand())
                 );
     }
 
@@ -205,7 +202,8 @@ public class Assets {
                     if (pyro != null) return getEntityDeath(pyro.getPlayer(), em.getEntity(), "Bed", mobType);
                 } else if (DeathMessages.majorVersion() >= 16 && explosionManager.getMaterial().equals(Material.RESPAWN_ANCHOR)) {
                     PlayerManager pyro = PlayerManager.getPlayer(explosionManager.getPyro());
-                    if (pyro != null) return getEntityDeath(pyro.getPlayer(), em.getEntity(), "Respawn-Anchor", mobType);
+                    if (pyro != null)
+                        return getEntityDeath(pyro.getPlayer(), em.getEntity(), "Respawn-Anchor", mobType);
                 }
             }
         }
@@ -344,6 +342,7 @@ public class Assets {
         }
         return tc;
     }
+
     @SuppressWarnings({"deprecation"})
     public static TextComponent getWeapon(boolean gang, PlayerManager pm, LivingEntity mob) {
         List<String> msgs;
@@ -439,6 +438,7 @@ public class Assets {
         }
         return tc;
     }
+
     @SuppressWarnings({"deprecation"})
     public static TextComponent getEntityDeathWeapon(Player p, Entity e, MobType mobType) {
         List<String> msgs;
@@ -927,6 +927,7 @@ public class Assets {
             return ChatColor.translateAlternateColorCodes('&', message);
         }
     }
+
     public static String entityDeathPlaceholders(String msg, Player player, Entity entity, boolean owner) {
         World world = entity.getWorld();
         Block loc = entity.getLocation().getBlock();
@@ -1203,12 +1204,14 @@ public class Assets {
     public static boolean isChatColorAColor(ChatColor chatColor) {
         return chatColor != ChatColor.MAGIC && chatColor != ChatColor.BOLD && chatColor != ChatColor.STRIKETHROUGH && chatColor != ChatColor.UNDERLINE && chatColor != ChatColor.ITALIC;
     }
+
     public static boolean hasNoCustomName(ItemStack item) {
         ItemMeta meta = item.hasItemMeta() ? item.getItemMeta() : null;
         if (meta == null) return true;
         if (!meta.hasDisplayName()) return true;
         return meta.getDisplayName().isEmpty();
     }
+
     public static String getCustomName(ItemStack item, Player player) {
         ItemMeta meta = item.hasItemMeta() ? item.getItemMeta() : null;
         if (meta == null) return getName(item, player);
@@ -1223,15 +1226,18 @@ public class Assets {
             return convertString(item.getType().name());
         }
     }
+
     public static String getName(Player player) {
         return PlaceholderAPI.setPlaceholders(player, ChatColor.translateAlternateColorCodes('&', Messages.getInstance().getConfig().getString("PlayerName", "%player_name%")));
     }
+
     public static String getCustomName(Entity entity, Player player) {
         if (entity instanceof Player) return getName((Player) entity);
         String customName = entity.getCustomName();
         if (customName == null) return getName(entity, player);
         return customName;
     }
+
     public static String getName(Entity entity, Player player) {
         if (entity instanceof Player) return getName((Player) entity);
         if (DeathMessages.langUtilsEnabled) {
@@ -1239,6 +1245,7 @@ public class Assets {
         }
         return Messages.getInstance().getConfig().getString("Mobs." + entity.getType().name().toLowerCase(), entity.getName());
     }
+
     @Nullable
     @SuppressWarnings({"deprecation"})
     public static String getBlockName(String splitMessage, FallingBlock block, Player player) {
@@ -1253,18 +1260,19 @@ public class Assets {
         }
         return getBlockName(splitMessage, mat, player);
     }
+
     public static String getBlockName(String splitMessage, Material mat, Player player) {
         if (mat == null) return null;
         String configValue2;
         if (DeathMessages.langUtilsEnabled) {
             configValue2 = LanguageHelper.getItemName(new ItemStack(mat), player);
-        }
-        else {
+        } else {
             String material2 = mat.toString().toLowerCase();
             configValue2 = Messages.getInstance().getConfig().getString("Blocks." + material2);
         }
         return colorize(splitMessage.replace("%climbable%", configValue2 + (splitMessage.endsWith(".") ? "" : " ")));
     }
+
     public static String classSimple(Entity entity) {
         Class<?> clazz = entity.getType().getEntityClass();
         if (clazz != null) return clazz.getSimpleName().toLowerCase();

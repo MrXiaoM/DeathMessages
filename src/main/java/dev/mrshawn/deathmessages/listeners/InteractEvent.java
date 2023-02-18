@@ -52,7 +52,7 @@ public class InteractEvent implements Listener {
                             entity = EntityManager.getEntity(ent.getUniqueId());
                         }
                         effected.add(ent.getUniqueId());
-                        if(entity != null) entity.setLastPlayerDamager(PlayerManager.getPlayer(e.getPlayer()));
+                        if (entity != null) entity.setLastPlayerDamager(PlayerManager.getPlayer(e.getPlayer()));
                     }
                 }
                 new ExplosionManager(e.getPlayer().getUniqueId(), b.getType(), b.getLocation(), effected);

@@ -28,7 +28,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import static dev.mrshawn.deathmessages.listeners.EntityDamageByBlock.d;
 import static dev.mrshawn.deathmessages.utils.Assets.classSimple;
 
 

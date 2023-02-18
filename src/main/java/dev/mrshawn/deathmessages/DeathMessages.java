@@ -7,14 +7,14 @@ import dev.mrshawn.deathmessages.command.deathmessages.TabCompleter;
 import dev.mrshawn.deathmessages.command.deathmessages.alias.CommandDeathMessagesToggle;
 import dev.mrshawn.deathmessages.config.ConfigManager;
 import dev.mrshawn.deathmessages.files.Config;
-import dev.mrshawn.deathmessages.hooks.PlaceholderAPIExtension;
 import dev.mrshawn.deathmessages.files.FileSettings;
-import dev.mrshawn.deathmessages.utils.EventUtils;
+import dev.mrshawn.deathmessages.hooks.PlaceholderAPIExtension;
 import dev.mrshawn.deathmessages.listeners.*;
 import dev.mrshawn.deathmessages.listeners.customlisteners.BlockExplosion;
 import dev.mrshawn.deathmessages.listeners.customlisteners.BroadcastEntityDeathListener;
 import dev.mrshawn.deathmessages.listeners.customlisteners.BroadcastPlayerDeathListener;
 import dev.mrshawn.deathmessages.listeners.mythicmobs.MobDeath;
+import dev.mrshawn.deathmessages.utils.EventUtils;
 import dev.mrshawn.deathmessages.worldguard.WorldGuard7Extension;
 import dev.mrshawn.deathmessages.worldguard.WorldGuardExtension;
 import io.lumine.xikage.mythicmobs.MythicMobs;
@@ -90,7 +90,7 @@ public class DeathMessages extends JavaPlugin {
 
     private void setupCommand(String cmd, CommandExecutor executor, org.bukkit.command.TabCompleter tab) {
         PluginCommand command = getCommand(cmd);
-        if (command != null){
+        if (command != null) {
             if (executor != null) command.setExecutor(executor);
             if (tab != null) command.setTabCompleter(tab);
         }

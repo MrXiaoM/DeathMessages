@@ -30,7 +30,7 @@ public class MobDeath implements Listener {
     @EventHandler
     public void onMythicMobDeath(MythicMobDeathEvent e) {
         ConfigurationSection mmEntitiesSection = getEntityDeathMessages().getConfigurationSection("Mythic-Mobs-Entities");
-        Set<String> mmKeys = mmEntitiesSection == null ? null: mmEntitiesSection.getKeys(false);
+        Set<String> mmKeys = mmEntitiesSection == null ? null : mmEntitiesSection.getKeys(false);
         if (mmKeys == null || mmKeys.isEmpty()) return;
 
         for (String customMobs : mmKeys) {

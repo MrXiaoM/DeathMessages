@@ -21,7 +21,7 @@ public final class CommentedConfiguration extends YamlConfiguration {
         }
         CommentedConfiguration cfg = loadConfiguration(resource);
         ConfigurationSection section = cfg.getConfigurationSection("");
-        if (section!=null && syncConfigurationSection(cfg, section, Arrays.asList(ignoredSections)) && file != null) {
+        if (section != null && syncConfigurationSection(cfg, section, Arrays.asList(ignoredSections)) && file != null) {
             save(file);
         }
     }
