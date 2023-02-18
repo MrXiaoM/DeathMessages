@@ -48,6 +48,8 @@ Commands:
         Usage: "%prefix% &a/dmsg restore <备份码> <恢复用户信息> &7- 恢复插件文件，是否恢复用户信息填true或false."
         Restored: "%prefix% &a已从 &e#%backup-code% &a恢复插件文件"
         Backup-Not-Found: "%prefix% &c找不到这个备份."
+
+PlayerName: '%player_name%'
 # 翻译 (推荐使用 LangUtils 而不是这里的翻译)
 # Mobs: 这里的翻译将会影响 %killer_type% 的变量
 Mobs:

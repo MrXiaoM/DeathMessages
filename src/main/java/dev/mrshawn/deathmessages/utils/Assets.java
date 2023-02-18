@@ -966,7 +966,7 @@ public class Assets {
             Block playerLoc = pm.getLastLocation().getBlock();
             World world = playerLoc.getWorld();
             msg2 = colorize(msg
-                    .replace("%player%", pm.getName())
+                    .replace("%player%", getName(pm.getPlayer()))
                     .replace("%player_display%", pm.getPlayer().getDisplayName())
                     .replace("%world%", world.getName())
                     .replace("%world_environment%", getEnvironment(world.getEnvironment()))
@@ -1004,7 +1004,7 @@ public class Assets {
             }
             Block playerLoc = pm.getLastLocation().getBlock();
             World world = playerLoc.getWorld();
-            msg2 = msg.replace("%player%", pm.getName())
+            msg2 = msg.replace("%player%", getName(pm.getPlayer()))
                     .replace("%player_display%", pm.getPlayer().getDisplayName())
                     .replace("%killer%", mobName)
                     .replace("%killer_type%", getName(mob, pm.getPlayer()))
@@ -1224,12 +1224,17 @@ public class Assets {
             return convertString(item.getType().name());
         }
     }
+    public static String getName(Player player) {
+        return PlaceholderAPI.setPlaceholders(player, ChatColor.translateAlternateColorCodes('&', Messages.getInstance().getConfig().getString("PlayerName", "%player_name%")));
+    }
     public static String getCustomName(Entity entity, Player player) {
+        if (entity instanceof Player) return getName((Player) entity);
         String customName = entity.getCustomName();
         if (customName == null) return getName(entity, player);
         return customName;
     }
     public static String getName(Entity entity, Player player) {
+        if (entity instanceof Player) return getName((Player) entity);
         if (DeathMessages.langUtilsEnabled) {
             return LanguageHelper.getEntityName(entity, player);
         }
