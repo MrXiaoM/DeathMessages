@@ -42,26 +42,26 @@ Entities:
   # Below is an example of how this section is setup. You can use any death-type like in PlayerDeathMessages.yml
   wolf:
     Tamed:
-      - "&e%killer% &f杀死了 &e%owner% &f的 &e%entity%"
+      - "&e%killer% &f&l杀死了 &e%owner% &f&l的 &e%entity%"
     Projectile-Arrow:
-      - "&e%killer% &f用 &e%weapon% &f射杀了一只可爱的狗勾"
+      - "&e%killer% &f&l用 &e%weapon%&f &f&l 射杀了一只可爱的狗勾"
     Weapon:
-      - "&e%killer% &f用 &e%weapon% &f杀死了一只狗"
+      - "&e%killer% &f&l用 &e%weapon%&f &f&l 杀死了一只狗"
     Melee:
-      - "&e%killer% &f杀死了一只狗"
+      - "&e%killer% &f&l杀死了一只狗"
     Void:
-      - "&e%killer% &f将一只狗推下了虚空"
+      - "&e%killer% &f&l将一只狗推下了虚空"
     TNT:
-      - "&e%killer% &f炸死了一只狗!"
+      - "&e%killer% &f&l炸死了一只狗!"
     Respawn-Anchor:
-      - "&e%killer% &f使用重生锚炸死了一只狗"
+      - "&e%killer% &f&l使用重生锚炸死了一只狗"
   enderdragon:
     Projectile-Arrow:
-      - "&e%killer% &f使用 &e%weapon% &f射杀了&9&l末影龙&f!"
+      - "&e%killer% &f&l使用 &e%weapon%&f &f&l 射杀了&9&l末影龙&f!"
     Weapon:
-      - "&e%killer% &f用 &e%weapon% &f杀死了&9&l末影龙&f!"
+      - "&e%killer% &f&l使用 &e%weapon%&f &f&l 杀死了&9&l末影龙&f!"
     Melee:
-      - '&e%killer% &f杀死了&9&l末影龙&f!'
+      - '&e%killer% &f&l杀死了&9&l末影龙&f!'
 
 #Mythic-Mob Entities https://www.spigotmc.org/resources/%E2%9A%94-mythicmobs-free-version-%E2%96%BAthe-1-custom-mob-creator%E2%97%84.5702/
 Mythic-Mobs-Entities:
