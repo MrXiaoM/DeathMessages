@@ -6,6 +6,9 @@ Disable-Default-Messages: true
 # Add a prefix to all death messages? (Prefix from Messages.yml)
 Add-Prefix-To-All-Messages: true
 
+# Ignore projectile type when defining weapon
+Ignore-Projectile-Type: false
+
 # Settings for specific hooks the plugins interact with
 Hooks:
   # If MythicMobs is found, enable the hook

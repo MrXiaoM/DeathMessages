@@ -10,6 +10,7 @@ import dev.mrshawn.deathmessages.api.PlayerManager;
 import dev.mrshawn.deathmessages.config.EntityDeathMessages;
 import dev.mrshawn.deathmessages.config.Messages;
 import dev.mrshawn.deathmessages.config.PlayerDeathMessages;
+import dev.mrshawn.deathmessages.config.Settings;
 import dev.mrshawn.deathmessages.enums.DeathAffiliation;
 import dev.mrshawn.deathmessages.enums.MobType;
 import dev.mrshawn.deathmessages.enums.PDMode;
@@ -162,7 +163,7 @@ public class Assets {
             if (pm.getLastDamage().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
                 return getWeapon(gang, pm, mob);
             }
-            if (pm.getLastDamage().equals(EntityDamageEvent.DamageCause.PROJECTILE) && (pm.getLastProjectileEntity() instanceof Arrow)) {
+            if (pm.getLastDamage().equals(EntityDamageEvent.DamageCause.PROJECTILE) && (getSettings().getBoolean("Ignore-Projectile-Type") || pm.getLastProjectileEntity() instanceof Arrow)) {
                 return getProjectile(gang, pm, mob, getSimpleProjectile(pm.getLastProjectileEntity()));
             }
             return get(gang, pm, mob, getSimpleCause(EntityDamageEvent.DamageCause.ENTITY_ATTACK));
@@ -211,7 +212,7 @@ public class Assets {
             if (em.getLastDamage().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
                 return getEntityDeathWeapon(p, em.getEntity(), mobType);
             }
-            if (em.getLastDamage().equals(EntityDamageEvent.DamageCause.PROJECTILE) && (em.getLastProjectileEntity() instanceof Arrow)) {
+            if (em.getLastDamage().equals(EntityDamageEvent.DamageCause.PROJECTILE) && (getSettings().getBoolean("Ignore-Projectile-Type") || em.getLastProjectileEntity() instanceof Arrow)) {
                 return getEntityDeathProjectile(p, em, getSimpleProjectile(em.getLastProjectileEntity()), mobType);
             }
             return getEntityDeathWeapon(p, em.getEntity(), mobType);
@@ -647,7 +648,7 @@ public class Assets {
         String lastColor = "";
         String lastFont = "";
         for (String splitMessage : firstSection.split(" ")) {
-            if (splitMessage.contains("%weapon%") && (pm.getLastProjectileEntity() instanceof Arrow) && equipment != null) {
+            if (splitMessage.contains("%weapon%") && (getSettings().getBoolean("Ignore-Projectile-Type") || pm.getLastProjectileEntity() instanceof Arrow) && equipment != null) {
                 if (DeathMessages.majorVersion() < 9) {
                     i = equipment.getItemInHand();
                 } else {
@@ -749,7 +750,7 @@ public class Assets {
         String lastColor = "";
         String lastFont = "";
         for (String splitMessage : firstSection.split(" ")) {
-            if (splitMessage.contains("%weapon%") && (em.getLastProjectileEntity() instanceof Arrow) && equipment != null) {
+            if (splitMessage.contains("%weapon%") && (getSettings().getBoolean("Ignore-Projectile-Type") || em.getLastProjectileEntity() instanceof Arrow) && equipment != null) {
                 if (DeathMessages.majorVersion() < 9) {
                     i = equipment.getItemInHand();
                 } else {
@@ -1182,6 +1183,10 @@ public class Assets {
 
     public static FileConfiguration getEntityDeathMessages() {
         return EntityDeathMessages.getInstance().getConfig();
+    }
+
+    public static FileConfiguration getSettings() {
+        return Settings.getInstance().getConfig();
     }
 
     public static String getColorOfString(String input) {
