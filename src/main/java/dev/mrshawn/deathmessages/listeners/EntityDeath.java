@@ -146,7 +146,7 @@ public class EntityDeath implements Listener {
             }
         }
         MobType mobType = MobType.VANILLA;
-        if (DeathMessages.getInstance().mythicmobsEnabled && DeathMessages.getInstance().mythicMobs.getAPIHelper().isMythicMob(e.getEntity().getUniqueId())) {
+        if (DeathMessages.getInstance().mythicmobsEnabled && DeathMessages.getInstance().mythicMobs.isMythicMob(e.getEntity().getUniqueId())) {
             mobType = MobType.MYTHIC_MOB;
         }
         if (EntityManager.getEntity(e.getEntity().getUniqueId()) == null || (em = EntityManager.getEntity(e.getEntity().getUniqueId())) == null || em.getLastPlayerDamager() == null) {

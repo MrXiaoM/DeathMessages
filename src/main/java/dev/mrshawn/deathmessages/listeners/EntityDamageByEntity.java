@@ -84,10 +84,10 @@ public class EntityDamageByEntity implements Listener {
                 return;
             }
             for (String listened : listenedMobs) {
-                if (listened.contains(classSimple(e.getEntity())) || (DeathMessages.getInstance().mythicmobsEnabled && DeathMessages.getInstance().mythicMobs.getAPIHelper().isMythicMob(e.getEntity().getUniqueId()))) {
+                if (listened.contains(classSimple(e.getEntity())) || (DeathMessages.getInstance().mythicmobsEnabled && DeathMessages.getInstance().mythicMobs.isMythicMob(e.getEntity().getUniqueId()))) {
                     if (EntityManager.getEntity(e.getEntity().getUniqueId()) == null) {
                         MobType mobType = MobType.VANILLA;
-                        if (DeathMessages.getInstance().mythicmobsEnabled && DeathMessages.getInstance().mythicMobs.getAPIHelper().isMythicMob(e.getEntity().getUniqueId())) {
+                        if (DeathMessages.getInstance().mythicmobsEnabled && DeathMessages.getInstance().mythicMobs.isMythicMob(e.getEntity().getUniqueId())) {
                             mobType = MobType.MYTHIC_MOB;
                         }
                         em = new EntityManager(e.getEntity(), e.getEntity().getUniqueId(), mobType);

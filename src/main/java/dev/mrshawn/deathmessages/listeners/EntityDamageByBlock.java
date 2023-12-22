@@ -42,7 +42,7 @@ public class EntityDamageByBlock implements Listener {
                 if (listened.contains(classSimple(e.getEntity()))) {
                     if (EntityManager.getEntity(e.getEntity().getUniqueId()) == null) {
                         MobType mobType = MobType.VANILLA;
-                        if (DeathMessages.getInstance().mythicmobsEnabled && DeathMessages.getInstance().mythicMobs.getAPIHelper().isMythicMob(e.getEntity().getUniqueId())) {
+                        if (DeathMessages.getInstance().mythicmobsEnabled && DeathMessages.getInstance().mythicMobs.isMythicMob(e.getEntity().getUniqueId())) {
                             mobType = MobType.MYTHIC_MOB;
                         }
                         entity = new EntityManager(e.getEntity(), e.getEntity().getUniqueId(), mobType);

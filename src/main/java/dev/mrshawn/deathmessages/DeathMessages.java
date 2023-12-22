@@ -8,16 +8,17 @@ import dev.mrshawn.deathmessages.command.deathmessages.alias.CommandDeathMessage
 import dev.mrshawn.deathmessages.config.ConfigManager;
 import dev.mrshawn.deathmessages.files.Config;
 import dev.mrshawn.deathmessages.files.FileSettings;
+import dev.mrshawn.deathmessages.hooks.IMythicMobsAPI;
+import dev.mrshawn.deathmessages.hooks.MythicMobs4API;
 import dev.mrshawn.deathmessages.hooks.PlaceholderAPIExtension;
 import dev.mrshawn.deathmessages.listeners.*;
 import dev.mrshawn.deathmessages.listeners.customlisteners.BlockExplosion;
 import dev.mrshawn.deathmessages.listeners.customlisteners.BroadcastEntityDeathListener;
 import dev.mrshawn.deathmessages.listeners.customlisteners.BroadcastPlayerDeathListener;
-import dev.mrshawn.deathmessages.listeners.mythicmobs.MobDeath;
+import dev.mrshawn.deathmessages.listeners.mythicmobs.MobDeath4;
 import dev.mrshawn.deathmessages.utils.EventUtils;
 import dev.mrshawn.deathmessages.worldguard.WorldGuard7Extension;
 import dev.mrshawn.deathmessages.worldguard.WorldGuardExtension;
-import io.lumine.xikage.mythicmobs.MythicMobs;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
@@ -34,7 +35,7 @@ import java.util.List;
 public class DeathMessages extends JavaPlugin {
     private static DeathMessages instance;
     public boolean placeholderAPIEnabled = false;
-    public MythicMobs mythicMobs = null;
+    public IMythicMobsAPI mythicMobs = null;
     public boolean mythicmobsEnabled = false;
     public static boolean langUtilsEnabled = false;
     public static String bungeeServerName;
@@ -121,10 +122,19 @@ public class DeathMessages extends JavaPlugin {
             }
         }
         if (Bukkit.getPluginManager().getPlugin("MythicMobs") != null && config.getBoolean(Config.HOOKS_MYTHICMOBS_ENABLED)) {
-            this.mythicMobs = MythicMobs.inst();
-            this.mythicmobsEnabled = true;
-            getLogger().info("MythicMobs Hook Enabled!");
-            Bukkit.getPluginManager().registerEvents(new MobDeath(), this);
+            String ver = Bukkit.getPluginManager().getPlugin("MythicMobs").getDescription().getVersion();
+            if (ver.startsWith("4.")) {
+                this.mythicMobs = new MythicMobs4API();
+                this.mythicmobsEnabled = true;
+                getLogger().info("MythicMobs 4.x Hook Enabled!");
+                Bukkit.getPluginManager().registerEvents(new MobDeath4(), this);
+            }
+            if (ver.startsWith("5.")) {
+                // TODO: MythicMobs 5.x support.
+            }
+            if (!mythicmobsEnabled) {
+                getLogger().warning("Unknown MythicMobs version " + ver);
+            }
         }
         if (Bukkit.getPluginManager().getPlugin("LangUtils") != null && config.getBoolean(Config.HOOKS_LANGUTILS_ENABLED)) {
             langUtilsEnabled = true;
