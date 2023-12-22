@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "dev.mrshawn"
-version = "1.4.16"
+version = "1.4.17"
 
 repositories {
     maven("https://repo.huaweicloud.com/repository/maven/")
@@ -26,6 +26,7 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("de.tr7zw:item-nbt-api-plugin:2.11.1")
     compileOnly("io.lumine:Mythic-Dist:4.13.0")
+    compileOnly("io.lumine:Mythic:5.4.1")
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.0")
     compileOnly("com.sk89q.worldedit:worldedit-core:7.2.0")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.1")

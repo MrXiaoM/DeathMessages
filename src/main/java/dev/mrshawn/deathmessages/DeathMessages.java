@@ -10,12 +10,14 @@ import dev.mrshawn.deathmessages.files.Config;
 import dev.mrshawn.deathmessages.files.FileSettings;
 import dev.mrshawn.deathmessages.hooks.IMythicMobsAPI;
 import dev.mrshawn.deathmessages.hooks.MythicMobs4API;
+import dev.mrshawn.deathmessages.hooks.MythicMobs5API;
 import dev.mrshawn.deathmessages.hooks.PlaceholderAPIExtension;
 import dev.mrshawn.deathmessages.listeners.*;
 import dev.mrshawn.deathmessages.listeners.customlisteners.BlockExplosion;
 import dev.mrshawn.deathmessages.listeners.customlisteners.BroadcastEntityDeathListener;
 import dev.mrshawn.deathmessages.listeners.customlisteners.BroadcastPlayerDeathListener;
 import dev.mrshawn.deathmessages.listeners.mythicmobs.MobDeath4;
+import dev.mrshawn.deathmessages.listeners.mythicmobs.MobDeath5;
 import dev.mrshawn.deathmessages.utils.EventUtils;
 import dev.mrshawn.deathmessages.worldguard.WorldGuard7Extension;
 import dev.mrshawn.deathmessages.worldguard.WorldGuardExtension;
@@ -121,8 +123,9 @@ public class DeathMessages extends JavaPlugin {
                 }
             }
         }
-        if (Bukkit.getPluginManager().getPlugin("MythicMobs") != null && config.getBoolean(Config.HOOKS_MYTHICMOBS_ENABLED)) {
-            String ver = Bukkit.getPluginManager().getPlugin("MythicMobs").getDescription().getVersion();
+        Plugin mythicPlugin = Bukkit.getPluginManager().getPlugin("MythicMobs");
+        if (mythicPlugin != null && config.getBoolean(Config.HOOKS_MYTHICMOBS_ENABLED)) {
+            String ver = mythicPlugin.getDescription().getVersion();
             if (ver.startsWith("4.")) {
                 this.mythicMobs = new MythicMobs4API();
                 this.mythicmobsEnabled = true;
@@ -130,7 +133,10 @@ public class DeathMessages extends JavaPlugin {
                 Bukkit.getPluginManager().registerEvents(new MobDeath4(), this);
             }
             if (ver.startsWith("5.")) {
-                // TODO: MythicMobs 5.x support.
+                this.mythicMobs = new MythicMobs5API();
+                this.mythicmobsEnabled = true;
+                getLogger().info("MythicMobs 5.x Hook Enabled!");
+                Bukkit.getPluginManager().registerEvents(new MobDeath5(), this);
             }
             if (!mythicmobsEnabled) {
                 getLogger().warning("Unknown MythicMobs version " + ver);
