@@ -27,6 +27,7 @@ dependencies {
     compileOnly("de.tr7zw:item-nbt-api-plugin:2.11.1")
     compileOnly("io.lumine:Mythic-Dist:4.13.0")
     compileOnly("io.lumine:Mythic:5.4.1")
+    compileOnly("io.lumine:LumineUtils:1.20-SNAPSHOT")
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.0")
     compileOnly("com.sk89q.worldedit:worldedit-core:7.2.0")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.1")
