@@ -18,6 +18,7 @@ The plugin depends on [NBT API](https://www.spigotmc.org/resources/nbt-api.7939/
 * 关闭插件使用统计
 * 添加 [LangUtils](https://github.com/NyaaCat/LanguageUtils) 支持
 * 将 `/dm` 命令改为 `/dmsg`，避免与 [DeluxeMenus](https://www.spigotmc.org/resources/deluxemenus.11734/) 冲突
+* 添加 MythicMobs 5.x 支持
 
 ## 前置插件
 
@@ -34,7 +35,7 @@ The plugin depends on [NBT API](https://www.spigotmc.org/resources/nbt-api.7939/
 ```
 ./gradlew build
 ```
-原帖中说支持 `1.7-1.19`，本插件仅保证在 `1.16.x` 可用，其他版本请自行尝试。
+原帖中说支持 `1.7-1.19`，本插件仅保证在 `1.19.x` 可用，其他版本请自行尝试。
 
 # 死亡消息
 
@@ -75,6 +76,9 @@ broadcast-deathmessage-tameable
 ```
 
 ### MythicMobs 击杀提示
+
+支持 MythicMobs 版本 `4.x` 和 `5.x`。
+
 需要确保在配置文件中 MythicMobs 钩子是启用的。  
 默认的 `PlayerDeathMessages.yml` 和 `EntityDeathMessages.yml` 末尾已经有默认配置了，自由发挥吧。
 
