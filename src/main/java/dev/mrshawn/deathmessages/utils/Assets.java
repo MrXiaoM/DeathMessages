@@ -1235,7 +1235,13 @@ public class Assets {
     }
 
     public static String getName(Player player) {
-        return PlaceholderAPI.setPlaceholders(player, ChatColor.translateAlternateColorCodes('&', Messages.getInstance().getConfig().getString("PlayerName", "%player_name%")));
+        String msg = Messages.getInstance().getConfig().getString("PlayerName", "%player_name%");
+        if (DeathMessages.getInstance().placeholderAPIEnabled) {
+            msg = PlaceholderAPI.setPlaceholders(player,  msg);
+        } else {
+            msg = msg.replace("%player_name%", player.getName());
+        }
+        return ChatColor.translateAlternateColorCodes('&', msg);
     }
 
     public static String getCustomName(Entity entity, Player player) {
