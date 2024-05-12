@@ -66,7 +66,8 @@ public class DeathMessages extends JavaPlugin {
     }
 
     public static String serverVersion() {
-        return Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+        String name = Bukkit.getServer().getClass().getPackage().getName();
+        return name.substring(name.lastIndexOf('.') + 1);
     }
 
     public static int majorVersion() {
