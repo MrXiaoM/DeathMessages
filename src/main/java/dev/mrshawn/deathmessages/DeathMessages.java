@@ -71,7 +71,8 @@ public class DeathMessages extends JavaPlugin {
     }
 
     public static int majorVersion() {
-        return Integer.parseInt(serverVersion().replace("1_", "").replaceAll("_R\\d", "").replaceAll("v", ""));
+        String v = serverVersion().replace("1_", "").replaceAll("_R\\d", "").replaceAll("v", "");
+        return v.equals("craftbukkit") ? 20 : Integer.parseInt(v);
     }
 
     private void initializeConfigs() {
