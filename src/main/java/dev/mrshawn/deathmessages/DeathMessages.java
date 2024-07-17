@@ -12,13 +12,13 @@ import dev.mrshawn.deathmessages.hooks.MythicMobs4API;
 import dev.mrshawn.deathmessages.hooks.MythicMobs5API;
 import dev.mrshawn.deathmessages.hooks.PlaceholderAPIExtension;
 import dev.mrshawn.deathmessages.listeners.*;
-import dev.mrshawn.deathmessages.listeners.customlisteners.BlockExplosion;
-import dev.mrshawn.deathmessages.listeners.customlisteners.BroadcastEntityDeathListener;
-import dev.mrshawn.deathmessages.listeners.customlisteners.BroadcastPlayerDeathListener;
+import dev.mrshawn.deathmessages.listeners.api.BlockExplosionListener;
+import dev.mrshawn.deathmessages.listeners.api.BroadcastEntityDeathListener;
+import dev.mrshawn.deathmessages.listeners.api.BroadcastPlayerDeathListener;
 import dev.mrshawn.deathmessages.listeners.mythicmobs.MobDeath4;
 import dev.mrshawn.deathmessages.listeners.mythicmobs.MobDeath5;
-import dev.mrshawn.deathmessages.worldguard.WorldGuard7Extension;
-import dev.mrshawn.deathmessages.worldguard.WorldGuardExtension;
+import dev.mrshawn.deathmessages.hooks.WorldGuard7Extension;
+import dev.mrshawn.deathmessages.hooks.WorldGuardExtension;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
@@ -96,7 +96,7 @@ public class DeathMessages extends JavaPlugin {
         for (Listener listener : new Listener[] {
                 new BroadcastPlayerDeathListener(),
                 new BroadcastEntityDeathListener(),
-                new BlockExplosion(),
+                new BlockExplosionListener(),
                 new EntityDamage(),
                 new EntityDamageByBlock(),
                 new EntityDamageByEntity(),
