@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "dev.mrshawn"
-version = "1.4.17"
+version = "1.4.18"
 
 repositories {
     maven("https://repo.huaweicloud.com/repository/maven/")
