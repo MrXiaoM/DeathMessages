@@ -9,6 +9,8 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.Date;
 
+import static dev.mrshawn.deathmessages.DeathMessages.warn;
+
 
 public class EntityDeathMessages {
     public final String fileName = "EntityDeathMessages";
@@ -78,7 +80,7 @@ public class EntityDeathMessages {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            warn(e);
         }
     }
 }

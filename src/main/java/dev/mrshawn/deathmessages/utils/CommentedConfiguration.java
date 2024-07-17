@@ -12,6 +12,8 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+import static dev.mrshawn.deathmessages.DeathMessages.warn;
+
 
 public final class CommentedConfiguration extends YamlConfiguration {
     private final Map<String, String> configComments = new HashMap<>();
@@ -155,7 +157,7 @@ public final class CommentedConfiguration extends YamlConfiguration {
             config.loadFromString(contents.toString());
         } catch (IOException | InvalidConfigurationException ex) {
             config.flagAsFailed();
-            ex.printStackTrace();
+            warn(ex);
         }
         return config;
     }

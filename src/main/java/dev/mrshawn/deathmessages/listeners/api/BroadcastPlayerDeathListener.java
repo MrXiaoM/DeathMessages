@@ -20,6 +20,8 @@ import org.bukkit.event.Listener;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import static dev.mrshawn.deathmessages.DeathMessages.warn;
+
 
 public class BroadcastPlayerDeathListener implements Listener {
     private static final FileSettings<Config> config = FileSettings.CONFIG;
@@ -39,7 +41,6 @@ public class BroadcastPlayerDeathListener implements Listener {
             boolean privatePlayer = config.getBoolean(Config.PRIVATE_MESSAGES_PLAYER);
             boolean privateMobs = config.getBoolean(Config.PRIVATE_MESSAGES_MOBS);
             boolean privateNatural = config.getBoolean(Config.PRIVATE_MESSAGES_NATURAL);
-            boolean discordSent = false;
             for (World w : e.getBroadcastedWorlds()) {
                 if (!config.getStringList(Config.DISABLED_WORLDS).contains(w.getName())) {
                     for (Player pls : w.getPlayers()) {
@@ -79,7 +80,7 @@ public class BroadcastPlayerDeathListener implements Listener {
                 pls.spigot().sendMessage(e.getTextComponent());
             }
         } catch (NullPointerException e1) {
-            e1.printStackTrace();
+            warn(e1);
         }
     }
 }

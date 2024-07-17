@@ -33,6 +33,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.logging.Level;
 
 
 public class DeathMessages extends JavaPlugin {
@@ -49,6 +50,10 @@ public class DeathMessages extends JavaPlugin {
     public static boolean bungeeInit = false;
     private static EventPriority eventPriority = EventPriority.HIGH;
     private static int savedVersion = 0;
+
+    public static void warn(Throwable t) {
+        instance.getLogger().log(Level.WARNING, "", t);
+    }
 
     public void onEnable() {
         instance = this;

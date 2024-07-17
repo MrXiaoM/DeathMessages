@@ -20,6 +20,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.util.List;
 
+import static dev.mrshawn.deathmessages.DeathMessages.warn;
+
 
 public class PluginMessaging implements PluginMessageListener {
     private static final FileSettings<Config> config = FileSettings.CONFIG;
@@ -51,7 +53,7 @@ public class PluginMessaging implements PluginMessageListener {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                warn(e);
             }
         }
     }

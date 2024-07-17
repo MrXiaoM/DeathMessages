@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import static dev.mrshawn.deathmessages.DeathMessages.warn;
+
 
 public class FileSettings<C extends Enum<C>> {
     public static FileSettings<Config> CONFIG = new FileSettings<Config>(
@@ -38,7 +40,7 @@ public class FileSettings<C extends Enum<C>> {
         try {
             this.yamlConfig.save(this.file);
         } catch (IOException e) {
-            e.printStackTrace();
+            warn(e);
         }
     }
 

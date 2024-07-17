@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
+import static dev.mrshawn.deathmessages.DeathMessages.warn;
+
 
 public class ConfigManager {
     private static final ConfigManager instance = new ConfigManager();
@@ -47,33 +49,33 @@ public class ConfigManager {
         try {
             FileUtils.copyFileToDirectory(EntityDeathMessages.getInstance().file, backupDir);
         } catch (IOException e) {
-            e.printStackTrace();
+            warn(e);
         }
         try {
             FileUtils.copyFileToDirectory(Gangs.getInstance().file, backupDir);
         } catch (IOException e2) {
-            e2.printStackTrace();
+            warn(e2);
         }
         try {
             FileUtils.copyFileToDirectory(Messages.getInstance().file, backupDir);
         } catch (IOException e3) {
-            e3.printStackTrace();
+            warn(e3);
         }
         try {
             FileUtils.copyFileToDirectory(PlayerDeathMessages.getInstance().file, backupDir);
         } catch (IOException e4) {
-            e4.printStackTrace();
+            warn(e4);
         }
         try {
             FileUtils.copyFileToDirectory(Settings.getInstance().getFile(), backupDir);
         } catch (IOException e5) {
-            e5.printStackTrace();
+            warn(e5);
         }
         if (!excludeUserData) {
             try {
                 FileUtils.copyFileToDirectory(UserData.getInstance().file, backupDir);
             } catch (IOException e6) {
-                e6.printStackTrace();
+                warn(e6);
             }
         }
         return randomCode;
@@ -93,7 +95,7 @@ public class ConfigManager {
                 DeathMessages.getInstance().getLogger().severe("COULD NOT RESTORE " + "EntityDeathMessages" + ".");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            warn(e);
         }
         try {
             Objects.requireNonNull(Gangs.getInstance());
@@ -104,7 +106,7 @@ public class ConfigManager {
                 DeathMessages.getInstance().getLogger().severe("COULD NOT RESTORE " + "Gangs" + ".");
             }
         } catch (IOException e2) {
-            e2.printStackTrace();
+            warn(e2);
         }
         try {
             Objects.requireNonNull(Messages.getInstance());
@@ -115,7 +117,7 @@ public class ConfigManager {
                 DeathMessages.getInstance().getLogger().severe("COULD NOT RESTORE " + "Messages" + ".");
             }
         } catch (IOException e3) {
-            e3.printStackTrace();
+            warn(e3);
         }
         try {
             Objects.requireNonNull(PlayerDeathMessages.getInstance());
@@ -126,7 +128,7 @@ public class ConfigManager {
                 DeathMessages.getInstance().getLogger().severe("COULD NOT RESTORE " + "PlayerDeathMessages" + ".");
             }
         } catch (IOException e4) {
-            e4.printStackTrace();
+            warn(e4);
         }
         try {
             Objects.requireNonNull(Settings.getInstance());
@@ -137,7 +139,7 @@ public class ConfigManager {
                 DeathMessages.getInstance().getLogger().severe("COULD NOT RESTORE " + "Settings" + ".");
             }
         } catch (IOException e5) {
-            e5.printStackTrace();
+            warn(e5);
         }
         if (!excludeUserData) {
             try {
@@ -149,7 +151,7 @@ public class ConfigManager {
                     DeathMessages.getInstance().getLogger().severe("COULD NOT RESTORE " + "UserData" + ".");
                 }
             } catch (IOException e6) {
-                e6.printStackTrace();
+                warn(e6);
             }
         }
         getInstance().reload();

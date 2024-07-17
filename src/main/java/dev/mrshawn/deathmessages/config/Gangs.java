@@ -9,6 +9,8 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.Date;
 
+import static dev.mrshawn.deathmessages.DeathMessages.warn;
+
 
 public class Gangs {
     public final String fileName = "Gangs";
@@ -78,7 +80,7 @@ public class Gangs {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            warn(e);
         }
     }
 }

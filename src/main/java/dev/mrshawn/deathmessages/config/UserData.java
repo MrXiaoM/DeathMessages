@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
+import static dev.mrshawn.deathmessages.DeathMessages.warn;
+
 
 public class UserData {
     public final String fileName = "UserData";
@@ -55,7 +57,7 @@ public class UserData {
             try {
                 this.file.createNewFile();
             } catch (IOException e) {
-                e.printStackTrace();
+                warn(e);
             }
         }
         this.config = YamlConfiguration.loadConfiguration(this.file);

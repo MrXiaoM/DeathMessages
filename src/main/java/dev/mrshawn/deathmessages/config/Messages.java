@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static dev.mrshawn.deathmessages.DeathMessages.warn;
+
 
 public class Messages {
     CommentedConfiguration config;
@@ -81,7 +83,7 @@ public class Messages {
         try {
             this.config.syncWithConfig(this.file, DeathMessages.getInstance().getResource("Messages.yml"), "none");
         } catch (Exception e) {
-            e.printStackTrace();
+            warn(e);
         }
     }
 
@@ -100,7 +102,7 @@ public class Messages {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            warn(e);
         }
     }
 

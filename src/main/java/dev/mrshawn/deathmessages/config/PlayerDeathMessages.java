@@ -9,6 +9,8 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.Date;
 
+import static dev.mrshawn.deathmessages.DeathMessages.warn;
+
 
 public class PlayerDeathMessages {
     public final String fileName = "PlayerDeathMessages";
@@ -47,7 +49,7 @@ public class PlayerDeathMessages {
             DeathMessages.getInstance().getLogger().severe("You can try fixing the file with a yaml parser online!");
             this.file.renameTo(f);
             initialize();
-            e.printStackTrace();
+            warn(e);
         }
     }
 
@@ -79,7 +81,7 @@ public class PlayerDeathMessages {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            warn(e);
         }
     }
 }

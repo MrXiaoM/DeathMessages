@@ -9,6 +9,8 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.Date;
 
+import static dev.mrshawn.deathmessages.DeathMessages.warn;
+
 
 public class Settings {
     public final String fileName = "Settings";
@@ -37,7 +39,7 @@ public class Settings {
         try {
             this.config = CommentedConfiguration.loadConfiguration(this.file);
         } catch (Exception e) {
-            e.printStackTrace();
+            warn(e);
             File f = new File(DeathMessages.getInstance().getDataFolder(), "Settings.broken." + new Date().getTime());
             DeathMessages.getInstance().getLogger().severe("Could not reload: Settings.yml");
             DeathMessages.getInstance().getLogger().severe("Regenerating file and renaming the current file to: " + f.getName());
@@ -75,7 +77,7 @@ public class Settings {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            warn(e);
         }
     }
 
