@@ -21,7 +21,7 @@ public final class CommentedConfiguration extends YamlConfiguration {
         }
         CommentedConfiguration cfg = loadConfiguration(resource);
         ConfigurationSection section = cfg.getConfigurationSection("");
-        if (section != null && syncConfigurationSection(cfg, section, Arrays.asList(ignoredSections)) && file != null) {
+        if (section != null && syncConfigurationSection(section, Arrays.asList(ignoredSections)) && file != null) {
             save(file);
         }
     }
@@ -91,7 +91,7 @@ public final class CommentedConfiguration extends YamlConfiguration {
         return contents.length() == 0 ? "" : contents.substring(1);
     }
 
-    private boolean syncConfigurationSection(CommentedConfiguration commentedConfig, ConfigurationSection section, List<String> ignoredSections) {
+    private boolean syncConfigurationSection(ConfigurationSection section, List<String> ignoredSections) {
         boolean changed = false;
         for (String key : section.getKeys(false)) {
             String current = section.getCurrentPath();
@@ -103,14 +103,10 @@ public final class CommentedConfiguration extends YamlConfiguration {
                 boolean containsSection = contains(path);
                 ConfigurationSection section1 = section.getConfigurationSection(key);
                 if (section1 != null && (!containsSection || !isIgnored)) {
-                    changed = syncConfigurationSection(commentedConfig, section1, ignoredSections) || changed;
+                    changed = syncConfigurationSection(section1, ignoredSections) || changed;
                 }
             } else if (!contains(path)) {
                 set(path, section.get(key));
-                changed = true;
-            }
-            if (commentedConfig.containsComment(path) && !commentedConfig.getComment(path).equals(getComment(path))) {
-                setComment(path, commentedConfig.getComment(path));
                 changed = true;
             }
         }
