@@ -35,7 +35,6 @@ dependencies {
     compileOnly("com.meowj:LangUtils:2.3-SNAPSHOT")
 
     implementation("commons-io:commons-io:2.9.0")
-    implementation("com.github.cryptomorin:XSeries:9.2.0")
 }
 
 java {
@@ -49,19 +48,17 @@ tasks {
     }
     shadowJar {
         archiveClassifier.set("")
-
-        val shadow = "${project.group}.deathmessages.shadow"
-        relocate("org.apache.commons.io", "$shadow.commons-io")
-        relocate("com.cryptomorin.xseries", "$shadow.xseries")
-
+        mapOf(
+            "org.apache.commons.io" to "commons-io"
+        ).forEach { (original,target) ->
+            relocate(original, "dev.mrshawn.deathmessages.shadow.$target")
+        }
         minimize()
     }
     processResources {
         duplicatesStrategy = DuplicatesStrategy.INCLUDE
         from(sourceSets.main.get().resources.srcDirs) {
-            expand(
-                "version" to project.version
-            )
+            expand("version" to project.version)
             include("plugin.yml")
         }
     }

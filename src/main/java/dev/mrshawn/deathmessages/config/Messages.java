@@ -1,6 +1,5 @@
 package dev.mrshawn.deathmessages.config;
 
-import com.cryptomorin.xseries.XMaterial;
 import com.meowj.langutils.lang.LanguageHelper;
 import dev.mrshawn.deathmessages.DeathMessages;
 import dev.mrshawn.deathmessages.utils.CommentedConfiguration;
@@ -123,11 +122,9 @@ public class Messages {
         if (block == null) return null;
         Material mat;
         if (DeathMessages.majorVersion() < 13) {
-            mat = XMaterial.matchXMaterial(block.getMaterial()).parseMaterial();
-            if (mat == null) return null;
+            mat = block.getMaterial();
         } else {
-            mat = XMaterial.matchXMaterial(block.getBlockData().getMaterial()).parseMaterial();
-            if (mat == null) return null;
+            mat = block.getBlockData().getMaterial();
         }
         return getBlockName(splitMessage, mat, player);
     }

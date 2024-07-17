@@ -1,6 +1,5 @@
 package dev.mrshawn.deathmessages.utils;
 
-import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.nbtapi.NBTItem;
 import dev.mrshawn.deathmessages.DeathMessages;
 import dev.mrshawn.deathmessages.api.EntityManager;
@@ -210,7 +209,7 @@ public class DeathResolver {
                 tc.addExtra(mssa);
                 lastColor = Messages.getColorOfString(lastColor + mssa);
             } else if (splitMessage.contains("%climbable%") && pm.getLastDamage().equals(FALL)) {
-                Material mat = XMaterial.matchXMaterial(pm.getLastClimbing()).parseMaterial();
+                Material mat = pm.getLastClimbing();
                 String mssa2 = Messages.getBlockName(splitMessage, mat, pm.getPlayer());
                 if (mssa2 == null) {
                     DeathMessages.getInstance().getLogger().severe("Could not parse %climbable%. Please check your config for a wrong value. Your materials could be spelt wrong or it does not exists in the config.");
