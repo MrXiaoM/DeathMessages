@@ -1,7 +1,6 @@
 package dev.mrshawn.deathmessages.hooks;
 
 import io.lumine.mythic.bukkit.MythicBukkit;
-import io.lumine.xikage.mythicmobs.MythicMobs;
 import org.bukkit.entity.Entity;
 
 import java.util.UUID;

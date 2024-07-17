@@ -9,7 +9,7 @@ import dev.mrshawn.deathmessages.enums.MessageType;
 import dev.mrshawn.deathmessages.files.Config;
 import dev.mrshawn.deathmessages.files.FileSettings;
 import dev.mrshawn.deathmessages.listeners.PluginMessaging;
-import dev.mrshawn.deathmessages.utils.Assets;
+import dev.mrshawn.deathmessages.utils.DeathResolver;
 import net.md_5.bungee.chat.ComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -28,7 +28,7 @@ public class BroadcastPlayerDeathListener implements Listener {
     public void broadcastListener(BroadcastDeathMessageEvent e) {
         if (!e.isCancelled()) {
             if (Messages.getInstance().getConfig().getBoolean("Console.Enabled")) {
-                String message = Assets.playerDeathPlaceholders(Messages.getInstance().getConfig().getString("Console.Message"), PlayerManager.getPlayer(e.getPlayer()), e.getLivingEntity());
+                String message = DeathResolver.playerDeathPlaceholders(Messages.getInstance().getConfig().getString("Console.Message"), PlayerManager.getPlayer(e.getPlayer()), e.getLivingEntity());
                 Bukkit.getConsoleSender().sendMessage(message.replaceAll("%message%", Matcher.quoteReplacement(e.getTextComponent().toLegacyText())));
             }
             PlayerManager pm = PlayerManager.getPlayer(e.getPlayer());

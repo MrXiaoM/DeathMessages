@@ -31,16 +31,6 @@ Commands:
         Blacklist-Add: "%prefix% &a已将 &e%player%&a 列为黑名单!"
         Blacklist-Remove: "%prefix% &a已将 &e%player% &a移出黑名单."
       Version: "%prefix% &a正在运行 DeathMessages %version%, 作者 Joshb_"
-      Edit:
-        Usage: "%prefix% &a/dmsg edit <玩家> <生物> <solo, gang> <死因> <add, remove, list> (占位符，仅移除时填写) &7- 编辑死亡信息."
-        Invalid-Mob-Type: "%prefix% &c该生物类型不存在."
-        Invalid-Damage-Type: "%prefix% &c无法找到这个死因. 请从 TAB 补全中选择一个."
-        Invalid-Arguments: "%prefix% &c无效参数. 请使用 &a/dmsg edit &查看帮助."
-        Invalid-Placeholder: "%prefix% &c占位符必须是一个数字."
-        Removed-Message: "%prefix% &c已移除死亡信息 '%message%'"
-        Invalid-Selection: "%prefix% &c该死亡信息不存在."
-        Adding-Start: "%prefix% &a 你已进入死亡信息添加模式. 发送到聊天栏来添加死亡信息."
-        Added-Message: "%prefix% &a已添加消息 &e'&r%message%&e' &a 到 %mob_name% > %mode% > %damage_type%"
       Backup:
         Usage: "%prefix% &a/dmsg backup <保存用户信息> &7- 备份插件文件. 是否保存用户信息填true或false."
         Backed-Up: "%prefix% &a备份 &e#%backup-code% &a已保存."

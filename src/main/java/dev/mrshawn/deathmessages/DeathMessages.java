@@ -17,7 +17,6 @@ import dev.mrshawn.deathmessages.listeners.customlisteners.BroadcastEntityDeathL
 import dev.mrshawn.deathmessages.listeners.customlisteners.BroadcastPlayerDeathListener;
 import dev.mrshawn.deathmessages.listeners.mythicmobs.MobDeath4;
 import dev.mrshawn.deathmessages.listeners.mythicmobs.MobDeath5;
-import dev.mrshawn.deathmessages.utils.EventUtils;
 import dev.mrshawn.deathmessages.worldguard.WorldGuard7Extension;
 import dev.mrshawn.deathmessages.worldguard.WorldGuardExtension;
 import org.bukkit.Bukkit;
@@ -26,7 +25,10 @@ import org.bukkit.World;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.InvocationTargetException;
@@ -46,6 +48,7 @@ public class DeathMessages extends JavaPlugin {
     public static boolean bungeeServerNameRequest = true;
     public static boolean bungeeInit = false;
     private static EventPriority eventPriority = EventPriority.HIGH;
+    private static int savedVersion = 0;
 
     public void onEnable() {
         instance = this;
@@ -61,17 +64,24 @@ public class DeathMessages extends JavaPlugin {
     }
 
     public void onDisable() {
+        HandlerList.unregisterAll(this);
         instance = null;
     }
 
-    public static String serverVersion() {
-        String name = Bukkit.getServer().getClass().getPackage().getName();
-        return name.substring(name.lastIndexOf('.') + 1);
-    }
-
     public static int majorVersion() {
-        String v = serverVersion().replace("1_", "").replaceAll("_R\\d", "").replaceAll("v", "");
-        return v.equals("craftbukkit") ? 20 : Integer.parseInt(v);
+        if (savedVersion <= 0) {
+            String name = Bukkit.getServer().getClass().getPackage().getName();
+            String v = name.substring(name.lastIndexOf('.') + 1)
+                    .replace("1_", "")
+                    .replaceAll("_R\\d", "")
+                    .replaceAll("v", "");
+            try {
+                savedVersion = Integer.parseInt(v);
+            } catch (NumberFormatException e) {
+                savedVersion = 20;
+            }
+        }
+        return savedVersion;
     }
 
     private void initializeConfigs() {
@@ -82,7 +92,21 @@ public class DeathMessages extends JavaPlugin {
     }
 
     private void initializeListeners() {
-        EventUtils.registerEvents(new BroadcastPlayerDeathListener(), new BroadcastEntityDeathListener(), new BlockExplosion(), new EntityDamage(), new EntityDamageByBlock(), new EntityDamageByEntity(), new EntityDeath(), new InteractEvent(), new OnChat(), new OnJoin(), new OnMove(), new OnQuit(), new PlayerDeath());
+        PluginManager pluginManager = Bukkit.getPluginManager();
+        for (Listener listener : new Listener[] {
+                new BroadcastPlayerDeathListener(),
+                new BroadcastEntityDeathListener(),
+                new BlockExplosion(),
+                new EntityDamage(),
+                new EntityDamageByBlock(),
+                new EntityDamageByEntity(),
+                new EntityDeath(),
+                new InteractEvent(),
+                new OnJoin(),
+                new OnMove(),
+                new OnQuit(),
+                new PlayerDeath()
+        }) pluginManager.registerEvents(listener, this);
     }
 
     private void initializeCommands() {
@@ -188,11 +212,17 @@ public class DeathMessages extends JavaPlugin {
     }
 
     private void checkGameRules() {
-        if (config.getBoolean(Config.DISABLE_DEFAULT_MESSAGES) && majorVersion() >= 13) {
+        if (config.getBoolean(Config.DISABLE_DEFAULT_MESSAGES)) {
+            GameRule<Boolean> ruleToDisable;
+            try {
+                ruleToDisable = GameRule.SHOW_DEATH_MESSAGES;
+            } catch (Throwable ignored) {
+                return;
+            }
             for (World world : Bukkit.getWorlds()) {
-                Boolean rule = world.getGameRuleValue(GameRule.SHOW_DEATH_MESSAGES);
+                Boolean rule = world.getGameRuleValue(ruleToDisable);
                 if (rule == null || rule.equals(true)) {
-                    world.setGameRule(GameRule.SHOW_DEATH_MESSAGES, false);
+                    world.setGameRule(ruleToDisable, false);
                 }
             }
         }
