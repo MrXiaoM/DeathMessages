@@ -15,7 +15,7 @@ import org.bukkit.event.entity.EntityDamageByBlockEvent;
 
 import java.util.Set;
 
-import static dev.mrshawn.deathmessages.utils.Assets.classSimple;
+import static dev.mrshawn.deathmessages.config.Messages.classSimple;
 
 
 public class EntityDamageByBlock implements Listener {

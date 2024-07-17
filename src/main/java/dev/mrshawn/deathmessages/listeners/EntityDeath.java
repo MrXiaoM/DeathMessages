@@ -7,6 +7,7 @@ import dev.mrshawn.deathmessages.api.PlayerManager;
 import dev.mrshawn.deathmessages.api.events.BroadcastDeathMessageEvent;
 import dev.mrshawn.deathmessages.api.events.BroadcastEntityDeathMessageEvent;
 import dev.mrshawn.deathmessages.config.Gangs;
+import dev.mrshawn.deathmessages.config.Messages;
 import dev.mrshawn.deathmessages.config.Settings;
 import dev.mrshawn.deathmessages.enums.MessageType;
 import dev.mrshawn.deathmessages.enums.MobType;
@@ -28,7 +29,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import static dev.mrshawn.deathmessages.utils.Assets.classSimple;
+import static dev.mrshawn.deathmessages.config.Messages.classSimple;
 
 
 public class EntityDeath implements Listener {
@@ -102,11 +103,11 @@ public class EntityDeath implements Listener {
                         return;
                     } else {
                         if (pm.getLastDamage().equals(EntityDamageEvent.DamageCause.PROJECTILE)) {
-                            BroadcastDeathMessageEvent event6 = new BroadcastDeathMessageEvent(p, null, MessageType.NATURAL, Assets.getNaturalDeath(pm, Assets.getSimpleProjectile(pm.getLastProjectileEntity())), getWorlds(p), false);
+                            BroadcastDeathMessageEvent event6 = new BroadcastDeathMessageEvent(p, null, MessageType.NATURAL, Assets.getNaturalDeath(pm, Messages.getSimpleProjectile(pm.getLastProjectileEntity())), getWorlds(p), false);
                             Bukkit.getPluginManager().callEvent(event6);
                             return;
                         }
-                        TextComponent tx6 = Assets.getNaturalDeath(pm, Assets.getSimpleCause(pm.getLastDamage()));
+                        TextComponent tx6 = Assets.getNaturalDeath(pm, Messages.getSimpleCause(pm.getLastDamage()));
                         if (tx6 == null) {
                             return;
                         }

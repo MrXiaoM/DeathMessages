@@ -3,6 +3,7 @@ package dev.mrshawn.deathmessages.listeners.mythicmobs;
 import dev.mrshawn.deathmessages.api.EntityManager;
 import dev.mrshawn.deathmessages.api.PlayerManager;
 import dev.mrshawn.deathmessages.api.events.BroadcastEntityDeathMessageEvent;
+import dev.mrshawn.deathmessages.config.Messages;
 import dev.mrshawn.deathmessages.config.Settings;
 import dev.mrshawn.deathmessages.enums.MessageType;
 import dev.mrshawn.deathmessages.enums.MobType;
@@ -74,6 +75,6 @@ public class MobDeath5 implements Listener {
     }
 
     public static FileConfiguration getEntityDeathMessages() {
-        return Assets.getEntityDeathMessages();
+        return Messages.getEntityDeathMessages();
     }
 }

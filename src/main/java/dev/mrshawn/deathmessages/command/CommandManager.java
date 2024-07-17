@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import dev.mrshawn.deathmessages.command.impl.*;
 import dev.mrshawn.deathmessages.config.Messages;
 import dev.mrshawn.deathmessages.enums.Permission;
-import dev.mrshawn.deathmessages.utils.Assets;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,10 +29,10 @@ public class CommandManager implements CommandExecutor, TabCompleter {
 
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String cmdLabel, @NotNull String[] args) {
         if ((sender instanceof Player) && !sender.hasPermission(Permission.DEATHMESSAGES_COMMAND.getValue())) {
-            sender.sendMessage(Assets.formatMessage("Commands.DeathMessages.No-Permission"));
+            sender.sendMessage(Messages.formatMessage("Commands.DeathMessages.No-Permission"));
             return false;
         } else if (args.length == 0) {
-            for (String s : Assets.formatMessage(Messages.getInstance().getConfig().getStringList("Commands.DeathMessages.Help"))) {
+            for (String s : Messages.formatMessage(Messages.getInstance().getConfig().getStringList("Commands.DeathMessages.Help"))) {
                 sender.sendMessage(s);
             }
             return false;
@@ -45,7 +44,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
                 cmd.onCommand(sender, a.toArray(new String[0]));
                 return false;
             }
-            for (String s2 : Assets.formatMessage(Messages.getInstance().getConfig().getStringList("Commands.DeathMessages.Help"))) {
+            for (String s2 : Messages.formatMessage(Messages.getInstance().getConfig().getStringList("Commands.DeathMessages.Help"))) {
                 sender.sendMessage(s2);
             }
             return false;

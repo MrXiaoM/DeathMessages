@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import static dev.mrshawn.deathmessages.utils.Assets.classSimple;
+import static dev.mrshawn.deathmessages.config.Messages.classSimple;
 
 
 public class EntityDamageByEntity implements Listener {

@@ -1,6 +1,7 @@
 package dev.mrshawn.deathmessages.listeners;
 
 import dev.mrshawn.deathmessages.config.EntityDeathMessages;
+import dev.mrshawn.deathmessages.config.Messages;
 import dev.mrshawn.deathmessages.config.PlayerDeathMessages;
 import dev.mrshawn.deathmessages.utils.Assets;
 import org.bukkit.entity.Player;
@@ -29,7 +30,7 @@ public class OnChat implements Listener {
                 PlayerDeathMessages.getInstance().getConfig().set("Mobs." + mobName + "." + mode + "." + damageType, list);
                 PlayerDeathMessages.getInstance().save();
                 PlayerDeathMessages.getInstance().reload();
-                p.sendMessage(Assets.formatMessage("Commands.DeathMessages.Sub-Commands.Edit.Added-Message").replaceAll("%message%", e.getMessage()).replaceAll("%mob_name%", mobName).replaceAll("%mode%", mode).replaceAll("%damage_type%", damageType));
+                p.sendMessage(Messages.formatMessage("Commands.DeathMessages.Sub-Commands.Edit.Added-Message").replaceAll("%message%", e.getMessage()).replaceAll("%mob_name%", mobName).replaceAll("%mode%", mode).replaceAll("%damage_type%", damageType));
                 return;
             }
             String mobName2 = spl[0];
@@ -39,7 +40,7 @@ public class OnChat implements Listener {
             EntityDeathMessages.getInstance().getConfig().set("Entities." + mobName2 + "." + damageType2, list2);
             EntityDeathMessages.getInstance().save();
             EntityDeathMessages.getInstance().reload();
-            p.sendMessage(Assets.formatMessage("Commands.DeathMessages.Sub-Commands.Edit.Added-Message").replaceAll("%message%", e.getMessage()).replaceAll("%mob_name%", mobName2).replaceAll("%damage_type%", damageType2));
+            p.sendMessage(Messages.formatMessage("Commands.DeathMessages.Sub-Commands.Edit.Added-Message").replaceAll("%message%", e.getMessage()).replaceAll("%mob_name%", mobName2).replaceAll("%damage_type%", damageType2));
         }
     }
 }
