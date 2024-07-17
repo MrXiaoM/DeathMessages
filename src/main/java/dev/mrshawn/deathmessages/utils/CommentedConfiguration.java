@@ -1,5 +1,7 @@
 package dev.mrshawn.deathmessages.utils;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -30,7 +32,8 @@ public final class CommentedConfiguration extends YamlConfiguration {
         if (comment == null) {
             this.configComments.remove(path);
         } else {
-            this.configComments.put(path, comment);
+            Set<String> set = Sets.newHashSet(comment.split("\n"));
+            this.configComments.put(path, String.join("\n", set));
         }
     }
 
@@ -70,7 +73,7 @@ public final class CommentedConfiguration extends YamlConfiguration {
 
     @NotNull
     public String saveToString() {
-        List<String> lines = new ArrayList<>(Arrays.asList(super.saveToString().split("\n")));
+        List<String> lines = Lists.newArrayList(super.saveToString().split("\n"));
         int currentIndex = 0;
         String currentSection = "";
         while (currentIndex < lines.size()) {
