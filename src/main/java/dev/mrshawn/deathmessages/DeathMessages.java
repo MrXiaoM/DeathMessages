@@ -2,9 +2,10 @@ package dev.mrshawn.deathmessages;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import dev.mrshawn.deathmessages.api.PlayerManager;
-import dev.mrshawn.deathmessages.command.deathmessages.CommandManager;
-import dev.mrshawn.deathmessages.command.deathmessages.TabCompleter;
-import dev.mrshawn.deathmessages.command.deathmessages.alias.CommandDeathMessagesToggle;
+import dev.mrshawn.deathmessages.command.CommandManager;
+import dev.mrshawn.deathmessages.command.TabCompleter;
+import dev.mrshawn.deathmessages.command.impl.CommandToggle;
+import dev.mrshawn.deathmessages.command.impl.alias.CommandDeathMessagesToggle;
 import dev.mrshawn.deathmessages.config.ConfigManager;
 import dev.mrshawn.deathmessages.files.Config;
 import dev.mrshawn.deathmessages.files.FileSettings;
@@ -87,10 +88,10 @@ public class DeathMessages extends JavaPlugin {
     }
 
     private void initializeCommands() {
-        CommandManager cm = new CommandManager();
-        cm.initializeSubCommands();
-        setupCommand("deathmessages", cm, new TabCompleter());
-        setupCommand("deathmessagestoggle", new CommandDeathMessagesToggle(), null);
+        CommandManager manager = new CommandManager();
+        manager.initializeSubCommands();
+        setupCommand("deathmessages", manager, new TabCompleter());
+        setupCommand("deathmessagestoggle", new CommandToggle.Alias(), null);
     }
 
     private void setupCommand(String cmd, CommandExecutor executor, org.bukkit.command.TabCompleter tab) {
