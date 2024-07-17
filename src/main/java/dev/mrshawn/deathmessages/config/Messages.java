@@ -7,6 +7,7 @@ import dev.mrshawn.deathmessages.utils.CommentedConfiguration;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -435,6 +436,10 @@ public class Messages {
         } else {
             return ChatColor.translateAlternateColorCodes('&', message);
         }
+    }
+
+    public static TextComponent bungee(String message) {
+        return new TextComponent(TextComponent.fromLegacyText(colorize(message)));
     }
 
     public static String classSimple(Entity entity) {
