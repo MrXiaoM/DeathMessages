@@ -1,7 +1,7 @@
 package dev.mrshawn.deathmessages.command.impl;
 
 import dev.mrshawn.deathmessages.api.PlayerManager;
-import dev.mrshawn.deathmessages.command.DeathMessagesCommand;
+import dev.mrshawn.deathmessages.command.ICommand;
 import dev.mrshawn.deathmessages.config.UserData;
 import dev.mrshawn.deathmessages.enums.Permission;
 import dev.mrshawn.deathmessages.utils.Assets;
@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 
-public class CommandToggle extends DeathMessagesCommand {
+public class CommandToggle implements ICommand {
     @Override
     public String command() {
         return "toggle";

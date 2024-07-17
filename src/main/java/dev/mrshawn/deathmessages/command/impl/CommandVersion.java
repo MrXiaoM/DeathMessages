@@ -1,13 +1,13 @@
 package dev.mrshawn.deathmessages.command.impl;
 
 import dev.mrshawn.deathmessages.DeathMessages;
-import dev.mrshawn.deathmessages.command.DeathMessagesCommand;
+import dev.mrshawn.deathmessages.command.ICommand;
 import dev.mrshawn.deathmessages.enums.Permission;
 import dev.mrshawn.deathmessages.utils.Assets;
 import org.bukkit.command.CommandSender;
 
 
-public class CommandVersion extends DeathMessagesCommand {
+public class CommandVersion implements ICommand {
     @Override
     public String command() {
         return "version";
