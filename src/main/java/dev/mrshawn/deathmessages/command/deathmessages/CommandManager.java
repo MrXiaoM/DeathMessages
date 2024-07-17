@@ -20,7 +20,6 @@ public class CommandManager implements CommandExecutor {
     public void initializeSubCommands() {
         this.commands.add(new CommandBackup());
         this.commands.add(new CommandBlacklist());
-        this.commands.add(new CommandEdit());
         this.commands.add(new CommandReload());
         this.commands.add(new CommandRestore());
         this.commands.add(new CommandToggle());
