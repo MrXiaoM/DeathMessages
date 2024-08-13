@@ -42,6 +42,7 @@ public class DeathMessages extends JavaPlugin {
     public IMythicMobsAPI mythicMobs = null;
     public boolean mythicmobsEnabled = false;
     public static boolean langUtilsEnabled = false;
+    public static boolean useTranslateComponent = true;
     public static String bungeeServerName;
     public static WorldGuardExtension worldGuardExtension;
     public static boolean worldGuardEnabled;
@@ -171,6 +172,7 @@ public class DeathMessages extends JavaPlugin {
                 getLogger().warning("Unknown MythicMobs version " + ver);
             }
         }
+        useTranslateComponent = isPresent("org.bukkit.Translatable");
         if (Bukkit.getPluginManager().getPlugin("LangUtils") != null && config.getBoolean(Config.HOOKS_LANGUTILS_ENABLED)) {
             langUtilsEnabled = true;
             getLogger().info("LangUtils Hook Enabled!");
@@ -239,5 +241,14 @@ public class DeathMessages extends JavaPlugin {
 
     public static DeathMessages getInstance() {
         return instance;
+    }
+
+    public static boolean isPresent(String className) {
+        try {
+            Class.forName(className);
+            return true;
+        } catch (ClassNotFoundException ignored) {
+            return false;
+        }
     }
 }

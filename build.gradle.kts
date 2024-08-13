@@ -1,5 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 plugins {
     id("java")
     id("com.github.johnrengelman.shadow") version "7.0.0"
@@ -18,11 +16,10 @@ repositories {
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://oss.sonatype.org/content/groups/public/")
     maven("https://mvn.lumine.io/repository/maven-public")
-    maven("https://ci.nyaacat.com/maven/")
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.20-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("de.tr7zw:item-nbt-api-plugin:2.11.1")
     compileOnly("io.lumine:Mythic-Dist:4.13.0")
@@ -32,7 +29,7 @@ dependencies {
     compileOnly("com.sk89q.worldedit:worldedit-core:7.2.0")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.1")
     compileOnly("com.sk89q.worldguard:worldguard-core:7.0.1")
-    compileOnly("com.meowj:LangUtils:2.3-SNAPSHOT")
+    compileOnly("com.github.MascusJeoraly:LanguageUtils:1.9")
 
     implementation("commons-io:commons-io:2.9.0")
 }
@@ -49,7 +46,7 @@ tasks {
     shadowJar {
         archiveClassifier.set("")
         mapOf(
-            "org.apache.commons.io" to "commons-io"
+            "org.apache.commons.io" to "commons.io"
         ).forEach { (original,target) ->
             relocate(original, "dev.mrshawn.deathmessages.shadow.$target")
         }

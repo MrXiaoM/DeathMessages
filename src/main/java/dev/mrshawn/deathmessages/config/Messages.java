@@ -7,6 +7,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -24,6 +25,8 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Function;
+import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,6 +37,7 @@ public class Messages {
     CommentedConfiguration config;
     File file;
     private static final Messages instance = new Messages();
+    private static final Pattern translatePattern = Pattern.compile("<translate:(.*?)>");
 
     public static Messages getInstance() {
         return instance;
@@ -109,7 +113,9 @@ public class Messages {
     public static String getBlockName(String splitMessage, Material mat, Player player) {
         if (mat == null) return null;
         String configValue2;
-        if (DeathMessages.langUtilsEnabled) {
+        if (DeathMessages.useTranslateComponent) {
+            configValue2 = "<translate:" + mat.getTranslationKey() + ">";
+        } else if (DeathMessages.langUtilsEnabled) {
             configValue2 = LanguageHelper.getItemName(new ItemStack(mat), player);
         } else {
             String material2 = mat.toString().toLowerCase();
@@ -321,6 +327,9 @@ public class Messages {
 
     public static String getEntityName(Entity entity, Player player) {
         if (entity instanceof Player) return getPlayerNameWithPlaceholder((Player) entity);
+        if (DeathMessages.useTranslateComponent) {
+            return "<translate:" + entity.getType().getTranslationKey() + ">";
+        }
         if (DeathMessages.langUtilsEnabled) {
             return LanguageHelper.getEntityName(entity, player);
         }
@@ -328,11 +337,13 @@ public class Messages {
     }
 
     public static String getItemName(ItemStack item, Player player) {
+        if (DeathMessages.useTranslateComponent) {
+            return "<translate:" + item.getTranslationKey() + ">";
+        }
         if (DeathMessages.langUtilsEnabled) {
             return LanguageHelper.getItemDisplayName(item, player);
-        } else {
-            return convertString(item.getType().name());
         }
+        return convertString(item.getType().name());
     }
 
     public static String getPlayerNameWithPlaceholder(Player player) {
@@ -438,7 +449,23 @@ public class Messages {
     }
 
     public static TextComponent bungee(String message) {
-        return new TextComponent(TextComponent.fromLegacyText(colorize(message)));
+        List<BaseComponent> components = split(translatePattern, colorize(message), regexResult -> {
+            if (!regexResult.isMatched) {
+                return new TextComponent(TextComponent.fromLegacyText(regexResult.text));
+            } else {
+                return new TranslatableComponent(regexResult.result.group(1));
+            }
+        });
+        if (components.size() == 1) {
+            BaseComponent component = components.get(0);
+            if (component instanceof TextComponent) return (TextComponent) component;
+            return new TextComponent(component);
+        }
+        TextComponent tc = new TextComponent("");
+        for (BaseComponent component : components) {
+            tc.addExtra(component);
+        }
+        return tc;
     }
 
     public static String classSimple(Entity entity) {
@@ -446,4 +473,40 @@ public class Messages {
         if (clazz != null) return clazz.getSimpleName().toLowerCase();
         return entity.getClass().getSimpleName().toLowerCase();
     }
+
+
+    public static <T> List<T> split(Pattern regex, String s, Function<RegexResult, T> transform) {
+        List<T> list = new ArrayList<>();
+        int index = 0;
+        Matcher m = regex.matcher(s);
+        while (m.find()) {
+            int first = m.start();
+            int last = m.end();
+            if (first > index) {
+                T value = transform.apply(new RegexResult(null, s.substring(index, first)));
+                if (value != null) list.add(value);
+            }
+            T value = transform.apply(new RegexResult(m.toMatchResult(), s.substring(first, last)));
+            if (value != null) list.add(value);
+            index = last;
+        }
+        if (index < s.length()) {
+            T value = transform.apply(new RegexResult(null, s.substring(index)));
+            if (value != null) list.add(value);
+        }
+        return list;
+    }
+
+    public static class RegexResult {
+        public final MatchResult result;
+        public final boolean isMatched;
+        public final String text;
+
+        public RegexResult(MatchResult result, String text) {
+            this.result = result;
+            this.isMatched = result != null;
+            this.text = text;
+        }
+    }
+
 }
