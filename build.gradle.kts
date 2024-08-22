@@ -39,8 +39,6 @@ dependencies {
 
     // LangUtils (legacy)
     compileOnly("com.github.MascusJeoraly:LanguageUtils:1.9")
-
-    implementation("commons-io:commons-io:2.9.0")
 }
 
 java {
@@ -54,12 +52,13 @@ tasks {
     }
     shadowJar {
         archiveClassifier.set("")
+        /*
         mapOf(
             "org.apache.commons.io" to "commons.io"
         ).forEach { (original,target) ->
             relocate(original, "dev.mrshawn.deathmessages.shadow.$target")
         }
-        minimize()
+        */
     }
     processResources {
         duplicatesStrategy = DuplicatesStrategy.INCLUDE

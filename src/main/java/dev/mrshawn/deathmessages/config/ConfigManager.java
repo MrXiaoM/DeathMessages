@@ -1,7 +1,7 @@
 package dev.mrshawn.deathmessages.config;
 
 import dev.mrshawn.deathmessages.DeathMessages;
-import org.apache.commons.io.FileUtils;
+import dev.mrshawn.deathmessages.utils.FileUtils;
 import org.apache.commons.lang.RandomStringUtils;
 
 import java.io.File;
