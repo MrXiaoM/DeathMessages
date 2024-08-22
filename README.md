@@ -37,7 +37,7 @@ The plugin depends on [NBT API](https://www.spigotmc.org/resources/nbt-api.7939/
 <s>原仓库没有许可证，所以我也不放许可证了，就当继承上一个仓库的吧</s>。<br>
 <s>原仓库 README 中禁止分发重新编译的 jar，但没说禁止重新分发代码</s>，你可以克隆该源码，执行以下命令构建插件<br>
 <p>原帖的新 fork 中添加了 GPL-3.0 协议，那我也加一个。</p>
-<pre><code>./gradlew build</code></pre>
+<pre><code>./gradlew clean build</code></pre>
 </details>
 
 原帖 1.4.15 的帖子说支持 `1.7-1.19`，本插件仅保证在 `1.20.4` 可用，其他版本请自行尝试。
@@ -51,10 +51,10 @@ The plugin depends on [NBT API](https://www.spigotmc.org/resources/nbt-api.7939/
 **请注意，2023年了，不要用 CraftBukkit 服务端了，请使用 Spigot 或 Paper 等 Spigot 衍生服务端，本插件需要 Spigot 自带的 BungeeCord API 来生成带鼠标悬停提示(hover)的消息。**
 
 ## 命令和权限
-| 命令 | 说明 | 权限 |
-| --- | --- | --- |
+| 命令    | 说明   | 权限                                  |
+|-------|------|-------------------------------------|
 | /dmsg | 插件命令 | deathmessages.command.deathmessages |
-| TODO | TODO | TODO |
+| TODO  | TODO | TODO                                |
 
 若要修改死亡信息，不推荐使用 `/dmsg edit`，推荐在配置文件修改后执行 `/dmsg reload` 重载
 

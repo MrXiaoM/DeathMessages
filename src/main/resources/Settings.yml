@@ -1,117 +1,153 @@
 # DeathMessages by MrXiaoM
 #
+# 禁用 Minecraft 原版的默认死亡消息
 # Disable the default messages from minecraft
 Disable-Default-Messages: true
 
+# 是否为所有死亡消息添加前缀？（前缀在 Messages.yml 里配置）
 # Add a prefix to all death messages? (Prefix from Messages.yml)
 Add-Prefix-To-All-Messages: true
 
+# 确定武器时，忽视弹射物类型
 # Ignore projectile type when defining weapon
 Ignore-Projectile-Type: false
 
+# 特定联动插件挂钩设置
 # Settings for specific hooks the plugins interact with
 Hooks:
-  # If MythicMobs is found, enable the hook
+  # 若找到 MythicMobs 4.x 或 5.x，启用插件联动
+  # If MythicMobs 4.x or 5.x is found, enable the hook.
   # Enable/Disable MythicMobs hook
   MythicMobs:
     Enabled: true
 
-  # If LangUtils is found, enable the hook
+  # 若找到 LangUtils，启用插件联动 (Translatable 特性的优先级比 LangUtils 高)
+  # If LangUtils is found, enable the hook.
+  # (The priority of Translatable feature is higher than LangUtils.)
   # Enable/Disable LangUtils hook
   LangUtils:
     Enabled: true
 
-  # If WorldGuard is found, enable the hook
+  # 若找到 WorldGuard 7.x，启用插件联动
+  # If WorldGuard 7.x is found, enable the hook
+  # 这将会创建以下自定义区域权限，所有权限默认设为 允许
   # This creates custom flags for regions. These flags are set to ALLOW by default
   # Flags:
   #   broadcast-deathmessage-player
   #   broadcast-deathmessage-mobs
   #   broadcast-deathmessage-natural
   #   broadcast-deathmessage-tameable
+  # 使用: /rg flag <区域名> <权限> allow/deny
   # Use: /rg flag <regionName> <customFlag> allow/deny
+  # 以上权限决定在某区域进行 PVP/PVE 时，是否会广播死亡消息
   # The above flags determine death message from being broadcasted if the pvp/pve is taking place in the region.
   WorldGuard:
     Enabled: true
 
+  # 如果你的服务器连接了 BungeeCord，且希望其他服务器能收到死亡消息，开启此选项
   # If you run a bungee server that you would like to send death messages to other servers, enable this
   Bungee:
     Enabled: false
+    # 其他服务器将会显示的子服名
     # The server name that other servers will see
     Server-Name:
+      # 插件是否应该从 BungeeCord 配置读取子服名
       # Should the plugin set the server name from the bungee config?
       Get-From-Bungee: false
+      # 子服名，如果开启了 Get-From-Bungee，请忽略该选项
       # Ignored if Get-From-Bungee is enabled.
       Display-Name: lobby
     Server-Groups:
+      # 若启用，消息将只会发送给以下列表设定的子服
       # If enabled, the messages will only send to specified servers you list in the Servers section.
+      # 若禁用，消息将会发送给已安装本插件的所有子服
       # If disabled, messages will send to all servers you have the plugin installed on.
       Enabled: false
+      # 服务器列表，请填写 BungeeCord 配置中设定的服务器名
       # Get the server names from your config.yml in bungee
       Servers:
         - lobby
         - survival
 
-
+# 若启用，用户数据将会保存 (黑名单，和 /dmsg toggle 状态)
 # If enabled, user data will be saved. (Blacklist, and /dmsg toggle data)
+# 若禁用，数据将不会保存到 UserData.yml
 # If disabled, data wont be saved in UserData.yml
 Saved-User-Data: true
 
+# 若启用，如果武器没有自定义名称，将会显示为默认的击杀消息
 # If enabled, weapon kills will default to a defined kill if the weapon does not have a custom display name
 Disable-Weapon-Kill-With-No-Custom-Name:
   Enabled: false
 
-  #If enabled, weapons with default display names (white) will be overridden with the message color.
-  # So if the last word is red, then if this is enabled, the weapon name will be red as well.
-  # NOT WORKING YET, NOT WORKING YET, NOT WORKING YET, NOT WORKING YET, NOT WORKING YET, NOT WORKING YET,
-  Allow-Message-Color-Override: true
-
+  # 如果武器没有自定义名称但有附魔，而你依然想让死亡消息显示武器，请将这个选项关闭
   # If the weapon has enchantments and you still want the death type to still be Weapon, set this to false.
   # Even if the weapon name is still default.
   Ignore-Enchantments: true
+
   Source:
     Projectile:
       Default-To: Projectile-Unknown
     Weapon:
       Default-To: Melee
 
+# 若启用，如果玩家被击杀者推入虚空，且虚空击杀消息未设定，使用普通消息
 # If enabled, if a player was pushed into the void by a killer, and void kill message is not defined, use melee death.
+# 如果 Default-Natural-Death-Not-Defined 开启，请忽视该选项
 # This option is ignored if Default-Natural-Death-Not-Defined is set to true.
 Default-Melee-Last-Damage-Not-Defined: true
 
+# 如果启用，举个例子，如果玩家被击杀者推入虚空，且虚空击杀消息未设定，使用自然死亡消息
 # If enabled, for example, if a player was pushed into the void by a killer,
 # and void kill message is not defined in the player section, natural death message will be used.
 Default-Natural-Death-Not-Defined: true
 
+# 设置死亡消息监听器优先级
 # Set the listener call priority for death messages.
+# LOWEST 最先执行，HIGHEST 最后执行，以下是允许使用的值
 # LOWEST, LOW, NORMAL, HIGH, HIGHEST are allowed
+# 不支持使用 MONITOR，否则会默认使用 HIGH
 # MONITOR is not support and is defaulted to HIGH
 Death-Listener-Priority: HIGH
 
+# 若启用，如果生物有 If-Contains 设定中的特定字符，生物将会显示默认生物名而不是自定义生物名
 # If enabled, if mobs that have any specified characters from If-Contains, the default mob name will be displayed.
 Rename-Mobs:
   Enabled: true
   If-Contains: "♡♥❤■"
 
+# 若启用，生物将会一直显示它们的生物名，而非自定义名称（除了玩家以外）
 # If enabled, mobs will always default to their entity name. Display names will always be ignored. (Besides players)
 Disable-Named-Mobs: false
 
 Expire-Last-Damage:
+  # 生物攻击玩家的攻击记录数据多久会过期？（变为自然死亡死因）
   # How long until the last mob that damaged a player expires? (Becomes a natural death cause)
+  # 单位：秒
   # Unit: Second
+  # 默认值：7
   # Default: 7
   Expire-Player: 7
-  # How long until the last player that damaged an entity expires (Cancels the deathmessage listener)
+  # 玩家攻击生物的攻击记录数据多久会过期？（取消显示死亡消息）
+  # How long until the last player that damaged an entity expires (Cancels the DeathMessage listener)
+  # 单位：秒
   # Unit: Second
+  # 默认值：7
   # Default: 7
   Expire-Entity: 7
 
+# 若启用，死亡消息只会显示给相同世界的玩家
 # If enabled, death messages will only be sent to players in the same world the player died in.
 Per-World-Messages: false
 
+# 将多个世界打组，以取代每个世界单独显示死亡消息
 # Group worlds together to send messages to a group of worlds instead of messages per world.
+# 选项 Per-World-Messages 必须要开启，否则该选项无效
 # Per-World-Messages must be set to true, otherwise, this setting is ignored.
+# 世界组是无限制的，组名可以任意取，它们会被忽略，不会在代码中使用。
 # World groups are unlimited, and the key names can be named whatever you want, they are ignored
 # and not used in the code.
+# 如果玩家死亡的世界不在任何组内，死亡消息只会在玩家死亡的世界广播。
 # If a world a player dies in is not specified, it will only broadcast to the world the player died in.
 World-Groups:
   1:
@@ -119,38 +155,57 @@ World-Groups:
     - world_nether
     - world_the_end
 
+# 永不接收死亡消息的世界
 # Worlds that death messages will never be sent to.
+# 无论其它设置如何，死亡消息永远不会被发送到这些世界
 # Regardless of any other settings, messages will never be sent on these worlds.
+# 如果下列世界也在 World-Groups 中，该世界的死亡消息也不会被发送到任何世界
 # If a world listed below belongs in a world group. Still, the messages will never be sent to any world.
 Disabled-Worlds:
   - someDisabledWorld1
   - someOtherDisabledWorld
 
 Private-Messages:
+  # 所有死亡消息都会发送给控制台，不管设置如何
   # All messages will still be sent to the console log no matter the setting.
   Player: false
+  # 只有死者会收到死亡消息
   # The victim will only have the death message sent to them.
   Mobs: false
+  # 只有死者会收到死亡消息
   # The victim will only have the death message sent to them.
   Natural: false
+  # 只有击杀者会收到死亡消息
   # The killer will only have the message sent to them.
   Tameable: false
 
+# 设置玩家死亡消息的冷却时间，避免刷屏
 # Set the cooldown for player deaths to prevent spam
+# 冷却时间单位为秒
 # Cooldown time in seconds
+# 控制台忽略冷却时间，依然能收到所有死亡消息
 # Console messages ignore cooldowns and will still send to console
+# 默认：0（禁用）
 # Default: 0 (disabled)
 Cooldown: 0
 
+# 自定义物品
 # Custom Items
 
+# 在这里添加物品展示名，如果一个物品有你提供在这里的展示名，它将被视为武器击杀，而非普通击杀
 # Add item display names here. If an item has the display name of something you provide here. Will be counted as
 # a Weapon Kill. Not a melee kill.
+# 此处要求使用 正则表达式
 # REGEX is required here.
-# Keeo the list empty means allow ALL item to display.
+# 如果想允许所有物品，请保持列表为空
+# Keep the list empty means allow ALL item to display.
 Custom-Item-Display-Names-Is-Weapon: []
 
+# 列在这里的物品将被视为武器击杀，而非普通击杀
 # Any item materials you list here will return a weapon kill. Not a melee kill
-# Material names are listed here https:
-# Keeo the list empty means allow ALL item to display.
+# 物品列表可在以下链接查看
+# Material names are listed in below link
+# https://helpch.at/docs/1.20/org/bukkit/Material.html
+# 如果想允许所有物品，请保持列表为空
+# Keep the list empty means allow ALL item to display.
 Custom-Item-Material-Is-Weapon: []

@@ -17,7 +17,6 @@ Commands:
       - "&a/dmsg blacklist <玩家> &7- 设置玩家为死亡信息黑名单. 被设置黑名单的玩家仍可看到其他玩家的死亡信息，但不会发送死亡信息."
       - "&a/dmsg toggle &7- 开启或关闭死亡信息."
       - "&a/dmsg reload &7- 重载插件配置文件."
-      - "&a/dmsg edit <玩家> <生物> <solo, gang> <死因> <add, remove, list> (占位符，仅移除时填写) &7- 编辑死亡信息."
       - ""
     Sub-Commands:
       Reload:
@@ -40,7 +39,8 @@ Commands:
         Backup-Not-Found: "%prefix% &c找不到这个备份."
 
 PlayerName: '%player_name%'
-# 翻译 (推荐使用 LangUtils 而不是这里的翻译)
+# 翻译 (推荐使用 LangUtils 或 1.19.4+ 自带的 Translatable 特性，而不是使用这里的翻译)
+# 由于有 Translatable 特性，Minecraft 有新版本更新也不需要更新这里的配置。
 # Mobs: 这里的翻译将会影响 %killer_type% 的变量
 Mobs:
   elderguardian: "远古守卫者"
