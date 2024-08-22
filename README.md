@@ -35,7 +35,7 @@ The plugin depends on [NBT API](https://www.spigotmc.org/resources/nbt-api.7939/
 <details>
   <summary>自行编译插件</summary>
 <s>原仓库没有许可证，所以我也不放许可证了，就当继承上一个仓库的吧</s>。<br>
-<s>原仓库 README 中禁止分发重新编译的 jar，但没说禁止重新分发代码</s>，你可以克隆该源码，执行以下命令构建插件<br>
+<s>原仓库 README 中禁止分发重新编译的 jar，但没说禁止重新分发代码</s>，你可以克隆该源码，使用 Java 17 或以上执行以下命令构建插件<br>
 <p>原帖的新 fork 中添加了 GPL-3.0 协议，那我也加一个。</p>
 <pre><code>./gradlew clean build</code></pre>
 </details>
