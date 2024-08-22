@@ -24,6 +24,7 @@ import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -117,15 +118,15 @@ public class DeathMessages extends JavaPlugin {
 
     private void initializeCommands() {
         CommandManager manager = new CommandManager();
-        setupCommand("deathmessages", manager, manager);
-        setupCommand("deathmessagestoggle", new CommandToggle.Alias(), null);
+        setupCommand("deathmessages", manager);
+        setupCommand("deathmessagestoggle", new CommandToggle.Alias());
     }
 
-    private void setupCommand(String cmd, CommandExecutor executor, org.bukkit.command.TabCompleter tab) {
-        PluginCommand command = getCommand(cmd);
-        if (command != null) {
-            if (executor != null) command.setExecutor(executor);
-            if (tab != null) command.setTabCompleter(tab);
+    private void setupCommand(String label, Object command) {
+        PluginCommand cmd = getCommand(label);
+        if (cmd != null) {
+            if (command instanceof CommandExecutor) cmd.setExecutor((CommandExecutor) command);
+            if (command instanceof TabCompleter) cmd.setTabCompleter((TabCompleter) command);
         }
     }
 

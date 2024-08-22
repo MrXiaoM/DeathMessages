@@ -1,8 +1,6 @@
 package dev.mrshawn.deathmessages.files;
 
 import com.google.common.collect.Lists;
-import dev.mrshawn.deathmessages.utils.Pair;
-
 
 public enum Config implements ConfigEnum {
     DISABLE_DEFAULT_MESSAGES("Disable-Default-Messages", true),
@@ -17,7 +15,6 @@ public enum Config implements ConfigEnum {
     HOOKS_BUNGEE_SERVER_GROUPS_SERVERS("Hooks.Bungee.Server-Groups.Servers", Lists.newArrayList("lobby", "survival")),
     SAVED_USER_DATA("Saved-User-Data", true),
     DISABLE_WEAPON_KILL_WITH_NO_CUSTOM_NAME_ENABLED("Disable-Weapon-Kill-With-No-Custom-Name.Enabled", false),
-    DISABLE_WEAPON_KILL_WITH_NO_CUSTOM_NAME_ALLOW_MESSAGE_COLOR_OVERRIDE("Disable-Weapon-Kill-With-No-Custom-Name.Allow-Message-Color-Override", true),
     DISABLE_WEAPON_KILL_WITH_NO_CUSTOM_NAME_IGNORE_ENCHANTMENTS("Disable-Weapon-Kill-With-No-Custom-Name.Ignore-Enchantments", true),
     DISABLE_WEAPON_KILL_WITH_NO_CUSTOM_NAME_SOURCE_PROJECTILE_DEFAULT_TO("Disable-Weapon-Kill-With-No-Custom-Name.Source.Projectile.Default-To", "Projectile-Unknown"),
     DISABLE_WEAPON_KILL_WITH_NO_CUSTOM_NAME_SOURCE_WEAPON_DEFAULT_TO("Disable-Weapon-Kill-With-No-Custom-Name.Source.Weapon.Default-To", "Melee"),
@@ -30,12 +27,10 @@ public enum Config implements ConfigEnum {
     EXPIRE_LAST_DAMAGE_EXPIRE_PLAYER("Expire-Last-Damage.Expire-Player", 7),
     EXPIRE_LAST_DAMAGE_EXPIRE_ENTITY("Expire-Last-Damage.Expire-Entity", 7),
     PER_WORLD_MESSAGES("Per-World-Messages", false),
-    WORLD_GROUPS("World-Groups", Pair.mapOf(Pair.of("1", Lists.newArrayList("world", "world_nether", "world_the_end")))),
     DISABLED_WORLDS("Disabled-Worlds", Lists.newArrayList("someDisabledWorld", "someOtherDisabledWorld")),
     PRIVATE_MESSAGES_PLAYER("Private-Messages.Player", false),
     PRIVATE_MESSAGES_MOBS("Private-Messages.Mobs", false),
     PRIVATE_MESSAGES_NATURAL("Private-Messages.Natural", false),
-    PRIVATE_MESSAGES_TAMEABLE("Private-Messages.Tameable", false),
     COOLDOWN("Cooldown", 0),
     CUSTOM_ITEM_DISPLAY_NAMES_IS_WEAPON("Custom-Item-Display-Names-Is-Weapon", Lists.newArrayList("&6SUPER COOL GOLDEN APPLE", "SICKNAME")),
     CUSTOM_ITEM_MATERIAL_IS_WEAPON("Custom-Item-Material-Is-Weapon", Lists.newArrayList("ACACIA_FENCE"));

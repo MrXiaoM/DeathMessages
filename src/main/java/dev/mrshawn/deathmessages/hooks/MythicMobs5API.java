@@ -6,7 +6,7 @@ import org.bukkit.entity.Entity;
 import java.util.UUID;
 
 public class MythicMobs5API implements IMythicMobsAPI {
-    MythicBukkit mythicMobs;
+    final MythicBukkit mythicMobs;
     public MythicMobs5API() {
         mythicMobs = MythicBukkit.inst();
     }

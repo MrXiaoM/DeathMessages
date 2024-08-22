@@ -20,15 +20,24 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20-R0.1-SNAPSHOT")
-    compileOnly("me.clip:placeholderapi:2.11.2")
-    compileOnly("de.tr7zw:item-nbt-api-plugin:2.11.1")
+    // NBT API
+    compileOnly("de.tr7zw:item-nbt-api-plugin:2.12.3")
+
+    // PlaceholderAPI
+    compileOnly("me.clip:placeholderapi:2.11.6")
+
+    // MythicMobs 4 and 5
     compileOnly("io.lumine:Mythic-Dist:4.13.0")
-    compileOnly("io.lumine:Mythic:5.4.1")
+    compileOnly("io.lumine:Mythic:5.6.2")
     compileOnly("io.lumine:LumineUtils:1.20-SNAPSHOT")
+
+    // WorldGuard/WorldEdit
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.0")
     compileOnly("com.sk89q.worldedit:worldedit-core:7.2.0")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.1")
     compileOnly("com.sk89q.worldguard:worldguard-core:7.0.1")
+
+    // LangUtils (legacy)
     compileOnly("com.github.MascusJeoraly:LanguageUtils:1.9")
 
     implementation("commons-io:commons-io:2.9.0")

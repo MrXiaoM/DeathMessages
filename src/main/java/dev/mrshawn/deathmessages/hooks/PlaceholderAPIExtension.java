@@ -42,30 +42,23 @@ public class PlaceholderAPIExtension extends PlaceholderExpansion {
             return "";
         }
         PlayerManager pm = PlayerManager.getPlayer(player);
-        if (identifier.equals("messages_enabled")) {
-            return String.valueOf(pm.getMessagesEnabled());
-        }
-        if (identifier.equals("is_blacklisted")) {
-            return String.valueOf(pm.isBlacklisted());
-        }
-        if (identifier.equals("victim_name")) {
-            return pm.getPlayer().getName();
-        }
-        if (identifier.equals("victim_display_name")) {
-            return pm.getPlayer().getDisplayName();
-        }
-        if (identifier.equals("killer_name")) {
-            if (pm.getLastEntityDamager() == null) {
-                return "null";
-            }
-            return pm.getLastEntityDamager().getName();
-        } else if (identifier.equals("killer_display_name")) {
-            if (pm.getLastEntityDamager() == null) {
-                return "null";
-            }
-            return pm.getLastEntityDamager().getCustomName();
-        } else {
-            return null;
+        switch (identifier) {
+            case "messages_enabled":
+                return String.valueOf(pm.getMessagesEnabled());
+            case "is_blacklisted":
+                return String.valueOf(pm.isBlacklisted());
+            case "victim_name":
+                return pm.getPlayer().getName();
+            case "victim_display_name":
+                return pm.getPlayer().getDisplayName();
+            case "killer_name":
+                if (pm.getLastEntityDamager() == null) return "null";
+                return pm.getLastEntityDamager().getName();
+            case "killer_display_name":
+                if (pm.getLastEntityDamager() == null) return "null";
+                return pm.getLastEntityDamager().getCustomName();
+            default:
+                return null;
         }
     }
 }
