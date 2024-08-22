@@ -26,16 +26,23 @@ The plugin depends on [NBT API](https://www.spigotmc.org/resources/nbt-api.7939/
 * [WorldGuard](https://enginehub.org/worldguard/) 可选 区域控制
 * [WorldEdit](https://enginehub.org/worldedit/) 可选 
 * [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) 可选 支持在死亡消息中使用变量
-* [MythicMobs](https://www.spigotmc.org/resources/mythicmobs.5702/) 可选 支持MM怪物死亡消息
-* [LangUtils](https://ci.nyaacat.com/job/LanguageUtils/) 可选 支持根据玩家语言显示生物/方块/物品名 (LangUtils for mc1.12或以下请到[原作者地址](https://github.com/MascusJeoraly/LanguageUtils/releases)下载，我看接口没有多大变动，应该能用)
+* [MythicMobs](https://www.spigotmc.org/resources/mythicmobs.5702/) 可选 支持MM怪物死亡消息 (4.x, 5.x 均支持)
+* [LangUtils](https://ci.nyaacat.com/job/LanguageUtils/) 可选 支持根据玩家语言显示生物/方块/物品名 (LangUtils for mc1.12或以下请到[原作者地址](https://github.com/MascusJeoraly/LanguageUtils/releases)下载)  
+`1.19.4+` 可使用 Translatable 特性，**无需安装 LangUtils** 即可根据玩家语言显示生物/方块/物品名
 
 ## 安装
-原仓库没有许可证，~~所以我也不放许可证了，就当继承上一个仓库的吧~~。  
-原仓库 README 中禁止分发重新编译的 jar，但没说禁止重新分发代码，你可以克隆该源码，执行以下命令构建插件
-```
-./gradlew build
-```
-原帖中说支持 `1.7-1.19`，本插件仅保证在 `1.19.x` 可用，其他版本请自行尝试。
+
+<details>
+  <summary>自行编译插件</summary>
+<s>原仓库没有许可证，所以我也不放许可证了，就当继承上一个仓库的吧</s>。<br>
+<s>原仓库 README 中禁止分发重新编译的 jar，但没说禁止重新分发代码</s>，你可以克隆该源码，执行以下命令构建插件<br>
+<p>原帖的新 fork 中添加了 GPL-3.0 协议，那我也加一个。</p>
+<pre><code>./gradlew build</code></pre>
+</details>
+
+原帖 1.4.15 的帖子说支持 `1.7-1.19`，本插件仅保证在 `1.20.4` 可用，其他版本请自行尝试。
+
+请前往 [Releases](https://github.com/MrXiaoM/DeathMessages/releases) 下载插件。
 
 # 死亡消息
 
