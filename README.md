@@ -6,6 +6,8 @@ The plugin depends on [NBT API](https://www.spigotmc.org/resources/nbt-api.7939/
 
 支持聊天栏显示物品和bc跨服的死亡信息插件！
 
+[![GitHub Downloads](https://img.shields.io/github/downloads/MrXiaoM/DeathMessages/total)](https://github.com/MrXiaoM/DeathMessages/releases)
+
 ## 新特性
 在这个重制版中，有以下修改
 * 不再内置 [NBT API](https://www.spigotmc.org/resources/nbt-api.7939/)，需要作为前置安装
