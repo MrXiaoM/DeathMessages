@@ -59,7 +59,7 @@ public class InteractEvent implements Listener {
                 DMBlockExplodeEvent explodeEvent = new DMBlockExplodeEvent(e.getPlayer(), b);
                 Bukkit.getPluginManager().callEvent(explodeEvent);
             }
-        } else if (!b.getWorld().getEnvironment().equals(World.Environment.NETHER) && DeathMessages.majorVersion() >= 16 && b.getType().equals(Material.RESPAWN_ANCHOR)) {
+        } else if (!b.getWorld().getEnvironment().equals(World.Environment.NETHER) && DeathMessages.majorVersion() >= 16 && b.getType().name().toUpperCase().equals("RESPAWN_ANCHOR")) {
             RespawnAnchor anchor = (RespawnAnchor) b.getBlockData();
             if (anchor.getCharges() != anchor.getMaximumCharges() && !e.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.GLOWSTONE)) {
                 return;

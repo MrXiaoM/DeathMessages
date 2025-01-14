@@ -21,7 +21,7 @@ repositories {
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20-R0.1-SNAPSHOT")
     // NBT API
-    compileOnly("de.tr7zw:item-nbt-api-plugin:2.12.3")
+    compileOnly("de.tr7zw:item-nbt-api-plugin:2.14.1")
 
     // PlaceholderAPI
     compileOnly("me.clip:placeholderapi:2.11.6")
@@ -32,9 +32,13 @@ dependencies {
     compileOnly("io.lumine:LumineUtils:1.20-SNAPSHOT")
 
     // WorldGuard/WorldEdit
-    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.0")
+    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.0") {
+        exclude(group="org.spigotmc", module="spigot-api")
+    }
     compileOnly("com.sk89q.worldedit:worldedit-core:7.2.0")
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.1")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.1") {
+        exclude(group="org.spigotmc", module="spigot-api")
+    }
     compileOnly("com.sk89q.worldguard:worldguard-core:7.0.1")
 
     // LangUtils (legacy)

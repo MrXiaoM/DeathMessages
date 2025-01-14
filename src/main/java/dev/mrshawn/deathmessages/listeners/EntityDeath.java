@@ -92,7 +92,7 @@ public class EntityDeath implements Listener {
                         if (explosionManager.getMaterial().name().contains("BED")) {
                             tx5 = DeathResolver.getNaturalDeath(pm, "Bed");
                         }
-                        if (DeathMessages.majorVersion() >= 16 && explosionManager.getMaterial().equals(Material.RESPAWN_ANCHOR)) {
+                        if (DeathMessages.majorVersion() >= 16 && explosionManager.getMaterial().name().toUpperCase().equals("RESPAWN_ANCHOR")) {
                             tx5 = DeathResolver.getNaturalDeath(pm, "Respawn-Anchor");
                         }
                         if (tx5 == null) {

@@ -54,7 +54,7 @@ public class DeathResolver {
     }
 
     public static boolean isWeaponByItemName(ItemStack item) {
-        if (item == null || item.getType().isAir()) return false;
+        if (item == null || item.getType().equals(Material.AIR)) return false;
         List<String> list = config.getStringList(Config.CUSTOM_ITEM_DISPLAY_NAMES_IS_WEAPON);
         if (list.isEmpty()) return true;
         ItemMeta meta = item.hasItemMeta() ? item.getItemMeta() : null;
@@ -69,7 +69,7 @@ public class DeathResolver {
     }
 
     public static boolean isWeaponByItemMaterial(ItemStack item) {
-        if (item == null || item.getType().isAir()) return false;
+        if (item == null || item.getType().equals(Material.AIR)) return false;
         List<String> list = config.getStringList(Config.CUSTOM_ITEM_MATERIAL_IS_WEAPON);
         if (list.isEmpty()) return true;
         for (String s : list) {
@@ -86,7 +86,7 @@ public class DeathResolver {
     @SuppressWarnings({"deprecation"})
     public static boolean hasWeapon(LivingEntity mob, EntityDamageEvent.DamageCause cause) {
         EntityEquipment e = mob.getEquipment();
-        return e != null && !cause.equals(THORNS) && isWeapon(majorVersion() < 9 ? e.getItemInHand() : e.getItemInMainHand());
+        return e != null && !cause.equals(THORNS) && isWeapon(getItemInHand(e));
     }
 
     public static TextComponent playerDeathMessage(PlayerManager pm, boolean gang) {
@@ -220,7 +220,7 @@ public class DeathResolver {
                 tc.addExtra(mssa2);
                 lastColor = Messages.getColorOfString(lastColor + mssa2);
             } else if (pm.getLastDamage().equals(PROJECTILE) && splitMessage.contains("%weapon%") && equipment != null) {
-                ItemStack i = majorVersion() <= 9 ? equipment.getItemInHand() : equipment.getItemInMainHand();
+                ItemStack i = getItemInHand(equipment);
                 String m = i.getType().name().toUpperCase();
                 if (!m.equals("BOW") && !m.equals("CROSSBOW")) return getNaturalDeath(pm, "Projectile-Unknown");
                 String displayName;
@@ -268,7 +268,7 @@ public class DeathResolver {
         String lastFont = "";
         for (String splitMessage : firstSection.split(" ")) {
             if (splitMessage.contains("%weapon%") && mobEquipment != null) {
-                ItemStack i = majorVersion() <= 9 ? mobEquipment.getItemInHand() : mobEquipment.getItemInMainHand();
+                ItemStack i = getItemInHand(mobEquipment);
                 String displayName;
                 if (Messages.hasNoCustomName(i)) {
                     if (FileSettings.CONFIG.getBoolean(Config.DISABLE_WEAPON_KILL_WITH_NO_CUSTOM_NAME_ENABLED)) {
@@ -316,7 +316,7 @@ public class DeathResolver {
         String lastFont = "";
         for (String splitMessage : firstSection.split(" ")) {
             if (splitMessage.contains("%weapon%") && equipment != null) {
-                ItemStack i = majorVersion() <= 9 ? equipment.getItemInHand() : equipment.getItemInMainHand();
+                ItemStack i = getItemInHand(equipment);
                 String displayName;
                 if (Messages.hasNoCustomName(i)) {
                     if (config.getBoolean(Config.DISABLE_WEAPON_KILL_WITH_NO_CUSTOM_NAME_ENABLED)) {
@@ -400,7 +400,7 @@ public class DeathResolver {
         String lastFont = "";
         for (String splitMessage : firstSection.split(" ")) {
             if (splitMessage.contains("%weapon%") && (getSettings().getBoolean("Ignore-Projectile-Type") || pm.getLastProjectileEntity() instanceof Arrow) && equipment != null) {
-                ItemStack i = majorVersion() < 9 ? equipment.getItemInHand() : equipment.getItemInMainHand();
+                ItemStack i = getItemInHand(equipment);
                 String displayName;
                 if (Messages.hasNoCustomName(i)) {
                     if (config.getBoolean(Config.DISABLE_WEAPON_KILL_WITH_NO_CUSTOM_NAME_ENABLED) && !config.getString(Config.DISABLE_WEAPON_KILL_WITH_NO_CUSTOM_NAME_SOURCE_PROJECTILE_DEFAULT_TO).equals(projectileDamage)) {
@@ -449,7 +449,7 @@ public class DeathResolver {
         String lastFont = "";
         for (String splitMessage : firstSection.split(" ")) {
             if (splitMessage.contains("%weapon%") && (getSettings().getBoolean("Ignore-Projectile-Type") || em.getLastProjectileEntity() instanceof Arrow) && equipment != null) {
-                ItemStack i = majorVersion() < 9 ? equipment.getItemInHand() : equipment.getItemInMainHand();
+                ItemStack i = getItemInHand(equipment);
                 String displayName;
                 if (Messages.hasNoCustomName(i)) {
                     if (config.getBoolean(Config.DISABLE_WEAPON_KILL_WITH_NO_CUSTOM_NAME_ENABLED) && !config.getString(Config.DISABLE_WEAPON_KILL_WITH_NO_CUSTOM_NAME_SOURCE_PROJECTILE_DEFAULT_TO).equals(projectileDamage)) {
@@ -611,4 +611,7 @@ public class DeathResolver {
         return Settings.getInstance().getConfig();
     }
 
+    public static ItemStack getItemInHand(EntityEquipment equipment) {
+        return majorVersion() < 9 ? equipment.getItemInHand() : equipment.getItemInMainHand();
+    }
 }
