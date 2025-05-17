@@ -11,6 +11,7 @@ softdepend:
   - WorldGuard
   - LangUtils
 authors: [ Joshb_, MrShawn, MrXiaoM ]
+folia-supported: true
 commands:
   deathmessages:
     description: Main plugin command
