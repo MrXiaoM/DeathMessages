@@ -32,10 +32,12 @@ dependencies {
     // WorldGuard/WorldEdit
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.0") {
         exclude(group="org.spigotmc", module="spigot-api")
+        exclude(group="org.bukkit", module="bukkit")
     }
     compileOnly("com.sk89q.worldedit:worldedit-core:7.2.0")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.1") {
         exclude(group="org.spigotmc", module="spigot-api")
+        exclude(group="org.bukkit", module="bukkit")
     }
     compileOnly("com.sk89q.worldguard:worldguard-core:7.0.1")
 
