@@ -2,7 +2,7 @@ package dev.mrshawn.deathmessages.config;
 
 import dev.mrshawn.deathmessages.DeathMessages;
 import dev.mrshawn.deathmessages.utils.FileUtils;
-import org.apache.commons.lang.RandomStringUtils;
+import dev.mrshawn.deathmessages.utils.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,7 +43,7 @@ public class ConfigManager {
         if (!this.backupDirectory.exists()) {
             this.backupDirectory.mkdir();
         }
-        String randomCode = RandomStringUtils.randomNumeric(4);
+        String randomCode = StringUtils.randomNumeric(4);
         File backupDir = new File(this.backupDirectory, randomCode);
         backupDir.mkdir();
         try {
