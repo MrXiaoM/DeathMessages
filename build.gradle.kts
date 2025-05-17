@@ -12,16 +12,14 @@ repositories {
     maven("https://jitpack.io/")
     maven("https://repo.codemc.io/repository/maven-public/")
     maven("https://maven.enginehub.org/repo/")
-    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-    maven("https://oss.sonatype.org/content/groups/public/")
+    maven("https://repo.helpch.at/releases/")
     maven("https://mvn.lumine.io/repository/maven-public")
 }
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20-R0.1-SNAPSHOT")
     // NBT API
-    compileOnly("de.tr7zw:item-nbt-api-plugin:2.14.1")
+    compileOnly("de.tr7zw:item-nbt-api-plugin:2.15.0")
 
     // PlaceholderAPI
     compileOnly("me.clip:placeholderapi:2.11.6")
