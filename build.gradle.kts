@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "dev.mrshawn"
-version = "1.4.21"
+version = "1.4.22"
 
 repositories {
     if (Locale.getDefault().country == "CN") {
