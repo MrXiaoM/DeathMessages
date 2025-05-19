@@ -1,6 +1,8 @@
 package dev.mrshawn.deathmessages;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.tcoded.folialib.FoliaLib;
+import com.tcoded.folialib.impl.PlatformScheduler;
 import dev.mrshawn.deathmessages.api.PlayerManager;
 import dev.mrshawn.deathmessages.command.CommandManager;
 import dev.mrshawn.deathmessages.command.impl.CommandToggle;
@@ -52,9 +54,14 @@ public class DeathMessages extends JavaPlugin {
     public static boolean bungeeInit = false;
     private static EventPriority eventPriority = EventPriority.HIGH;
     private static int savedVersion = 0;
+    private final FoliaLib foliaLib = new FoliaLib(this);
 
     public static void warn(Throwable t) {
         instance.getLogger().log(Level.WARNING, "", t);
+    }
+
+    public PlatformScheduler getScheduler() {
+        return foliaLib.getScheduler();
     }
 
     public void onEnable() {
@@ -72,6 +79,7 @@ public class DeathMessages extends JavaPlugin {
 
     public void onDisable() {
         HandlerList.unregisterAll(this);
+        getScheduler().cancelAllTasks();
         instance = null;
     }
 
@@ -109,7 +117,7 @@ public class DeathMessages extends JavaPlugin {
                 new EntityDamageByEntity(),
                 new EntityDeath(),
                 new InteractEvent(),
-                new OnJoin(),
+                new OnJoin(this),
                 new OnMove(),
                 new OnQuit(),
                 new PlayerDeath()
@@ -230,7 +238,9 @@ public class DeathMessages extends JavaPlugin {
             for (World world : Bukkit.getWorlds()) {
                 Boolean rule = world.getGameRuleValue(ruleToDisable);
                 if (rule == null || rule.equals(true)) {
-                    world.setGameRule(ruleToDisable, false);
+                    getScheduler().runNextTick((t) -> {
+                        world.setGameRule(ruleToDisable, false);
+                    });
                 }
             }
         }

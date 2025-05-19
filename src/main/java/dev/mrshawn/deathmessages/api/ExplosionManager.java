@@ -3,7 +3,6 @@ package dev.mrshawn.deathmessages.api;
 import dev.mrshawn.deathmessages.DeathMessages;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +23,9 @@ public class ExplosionManager {
         this.location = location;
         this.effected = effected;
         explosions.add(this);
-        new BukkitRunnable() {
-            public void run() {
-                ExplosionManager.this.destroy();
-            }
-        }.runTaskLater(DeathMessages.getInstance(), 100L);
+        DeathMessages.getInstance().getScheduler().runLater(
+                this::destroy,
+                100L);
     }
 
     public UUID getPyro() {

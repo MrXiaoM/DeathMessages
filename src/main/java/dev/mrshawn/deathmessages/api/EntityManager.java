@@ -8,7 +8,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
@@ -63,11 +62,9 @@ public class EntityManager {
         if (this.lastPlayerTask != null) {
             this.lastPlayerTask.cancel();
         }
-        this.lastPlayerTask = new BukkitRunnable() {
-            public void run() {
-                EntityManager.this.destroy();
-            }
-        }.runTaskLater(DeathMessages.getInstance(), config.getInt(Config.EXPIRE_LAST_DAMAGE_EXPIRE_ENTITY) * 20L);
+        DeathMessages.getInstance().getScheduler().runLater(
+                EntityManager.this::destroy,
+                config.getInt(Config.EXPIRE_LAST_DAMAGE_EXPIRE_ENTITY) * 20L);
         this.damageCause = EntityDamageEvent.DamageCause.CUSTOM;
     }
 

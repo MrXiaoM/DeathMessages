@@ -1,3 +1,5 @@
+import java.util.Locale
+
 plugins {
     id("java")
     id("com.github.johnrengelman.shadow") version "7.0.0"
@@ -7,12 +9,16 @@ group = "dev.mrshawn"
 version = "1.4.21"
 
 repositories {
-    maven("https://repo.huaweicloud.com/repository/maven/")
+    if (Locale.getDefault().country == "CN") {
+        maven("https://repo.huaweicloud.com/repository/maven/")
+    }
     mavenCentral()
-    maven("https://jitpack.io/")
     maven("https://repo.codemc.io/repository/maven-public/")
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://maven.enginehub.org/repo/")
     maven("https://repo.helpch.at/releases/")
+    maven("https://jitpack.io/")
+    maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://mvn.lumine.io/repository/maven-public")
 }
 
@@ -43,6 +49,8 @@ dependencies {
 
     // LangUtils (legacy)
     compileOnly("com.github.MascusJeoraly:LanguageUtils:1.9")
+
+    implementation("com.github.technicallycoded:FoliaLib:0.4.4")
 }
 
 java {
@@ -56,13 +64,11 @@ tasks {
     }
     shadowJar {
         archiveClassifier.set("")
-        /*
         mapOf(
-            "org.apache.commons.io" to "commons.io"
+            "com.tcoded.folialib" to "folialib",
         ).forEach { (original,target) ->
-            relocate(original, "dev.mrshawn.deathmessages.shadow.$target")
+            relocate(original, "dev.mrshawn.deathmessages.libs.$target")
         }
-        */
     }
     processResources {
         duplicatesStrategy = DuplicatesStrategy.INCLUDE
