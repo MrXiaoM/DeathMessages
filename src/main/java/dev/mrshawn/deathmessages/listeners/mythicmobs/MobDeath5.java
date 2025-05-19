@@ -61,7 +61,10 @@ public class MobDeath5 implements Listener {
                     List<String> worlds = Settings.getInstance().getConfig().getStringList("World-Groups." + groups);
                     if (worlds.contains(e.getWorld().getName())) {
                         for (String single : worlds) {
-                            broadcastWorlds.add(Bukkit.getWorld(single));
+                            World world = Bukkit.getWorld(single);
+                            if (world != null) {
+                                broadcastWorlds.add(world);
+                            }
                         }
                     }
                 }
