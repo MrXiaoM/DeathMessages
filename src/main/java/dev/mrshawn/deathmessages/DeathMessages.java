@@ -64,11 +64,15 @@ public class DeathMessages extends JavaPlugin {
         return foliaLib.getScheduler();
     }
 
-    public void onEnable() {
+    @Override
+    public void onLoad() {
         instance = this;
         initializeConfigs();
         initializeHooksOnLoad();
+    }
 
+    @Override
+    public void onEnable() {
         initializeListeners();
         initializeCommands();
         initializeHooks();
@@ -77,6 +81,7 @@ public class DeathMessages extends JavaPlugin {
         getLogger().info("Plugin Enabled!");
     }
 
+    @Override
     public void onDisable() {
         HandlerList.unregisterAll(this);
         getScheduler().cancelAllTasks();
@@ -181,7 +186,6 @@ public class DeathMessages extends JavaPlugin {
                 getLogger().warning("Unknown MythicMobs version " + ver);
             }
         }
-        useTranslateComponent = isPresent("org.bukkit.Translatable");
         if (Bukkit.getPluginManager().getPlugin("LangUtils") != null && config.getBoolean(Config.HOOKS_LANGUTILS_ENABLED)) {
             langUtilsEnabled = true;
             getLogger().info("LangUtils Hook Enabled!");
@@ -200,20 +204,22 @@ public class DeathMessages extends JavaPlugin {
     }
 
     private void initializeHooksOnLoad() {
+        useTranslateComponent = isPresent("org.bukkit.Translatable");
         if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null && config.getBoolean(Config.HOOKS_WORLDGUARD_ENABLED)) {
             try {
                 WorldGuardPlugin worldGuardPlugin = WorldGuardPlugin.inst();
                 if (worldGuardPlugin == null) {
-                    throw new Exception();
+                    throw new Exception("WorldGuard not found!");
                 }
                 String version = worldGuardPlugin.getDescription().getVersion();
                 if (version.startsWith("7")) {
                     worldGuardExtension = new WorldGuard7Extension();
                     worldGuardExtension.registerFlags();
                 } else if (version.startsWith("6")) {
+                    // TODO: WG6 support
                     worldGuardExtension.registerFlags();
                 } else {
-                    throw new Exception();
+                    throw new Exception("WorldGuard " + version + " is not supported!");
                 }
                 worldGuardEnabled = true;
             } catch (Throwable e) {
