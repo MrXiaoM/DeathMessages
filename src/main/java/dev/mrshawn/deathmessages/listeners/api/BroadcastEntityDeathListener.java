@@ -1,6 +1,5 @@
 package dev.mrshawn.deathmessages.listeners.api;
 
-import com.sk89q.worldguard.protection.flags.StateFlag;
 import dev.mrshawn.deathmessages.DeathMessages;
 import dev.mrshawn.deathmessages.api.EntityManager;
 import dev.mrshawn.deathmessages.api.PlayerManager;
@@ -56,7 +55,7 @@ public class BroadcastEntityDeathListener implements Listener {
                             }
                         } else {
                             if (pms.getMessagesEnabled()) {
-                                if (DeathMessages.worldGuardExtension != null && DeathMessages.worldGuardExtension.getRegionState(pls, e.getMessageType().getValue()).equals(StateFlag.State.DENY)) {
+                                if (DeathMessages.worldGuardExtension != null && DeathMessages.worldGuardExtension.getRegionState(pls, e.getMessageType().getValue()).equals("DENY")) {
                                     return;
                                 }
                                 pls.spigot().sendMessage(e.getTextComponent());

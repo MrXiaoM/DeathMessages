@@ -1,6 +1,5 @@
 package dev.mrshawn.deathmessages.listeners.api;
 
-import com.sk89q.worldguard.protection.flags.StateFlag;
 import dev.mrshawn.deathmessages.DeathMessages;
 import dev.mrshawn.deathmessages.api.PlayerManager;
 import dev.mrshawn.deathmessages.api.events.BroadcastDeathMessageEvent;
@@ -72,7 +71,7 @@ public class BroadcastPlayerDeathListener implements Listener {
     }
 
     private void normal(BroadcastDeathMessageEvent e, PlayerManager pms, Player pls, List<World> worlds) {
-        if (DeathMessages.worldGuardExtension != null && (DeathMessages.worldGuardExtension.getRegionState(pls, e.getMessageType().getValue()).equals(StateFlag.State.DENY) || DeathMessages.worldGuardExtension.getRegionState(e.getPlayer(), e.getMessageType().getValue()).equals(StateFlag.State.DENY))) {
+        if (DeathMessages.worldGuardExtension != null && (DeathMessages.worldGuardExtension.getRegionState(pls, e.getMessageType().getValue()).equals("DENY") || DeathMessages.worldGuardExtension.getRegionState(e.getPlayer(), e.getMessageType().getValue()).equals("DENY"))) {
             return;
         }
         try {

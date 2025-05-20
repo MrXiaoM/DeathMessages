@@ -1,6 +1,5 @@
 package dev.mrshawn.deathmessages;
 
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.tcoded.folialib.FoliaLib;
 import com.tcoded.folialib.impl.PlatformScheduler;
 import dev.mrshawn.deathmessages.api.PlayerManager;
@@ -9,18 +8,16 @@ import dev.mrshawn.deathmessages.command.impl.CommandToggle;
 import dev.mrshawn.deathmessages.config.ConfigManager;
 import dev.mrshawn.deathmessages.files.Config;
 import dev.mrshawn.deathmessages.files.FileSettings;
-import dev.mrshawn.deathmessages.hooks.IMythicMobsAPI;
-import dev.mrshawn.deathmessages.hooks.MythicMobs4API;
-import dev.mrshawn.deathmessages.hooks.MythicMobs5API;
-import dev.mrshawn.deathmessages.hooks.PlaceholderAPIExtension;
+import dev.mrshawn.deathmessages.hooks.*;
 import dev.mrshawn.deathmessages.listeners.*;
 import dev.mrshawn.deathmessages.listeners.api.BlockExplosionListener;
 import dev.mrshawn.deathmessages.listeners.api.BroadcastEntityDeathListener;
 import dev.mrshawn.deathmessages.listeners.api.BroadcastPlayerDeathListener;
 import dev.mrshawn.deathmessages.listeners.mythicmobs.MobDeath4;
 import dev.mrshawn.deathmessages.listeners.mythicmobs.MobDeath5;
-import dev.mrshawn.deathmessages.hooks.WorldGuard7Extension;
-import dev.mrshawn.deathmessages.hooks.WorldGuardExtension;
+import dev.mrshawn.deathmessages.hooks.worldguard.WorldGuard7Extension;
+import dev.mrshawn.deathmessages.hooks.worldguard.WorldGuard6Extension;
+import dev.mrshawn.deathmessages.hooks.worldguard.WorldGuardExtension;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
@@ -205,25 +202,23 @@ public class DeathMessages extends JavaPlugin {
 
     private void initializeHooksOnLoad() {
         useTranslateComponent = isPresent("org.bukkit.Translatable");
-        if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null && config.getBoolean(Config.HOOKS_WORLDGUARD_ENABLED)) {
+        Plugin worldGuardPlugin;
+        if ((worldGuardPlugin = Bukkit.getPluginManager().getPlugin("WorldGuard")) != null
+                && config.getBoolean(Config.HOOKS_WORLDGUARD_ENABLED)
+        ) {
+            String version = worldGuardPlugin.getDescription().getVersion();
             try {
-                WorldGuardPlugin worldGuardPlugin = WorldGuardPlugin.inst();
-                if (worldGuardPlugin == null) {
-                    throw new Exception("WorldGuard not found!");
-                }
-                String version = worldGuardPlugin.getDescription().getVersion();
                 if (version.startsWith("7")) {
                     worldGuardExtension = new WorldGuard7Extension();
-                    worldGuardExtension.registerFlags();
                 } else if (version.startsWith("6")) {
-                    // TODO: WG6 support
-                    worldGuardExtension.registerFlags();
+                    worldGuardExtension = new WorldGuard6Extension();
                 } else {
-                    throw new Exception("WorldGuard " + version + " is not supported!");
+                    throw new Exception("Current version of WorldGuard is not supported!");
                 }
+                worldGuardExtension.registerFlags(getLogger());
                 worldGuardEnabled = true;
             } catch (Throwable e) {
-                getLogger().severe("Error loading WorldGuardHook. Error: " + e.getMessage());
+                getLogger().severe("Error loading WorldGuardHook (v" + version + "). Error: " + e.getMessage());
                 worldGuardEnabled = false;
             }
         }
