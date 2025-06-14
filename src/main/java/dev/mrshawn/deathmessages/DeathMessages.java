@@ -117,13 +117,13 @@ public class DeathMessages extends JavaPlugin {
                 new EntityDamage(),
                 new EntityDamageByBlock(),
                 new EntityDamageByEntity(),
-                new EntityDeath(),
                 new InteractEvent(),
                 new OnJoin(this),
                 new OnMove(),
                 new OnQuit(),
                 new PlayerDeath()
         }) pluginManager.registerEvents(listener, this);
+        new EntityDeath(this);
     }
 
     private void initializeCommands() {

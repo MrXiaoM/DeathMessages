@@ -16,15 +16,14 @@ import dev.mrshawn.deathmessages.files.FileSettings;
 import dev.mrshawn.deathmessages.utils.DeathResolver;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.*;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.plugin.EventExecutor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +33,11 @@ import static dev.mrshawn.deathmessages.config.Messages.classSimple;
 
 public class EntityDeath implements Listener {
     private static final FileSettings<Config> config = FileSettings.CONFIG;
+    public EntityDeath(DeathMessages plugin) {
+        EventPriority priority = DeathMessages.getEventPriority();
+        EventExecutor executor = (listener, e) -> onEntityDeath((EntityDeathEvent) e);
+        Bukkit.getPluginManager().registerEvent(EntityDeathEvent.class, this, priority, executor, plugin);
+    }
 
     synchronized void onEntityDeath(EntityDeathEvent e) {
         EntityManager em;
@@ -92,7 +96,7 @@ public class EntityDeath implements Listener {
                         if (explosionManager.getMaterial().name().contains("BED")) {
                             tx5 = DeathResolver.getNaturalDeath(pm, "Bed");
                         }
-                        if (DeathMessages.majorVersion() >= 16 && explosionManager.getMaterial().name().toUpperCase().equals("RESPAWN_ANCHOR")) {
+                        if (DeathMessages.majorVersion() >= 16 && explosionManager.getMaterial().name().equalsIgnoreCase("RESPAWN_ANCHOR")) {
                             tx5 = DeathResolver.getNaturalDeath(pm, "Respawn-Anchor");
                         }
                         if (tx5 == null) {
@@ -188,40 +192,5 @@ public class EntityDeath implements Listener {
             return broadcastWorlds;
         }
         return Bukkit.getWorlds();
-    }
-
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onEntityDeath_LOWEST(EntityDeathEvent e) {
-        if (DeathMessages.getEventPriority().equals(EventPriority.LOWEST)) {
-            onEntityDeath(e);
-        }
-    }
-
-    @EventHandler(priority = EventPriority.LOW)
-    public void onEntityDeath_LOW(EntityDeathEvent e) {
-        if (DeathMessages.getEventPriority().equals(EventPriority.LOW)) {
-            onEntityDeath(e);
-        }
-    }
-
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void onEntityDeath_NORMAL(EntityDeathEvent e) {
-        if (DeathMessages.getEventPriority().equals(EventPriority.NORMAL)) {
-            onEntityDeath(e);
-        }
-    }
-
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onEntityDeath_HIGH(EntityDeathEvent e) {
-        if (DeathMessages.getEventPriority().equals(EventPriority.HIGH)) {
-            onEntityDeath(e);
-        }
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onEntityDeath_HIGHEST(EntityDeathEvent e) {
-        if (DeathMessages.getEventPriority().equals(EventPriority.HIGHEST)) {
-            onEntityDeath(e);
-        }
     }
 }
