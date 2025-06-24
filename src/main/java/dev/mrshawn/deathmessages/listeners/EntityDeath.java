@@ -40,6 +40,7 @@ public class EntityDeath implements Listener {
     }
 
     synchronized void onEntityDeath(EntityDeathEvent e) {
+        StackTraceElement[] stackTrace = new Exception().getStackTrace();
         EntityManager em;
         if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
@@ -60,7 +61,7 @@ public class EntityDeath implements Listener {
                         if (tx == null) {
                             return;
                         }
-                        BroadcastDeathMessageEvent event = new BroadcastDeathMessageEvent(p, null, MessageType.NATURAL, tx, getWorlds(p), false);
+                        BroadcastDeathMessageEvent event = new BroadcastDeathMessageEvent(p, null, MessageType.NATURAL, tx, getWorlds(p), false, stackTrace);
                         Bukkit.getPluginManager().callEvent(event);
                         return;
                     } else if (pm.getLastExplosiveEntity() instanceof TNTPrimed) {
@@ -68,7 +69,7 @@ public class EntityDeath implements Listener {
                         if (tx2 == null) {
                             return;
                         }
-                        BroadcastDeathMessageEvent event2 = new BroadcastDeathMessageEvent(p, null, MessageType.NATURAL, tx2, getWorlds(p), false);
+                        BroadcastDeathMessageEvent event2 = new BroadcastDeathMessageEvent(p, null, MessageType.NATURAL, tx2, getWorlds(p), false, stackTrace);
                         Bukkit.getPluginManager().callEvent(event2);
                         return;
                     } else if (pm.getLastExplosiveEntity() instanceof Firework) {
@@ -76,7 +77,7 @@ public class EntityDeath implements Listener {
                         if (tx3 == null) {
                             return;
                         }
-                        BroadcastDeathMessageEvent event3 = new BroadcastDeathMessageEvent(p, null, MessageType.NATURAL, tx3, getWorlds(p), false);
+                        BroadcastDeathMessageEvent event3 = new BroadcastDeathMessageEvent(p, null, MessageType.NATURAL, tx3, getWorlds(p), false, stackTrace);
                         Bukkit.getPluginManager().callEvent(event3);
                         return;
                     } else if (pm.getLastClimbing() != null && pm.getLastDamage().equals(EntityDamageEvent.DamageCause.FALL)) {
@@ -84,7 +85,7 @@ public class EntityDeath implements Listener {
                         if (tx4 == null) {
                             return;
                         }
-                        BroadcastDeathMessageEvent event4 = new BroadcastDeathMessageEvent(p, null, MessageType.NATURAL, tx4, getWorlds(p), false);
+                        BroadcastDeathMessageEvent event4 = new BroadcastDeathMessageEvent(p, null, MessageType.NATURAL, tx4, getWorlds(p), false, stackTrace);
                         Bukkit.getPluginManager().callEvent(event4);
                         return;
                     } else if (pm.getLastDamage().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)) {
@@ -102,12 +103,12 @@ public class EntityDeath implements Listener {
                         if (tx5 == null) {
                             return;
                         }
-                        BroadcastDeathMessageEvent event5 = new BroadcastDeathMessageEvent(p, null, MessageType.NATURAL, tx5, getWorlds(p), false);
+                        BroadcastDeathMessageEvent event5 = new BroadcastDeathMessageEvent(p, null, MessageType.NATURAL, tx5, getWorlds(p), false, stackTrace);
                         Bukkit.getPluginManager().callEvent(event5);
                         return;
                     } else {
                         if (pm.getLastDamage().equals(EntityDamageEvent.DamageCause.PROJECTILE)) {
-                            BroadcastDeathMessageEvent event6 = new BroadcastDeathMessageEvent(p, null, MessageType.NATURAL, DeathResolver.getNaturalDeath(pm, Messages.getSimpleProjectile(pm.getLastProjectileEntity())), getWorlds(p), false);
+                            BroadcastDeathMessageEvent event6 = new BroadcastDeathMessageEvent(p, null, MessageType.NATURAL, DeathResolver.getNaturalDeath(pm, Messages.getSimpleProjectile(pm.getLastProjectileEntity())), getWorlds(p), false, stackTrace);
                             Bukkit.getPluginManager().callEvent(event6);
                             return;
                         }
@@ -115,7 +116,7 @@ public class EntityDeath implements Listener {
                         if (tx6 == null) {
                             return;
                         }
-                        BroadcastDeathMessageEvent event7 = new BroadcastDeathMessageEvent(p, null, MessageType.NATURAL, tx6, getWorlds(p), false);
+                        BroadcastDeathMessageEvent event7 = new BroadcastDeathMessageEvent(p, null, MessageType.NATURAL, tx6, getWorlds(p), false, stackTrace);
                         Bukkit.getPluginManager().callEvent(event7);
                         return;
                     }
@@ -141,11 +142,11 @@ public class EntityDeath implements Listener {
                     return;
                 }
                 if (ent instanceof Player) {
-                    BroadcastDeathMessageEvent event8 = new BroadcastDeathMessageEvent(p, (LivingEntity) pm.getLastEntityDamager(), MessageType.PLAYER, tx7, getWorlds(p), gangKill);
+                    BroadcastDeathMessageEvent event8 = new BroadcastDeathMessageEvent(p, (LivingEntity) pm.getLastEntityDamager(), MessageType.PLAYER, tx7, getWorlds(p), gangKill, stackTrace);
                     Bukkit.getPluginManager().callEvent(event8);
                     return;
                 }
-                BroadcastDeathMessageEvent event9 = new BroadcastDeathMessageEvent(p, (LivingEntity) pm.getLastEntityDamager(), MessageType.MOB, tx7, getWorlds(p), gangKill);
+                BroadcastDeathMessageEvent event9 = new BroadcastDeathMessageEvent(p, (LivingEntity) pm.getLastEntityDamager(), MessageType.MOB, tx7, getWorlds(p), gangKill, stackTrace);
                 Bukkit.getPluginManager().callEvent(event9);
                 return;
             }

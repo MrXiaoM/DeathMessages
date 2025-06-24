@@ -21,15 +21,17 @@ public class BroadcastDeathMessageEvent extends Event implements Cancellable {
     private final boolean isGangDeath;
     private final List<World> broadcastedWorlds;
     private boolean isCancelled = false;
+    public final StackTraceElement[] stackTrace;
     private static final HandlerList HANDLERS = new HandlerList();
 
-    public BroadcastDeathMessageEvent(Player player, LivingEntity livingEntity, MessageType messageType, TextComponent textComponent, List<World> broadcastedWorlds, boolean isGangDeath) {
+    public BroadcastDeathMessageEvent(Player player, LivingEntity livingEntity, MessageType messageType, TextComponent textComponent, List<World> broadcastedWorlds, boolean isGangDeath, StackTraceElement[] stackTrace) {
         this.player = player;
         this.livingEntity = livingEntity;
         this.messageType = messageType;
         this.textComponent = textComponent;
         this.isGangDeath = isGangDeath;
         this.broadcastedWorlds = broadcastedWorlds;
+        this.stackTrace = stackTrace;
     }
 
     @NotNull

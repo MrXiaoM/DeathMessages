@@ -4,6 +4,10 @@
 # Disable the default messages from minecraft
 Disable-Default-Messages: true
 
+# 是否在控制台显示死亡事件来源
+# Does a stacktrace of death event be shown in console
+Show-Death-Source: false
+
 # 是否为所有死亡消息添加前缀？（前缀在 Messages.yml 里配置）
 # Add a prefix to all death messages? (Prefix from Messages.yml)
 Add-Prefix-To-All-Messages: true

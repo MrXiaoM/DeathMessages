@@ -111,7 +111,7 @@ public class DeathMessages extends JavaPlugin {
     private void initializeListeners() {
         PluginManager pluginManager = Bukkit.getPluginManager();
         for (Listener listener : new Listener[] {
-                new BroadcastPlayerDeathListener(),
+                new BroadcastPlayerDeathListener(this),
                 new BroadcastEntityDeathListener(),
                 new BlockExplosionListener(),
                 new EntityDamage(),

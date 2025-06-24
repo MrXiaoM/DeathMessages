@@ -17,9 +17,14 @@ public class Settings {
     private CommentedConfiguration config;
     private File file;
     private static final Settings instance = new Settings();
+    private boolean showDeathSource = false;
 
     public static Settings getInstance() {
         return instance;
+    }
+
+    public boolean isShowDeathSource() {
+        return showDeathSource;
     }
 
     public void save() {
@@ -38,6 +43,7 @@ public class Settings {
     public void reload() {
         try {
             this.config = CommentedConfiguration.loadConfiguration(this.file);
+            this.showDeathSource = config.getBoolean("Show-Death-Source", false);
         } catch (Exception e) {
             warn(e);
             File f = new File(DeathMessages.getInstance().getDataFolder(), "Settings.broken." + new Date().getTime());
