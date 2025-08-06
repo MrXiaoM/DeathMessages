@@ -5,6 +5,7 @@ import dev.mrshawn.deathmessages.DeathMessages;
 import dev.mrshawn.deathmessages.config.UserData;
 import dev.mrshawn.deathmessages.files.Config;
 import dev.mrshawn.deathmessages.files.FileSettings;
+import dev.mrshawn.deathmessages.utils.DeathResolver;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.Inventory;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -23,6 +25,7 @@ public class PlayerManager {
     private boolean messagesEnabled;
     private boolean isBlacklisted;
     private EntityDamageEvent.DamageCause damageCause;
+    private @Nullable String damageSourceMsgId;
     private Entity lastEntityDamager;
     private Entity lastExplosiveEntity;
     private Projectile lastProjectileEntity;
@@ -101,6 +104,18 @@ public class PlayerManager {
         return this.damageCause;
     }
 
+    public void setDamageSourceMsgId(EntityDamageEvent event) {
+        this.damageSourceMsgId = DeathResolver.getDamageSourceMsgId(event);
+    }
+
+    public void setDamageSourceMsgId(String damageSourceMsgId) {
+        this.damageSourceMsgId = damageSourceMsgId;
+    }
+
+    @Nullable
+    public String getDamageSourceMsgId() {
+        return damageSourceMsgId;
+    }
 
     public void setLastEntityDamager(Entity e) {
         setLastExplosiveEntity(null);

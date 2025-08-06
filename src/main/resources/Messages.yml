@@ -2,6 +2,8 @@ Prefix: "&7[&c&l死亡&7] "
 Console:
   # 向控制台发送死亡信息
   Enabled: true
+  # 1.20.4 开始，添加 %source% 可以显示原始伤害来源消息。可作为参考添加到死亡消息配置文件中
+  # %source% 是实验性功能，试图解决无法获得 mod 服自定义伤害来源的问题
   Message: "%message% (世界:%world%, X:%x%, Y:%y%, Z:%z%)"
 Bungee:
   # 群组服收到其他服务器的死亡信息前缀的格式.

@@ -51,6 +51,7 @@ public class EntityDeath implements Listener {
                     pm.setLastDamageCause(EntityDamageEvent.DamageCause.CUSTOM);
                 } else {
                     pm.setLastDamageCause(e.getEntity().getLastDamageCause().getCause());
+                    pm.setDamageSourceMsgId(e.getEntity().getLastDamageCause());
                 }
                 if (pm.isBlacklisted()) {
                     return;

@@ -4,11 +4,13 @@ import dev.mrshawn.deathmessages.DeathMessages;
 import dev.mrshawn.deathmessages.enums.MobType;
 import dev.mrshawn.deathmessages.files.Config;
 import dev.mrshawn.deathmessages.files.FileSettings;
+import dev.mrshawn.deathmessages.utils.DeathResolver;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitTask;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ public class EntityManager {
     private final UUID entityUUID;
     private final MobType mobType;
     private EntityDamageEvent.DamageCause damageCause;
+    private @Nullable String damageSourceMsgId;
     private PlayerManager lastPlayerDamager;
     private Entity lastExplosiveEntity;
     private Projectile lastPlayerProjectile;
@@ -51,6 +54,18 @@ public class EntityManager {
         return this.damageCause;
     }
 
+    public void setDamageSourceMsgId(EntityDamageEvent event) {
+        this.damageSourceMsgId = DeathResolver.getDamageSourceMsgId(event);
+    }
+
+    public void setDamageSourceMsgId(String damageSourceMsgId) {
+        this.damageSourceMsgId = damageSourceMsgId;
+    }
+
+    @Nullable
+    public String getDamageSourceMsgId() {
+        return damageSourceMsgId;
+    }
 
     public void setLastPlayerDamager(PlayerManager pm) {
         setLastExplosiveEntity(null);
