@@ -1,6 +1,5 @@
 package dev.mrshawn.deathmessages.utils;
 
-import de.tr7zw.nbtapi.NBTItem;
 import dev.mrshawn.deathmessages.DeathMessages;
 import dev.mrshawn.deathmessages.api.EntityManager;
 import dev.mrshawn.deathmessages.api.ExplosionManager;
@@ -207,7 +206,6 @@ public class DeathResolver {
         return null;
     }
 
-    @SuppressWarnings({"deprecation"})
     public static TextComponent solveWeapon(String splitMessage, ItemStack i, String displayName) {
         String[] spl = splitMessage.split("%weapon%");
         if (spl.length != 0 && spl[0] != null && !spl[0].isEmpty()) {
@@ -217,8 +215,7 @@ public class DeathResolver {
             displayName = displayName + Messages.colorize(spl[1]);
         }
         TextComponent weaponComp = bungee(displayName);
-        BaseComponent[] hoverEventComponents = {new TextComponent(NBTItem.convertItemtoNBT(i).getCompound().toString())};
-        weaponComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, hoverEventComponents));
+        weaponComp.setHoverEvent(HoverShowItemResolver.toHoverEvent(i));
         return weaponComp;
     }
 
