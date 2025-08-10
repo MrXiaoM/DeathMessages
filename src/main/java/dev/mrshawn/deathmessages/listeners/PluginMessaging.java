@@ -7,6 +7,7 @@ import dev.mrshawn.deathmessages.api.PlayerManager;
 import dev.mrshawn.deathmessages.config.Messages;
 import dev.mrshawn.deathmessages.files.Config;
 import dev.mrshawn.deathmessages.files.FileSettings;
+import dev.mrshawn.deathmessages.utils.ComponentUtils;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
@@ -48,7 +49,7 @@ public class PluginMessaging implements PluginMessageListener {
                     for (Player pls : Bukkit.getOnlinePlayers()) {
                         PlayerManager pms = PlayerManager.getPlayer(pls);
                         if (pms.getMessagesEnabled()) {
-                            pls.spigot().sendMessage(textComponent, textComponent2);
+                            ComponentUtils.send(pls, textComponent, textComponent2);
                         }
                     }
                 }
@@ -67,8 +68,9 @@ public class PluginMessaging implements PluginMessageListener {
         }
     }
 
-    public static void sendPluginMSG(Player p, String msg) {
+    public static void sendPluginMSG(Player p, TextComponent text) {
         if (config.getBoolean(Config.HOOKS_BUNGEE_ENABLED)) {
+            String msg = ComponentSerializer.toString(text);
             if (config.getBoolean(Config.HOOKS_BUNGEE_SERVER_GROUPS_ENABLED)) {
                 List<String> serverList = config.getStringList(Config.HOOKS_BUNGEE_SERVER_GROUPS_SERVERS);
                 for (String server : serverList) {

@@ -18,6 +18,7 @@ import dev.mrshawn.deathmessages.listeners.mythicmobs.MobDeath5;
 import dev.mrshawn.deathmessages.hooks.worldguard.WorldGuard7Extension;
 import dev.mrshawn.deathmessages.hooks.worldguard.WorldGuard6Extension;
 import dev.mrshawn.deathmessages.hooks.worldguard.WorldGuardExtension;
+import dev.mrshawn.deathmessages.utils.ComponentUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
@@ -70,6 +71,7 @@ public class DeathMessages extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        ComponentUtils.init();
         initializeListeners();
         initializeCommands();
         initializeHooks();

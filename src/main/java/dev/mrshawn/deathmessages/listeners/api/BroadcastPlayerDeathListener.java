@@ -9,6 +9,7 @@ import dev.mrshawn.deathmessages.enums.MessageType;
 import dev.mrshawn.deathmessages.files.Config;
 import dev.mrshawn.deathmessages.files.FileSettings;
 import dev.mrshawn.deathmessages.listeners.PluginMessaging;
+import dev.mrshawn.deathmessages.utils.ComponentUtils;
 import dev.mrshawn.deathmessages.utils.DeathResolver;
 import net.md_5.bungee.chat.ComponentSerializer;
 import org.bukkit.Bukkit;
@@ -79,7 +80,7 @@ public class BroadcastPlayerDeathListener implements Listener {
                     }
                 }
             }
-            PluginMessaging.sendPluginMSG(e.getPlayer(), ComponentSerializer.toString(e.getTextComponent()));
+            PluginMessaging.sendPluginMSG(e.getPlayer(), e.getTextComponent());
         }
     }
 
@@ -89,7 +90,7 @@ public class BroadcastPlayerDeathListener implements Listener {
         }
         try {
             if (pms.getMessagesEnabled()) {
-                pls.spigot().sendMessage(e.getTextComponent());
+                ComponentUtils.send(pls, e.getTextComponent());
             }
         } catch (NullPointerException e1) {
             warn(e1);

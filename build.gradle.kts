@@ -24,6 +24,8 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
+    compileOnly("net.kyori:adventure-api:4.22.0")
+
     // NBT API
     compileOnly("de.tr7zw:item-nbt-api-plugin:2.15.0")
 
