@@ -52,16 +52,21 @@ java {
 }
 
 tasks {
-    build {
-        dependsOn(shadowJar)
-    }
     shadowJar {
-        archiveClassifier.set("")
         mapOf(
             "com.tcoded.folialib" to "folialib",
         ).forEach { (original,target) ->
             relocate(original, "dev.mrshawn.deathmessages.libs.$target")
         }
+    }
+    val copyTask = create<Copy>("copyBuildArtifact") {
+        dependsOn(shadowJar)
+        from(shadowJar.get().outputs)
+        rename { "${project.name}-$version.jar" }
+        into(rootProject.file("out"))
+    }
+    build {
+        dependsOn(copyTask)
     }
     processResources {
         duplicatesStrategy = DuplicatesStrategy.INCLUDE
