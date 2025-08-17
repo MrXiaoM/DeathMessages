@@ -160,26 +160,33 @@ public class AdventureUtils {
         return builder;
     }
 
+    private static boolean isReset(BaseComponent bungee) {
+        try {
+            return bungee.isReset();
+        } catch (Throwable t) {
+            return true;
+        }
+    }
+
     @Nullable
     public static Component convert(BaseComponent bungee) {
         Builder builder = convert0(bungee);
         if (builder == null) return null;
-        ComponentStyle style = bungee.getStyle();
-        if (bungee.isReset()) {
-            if (style.hasColor()) {
-                TextColor color = style.getColor().getName().startsWith("#")
-                        ? TextColor.fromHexString(style.getColor().getName())
-                        : NamedTextColor.NAMES.value(style.getColor().getName());
+        if (isReset(bungee)) {
+            if (bungee.getColorRaw() != null) {
+                TextColor color = bungee.getColorRaw().getName().startsWith("#")
+                        ? TextColor.fromHexString(bungee.getColorRaw().getName())
+                        : NamedTextColor.NAMES.value(bungee.getColorRaw().getName());
                 if (color != null) {
                     builder.color(color);
                 }
             }
-            if (style.isBold()) builder.decorate(TextDecoration.BOLD);
-            if (style.isItalic()) builder.decorate(TextDecoration.ITALIC);
-            if (style.isStrikethrough()) builder.decorate(TextDecoration.STRIKETHROUGH);
-            if (style.isUnderlined()) builder.decorate(TextDecoration.UNDERLINED);
-            if (style.isObfuscated()) builder.decorate(TextDecoration.OBFUSCATED);
-            if (style.hasFont()) builder.font(Key.key(style.getFont(), ':'));
+            if (bungee.isBold()) builder.decorate(TextDecoration.BOLD);
+            if (bungee.isItalic()) builder.decorate(TextDecoration.ITALIC);
+            if (bungee.isStrikethrough()) builder.decorate(TextDecoration.STRIKETHROUGH);
+            if (bungee.isUnderlined()) builder.decorate(TextDecoration.UNDERLINED);
+            if (bungee.isObfuscated()) builder.decorate(TextDecoration.OBFUSCATED);
+            if (bungee.getFontRaw() != null) builder.font(Key.key(bungee.getFontRaw(), ':'));
         }
         builder.insertion(bungee.getInsertion());
         builder.clickEvent(bungee.getClickEvent());
@@ -210,7 +217,11 @@ public class AdventureUtils {
         }
         if (bungee instanceof net.md_5.bungee.api.chat.TranslatableComponent) {
             net.md_5.bungee.api.chat.TranslatableComponent impl = (net.md_5.bungee.api.chat.TranslatableComponent) bungee;
-            return new Builder(Component.translatable(impl.getTranslate(), impl.getFallback()));
+            try {
+                return new Builder(Component.translatable(impl.getTranslate(), impl.getFallback()));
+            } catch (Throwable t) {
+                return new Builder(Component.translatable(impl.getTranslate()));
+            }
         }
         if (bungee instanceof net.md_5.bungee.api.chat.TextComponent) {
             net.md_5.bungee.api.chat.TextComponent impl = (net.md_5.bungee.api.chat.TextComponent) bungee;
