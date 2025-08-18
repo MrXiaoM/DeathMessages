@@ -24,10 +24,10 @@ The plugin depends on [NBT API](https://www.spigotmc.org/resources/nbt-api.7939/
 
 ## 前置插件
 
-* [NBT API](https://www.spigotmc.org/resources/nbt-api.7939/) **必选**
+* [NBT API](https://modrinth.com/plugin/nbtapi/versions) **必选**
 * [WorldGuard](https://enginehub.org/worldguard/) 可选 区域控制
 * [WorldEdit](https://enginehub.org/worldedit/) 可选 
-* [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) 可选 支持在死亡消息中使用变量
+* [PlaceholderAPI](https://modrinth.com/plugin/placeholderapi/versions/) 可选 支持在死亡消息中使用变量
 * [MythicMobs](https://www.spigotmc.org/resources/mythicmobs.5702/) 可选 支持MM怪物死亡消息 (4.x, 5.x 均支持)
 * [LangUtils](https://ci.nyaacat.com/job/LanguageUtils/) 可选 支持根据玩家语言显示生物/方块/物品名 (LangUtils for mc1.12或以下请到[原作者地址](https://github.com/MascusJeoraly/LanguageUtils/releases)下载)  
 `1.19.4+` 可使用 Translatable 特性，**无需安装 LangUtils** 即可根据玩家语言显示生物/方块/物品名
