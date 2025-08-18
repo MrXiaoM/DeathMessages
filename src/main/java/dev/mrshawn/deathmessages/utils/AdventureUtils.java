@@ -41,6 +41,10 @@ public class AdventureUtils {
             base = base.color(color);
         }
 
+        public void shadowColor(java.awt.Color color) {
+            base = base.shadowColor(net.kyori.adventure.text.format.ShadowColor.shadowColor(color.getAlpha(), color.getRed(), color.getRed(), color.getBlue()));
+        }
+
         public void decorate(TextDecoration decoration) {
             base = base.decorate(decoration);
         }
@@ -160,34 +164,31 @@ public class AdventureUtils {
         return builder;
     }
 
-    private static boolean isReset(BaseComponent bungee) {
-        try {
-            return bungee.isReset();
-        } catch (Throwable t) {
-            return true;
-        }
-    }
-
     @Nullable
     public static Component convert(BaseComponent bungee) {
         Builder builder = convert0(bungee);
         if (builder == null) return null;
-        if (isReset(bungee)) {
-            if (bungee.getColorRaw() != null) {
-                TextColor color = bungee.getColorRaw().getName().startsWith("#")
-                        ? TextColor.fromHexString(bungee.getColorRaw().getName())
-                        : NamedTextColor.NAMES.value(bungee.getColorRaw().getName());
-                if (color != null) {
-                    builder.color(color);
-                }
+        if (bungee.getColorRaw() != null) {
+            TextColor color = bungee.getColorRaw().getName().startsWith("#")
+                    ? TextColor.fromHexString(bungee.getColorRaw().getName())
+                    : NamedTextColor.NAMES.value(bungee.getColorRaw().getName());
+            if (color != null) {
+                builder.color(color);
             }
-            if (bungee.isBold()) builder.decorate(TextDecoration.BOLD);
-            if (bungee.isItalic()) builder.decorate(TextDecoration.ITALIC);
-            if (bungee.isStrikethrough()) builder.decorate(TextDecoration.STRIKETHROUGH);
-            if (bungee.isUnderlined()) builder.decorate(TextDecoration.UNDERLINED);
-            if (bungee.isObfuscated()) builder.decorate(TextDecoration.OBFUSCATED);
-            if (bungee.getFontRaw() != null) builder.font(Key.key(bungee.getFontRaw(), ':'));
         }
+        try {
+            if (bungee.getShadowColorRaw() != null) {
+                builder.shadowColor(bungee.getShadowColorRaw());
+            }
+        } catch (LinkageError ignored) {
+        }
+        if (bungee.isBold()) builder.decorate(TextDecoration.BOLD);
+        if (bungee.isItalic()) builder.decorate(TextDecoration.ITALIC);
+        if (bungee.isStrikethrough()) builder.decorate(TextDecoration.STRIKETHROUGH);
+        if (bungee.isUnderlined()) builder.decorate(TextDecoration.UNDERLINED);
+        if (bungee.isObfuscated()) builder.decorate(TextDecoration.OBFUSCATED);
+        if (bungee.getFontRaw() != null) builder.font(Key.key(bungee.getFontRaw(), ':'));
+
         builder.insertion(bungee.getInsertion());
         builder.clickEvent(bungee.getClickEvent());
         builder.hoverEvent(bungee.getHoverEvent());
