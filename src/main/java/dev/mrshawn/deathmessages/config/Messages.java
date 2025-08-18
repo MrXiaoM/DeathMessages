@@ -357,10 +357,15 @@ public class Messages {
     }
 
     public static String getCustomName(Entity entity, Player player) {
-        if (entity instanceof Player) return getPlayerNameWithPlaceholder((Player) entity);
+        if (entity instanceof Player) {
+            return getPlayerNameWithPlaceholder((Player) entity);
+        }
         String customName = entity.getCustomName();
-        if (customName == null) return getEntityName(entity, player);
-        return customName;
+        if (customName == null) {
+            return getEntityName(entity, player);
+        } else {
+            return customName;
+        }
     }
 
     public static boolean isNotNumeric(String s) {
@@ -464,32 +469,9 @@ public class Messages {
         if (components.size() == 1) {
             return components.get(0);
         }
-        BaseComponent last = null;
         TextComponent tc = new TextComponent("");
         for (BaseComponent component : components) {
-            // 继承颜色与样式
-            if (last != null && component instanceof TranslatableComponent) {
-                if (last.getColorRaw() != null) {
-                    component.setColor(last.getColorRaw());
-                }
-                try {
-                    if (last.getShadowColorRaw() != null) {
-                        component.setShadowColor(last.getShadowColorRaw());
-                    }
-                } catch (LinkageError ignored) {
-                }
-                if (last.isBold()) component.setBold(last.isBold());
-                if (last.isItalic()) component.setItalic(last.isItalic());
-                if (last.isUnderlined()) component.setUnderlined(last.isUnderlined());
-                if (last.isStrikethrough()) component.setStrikethrough(last.isStrikethrough());
-                if (last.isObfuscated()) component.setObfuscated(last.isObfuscated());
-                if (last.getInsertion() != null) component.setInsertion(last.getInsertion());
-                if (last.getFontRaw() != null) component.setFont(last.getFontRaw());
-                if (last.getHoverEvent() != null) component.setHoverEvent(last.getHoverEvent());
-                if (last.getClickEvent() != null) component.setClickEvent(last.getClickEvent());
-            }
             tc.addExtra(component);
-            last = component;
         }
         return tc;
     }
