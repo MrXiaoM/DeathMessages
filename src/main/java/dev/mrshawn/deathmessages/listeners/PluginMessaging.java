@@ -10,7 +10,6 @@ import dev.mrshawn.deathmessages.files.FileSettings;
 import dev.mrshawn.deathmessages.utils.ComponentUtils;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.chat.ComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
@@ -45,7 +44,7 @@ public class PluginMessaging implements PluginMessageListener {
                     String rawMsg = data[1];
                     BaseComponent textComponent = new TextComponent(Messages.colorize(Messages.getInstance().getConfig().getString("Bungee.Message", "")
                             .replace("%server_name%", serverName2)));
-                    BaseComponent textComponent2 = new TextComponent(ComponentSerializer.parse(rawMsg));
+                    BaseComponent textComponent2 = new TextComponent(deserializeFromString(rawMsg));
                     for (Player pls : Bukkit.getOnlinePlayers()) {
                         PlayerManager pms = PlayerManager.getPlayer(pls);
                         if (pms.getMessagesEnabled()) {
@@ -70,7 +69,7 @@ public class PluginMessaging implements PluginMessageListener {
 
     public static void sendPluginMSG(Player p, TextComponent text) {
         if (config.getBoolean(Config.HOOKS_BUNGEE_ENABLED)) {
-            String msg = ComponentSerializer.toString(text);
+            String msg = serializeToString(text);
             if (config.getBoolean(Config.HOOKS_BUNGEE_SERVER_GROUPS_ENABLED)) {
                 List<String> serverList = config.getStringList(Config.HOOKS_BUNGEE_SERVER_GROUPS_SERVERS);
                 for (String server : serverList) {
@@ -90,5 +89,15 @@ public class PluginMessaging implements PluginMessageListener {
             out2.writeUTF(DeathMessages.bungeeServerName + "######" + msg);
             p.sendPluginMessage(DeathMessages.getInstance(), "BungeeCord", out2.toByteArray());
         }
+    }
+
+    public static String serializeToString(BaseComponent component) {
+        // 1.21.6 以前，在 net.md-5:bungeecord-chat
+        // 1.21.6 以后，在 net.md-5:bungeecord-serializer
+        return net.md_5.bungee.chat.ComponentSerializer.toString(component);
+    }
+
+    public static BaseComponent[] deserializeFromString(String str) {
+        return net.md_5.bungee.chat.ComponentSerializer.parse(str);
     }
 }
