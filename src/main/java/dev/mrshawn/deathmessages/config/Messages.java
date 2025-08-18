@@ -448,7 +448,12 @@ public class Messages {
         }
     }
 
+    @Deprecated
     public static TextComponent bungee(String message) {
+        return new TextComponent(parseBungee(message));
+    }
+
+    public static BaseComponent parseBungee(String message) {
         List<BaseComponent> components = split(translatePattern, colorize(message), regexResult -> {
             if (!regexResult.isMatched) {
                 return new TextComponent(TextComponent.fromLegacyText(regexResult.text));
@@ -457,9 +462,7 @@ public class Messages {
             }
         });
         if (components.size() == 1) {
-            BaseComponent component = components.get(0);
-            if (component instanceof TextComponent) return (TextComponent) component;
-            return new TextComponent(component);
+            return components.get(0);
         }
         BaseComponent last = null;
         TextComponent tc = new TextComponent("");

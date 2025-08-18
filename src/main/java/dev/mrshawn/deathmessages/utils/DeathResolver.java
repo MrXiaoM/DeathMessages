@@ -42,7 +42,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static dev.mrshawn.deathmessages.DeathMessages.majorVersion;
-import static dev.mrshawn.deathmessages.config.Messages.bungee;
+import static dev.mrshawn.deathmessages.config.Messages.parseBungee;
 import static org.bukkit.event.entity.EntityDamageEvent.DamageCause.*;
 
 public class DeathResolver {
@@ -206,7 +206,12 @@ public class DeathResolver {
         return null;
     }
 
-    public static TextComponent solveWeapon(String splitMessage, ItemStack i, String displayName) {
+    @Deprecated
+    public static TextComponent resolveWeapon(String splitMessage, ItemStack i, String displayName) {
+        return new TextComponent(parseWeapon(splitMessage, i, displayName));
+    }
+
+    public static BaseComponent parseWeapon(String splitMessage, ItemStack i, String displayName) {
         String[] spl = splitMessage.split("%weapon%");
         if (spl.length != 0 && spl[0] != null && !spl[0].isEmpty()) {
             displayName = Messages.colorize(spl[0]) + displayName;
@@ -214,7 +219,7 @@ public class DeathResolver {
         if (spl.length != 0 && spl.length != 1 && spl[1] != null && !spl[1].isEmpty()) {
             displayName = displayName + Messages.colorize(spl[1]);
         }
-        TextComponent weaponComp = bungee(displayName);
+        BaseComponent weaponComp = parseBungee(displayName);
         weaponComp.setHoverEvent(HoverShowItemResolver.toHoverEvent(i));
         return weaponComp;
     }
@@ -244,7 +249,7 @@ public class DeathResolver {
         List<String> msgs = Messages.sortList(unsortedMessages, pm.getPlayer(), pm.getPlayer());
         if (msgs.isEmpty()) return null;
         TextComponent tc = new TextComponent("");
-        if (addPrefix) tc.addExtra(bungee(Messages.getInstance().getConfig().getString("Prefix", "")));
+        if (addPrefix) tc.addExtra(parseBungee(Messages.getInstance().getConfig().getString("Prefix", "")));
         String msg = msgs.get(new Random().nextInt(msgs.size()));
         String[] sec = msg.split("::");
         String firstSection = msg.contains("::") ? (sec.length == 0 ? msg : sec[0]) : msg;
@@ -287,9 +292,9 @@ public class DeathResolver {
                 } else {
                     displayName = Messages.getCustomName(i, pm.getPlayer());
                 }
-                tc.addExtra(solveWeapon(splitMessage, i, displayName));
+                tc.addExtra(parseWeapon(splitMessage, i, displayName));
             } else {
-                TextComponent tx = bungee(playerDeathPlaceholders(lastColor + lastFont + splitMessage, pm, null) + " ");
+                BaseComponent tx = parseBungee(playerDeathPlaceholders(lastColor + lastFont + splitMessage, pm, null) + " ");
                 tc.addExtra(tx);
                 for (BaseComponent bs : tx.getExtra()) {
                     if (bs.getColor() != null) lastColor = bs.getColor().toString();
@@ -311,7 +316,7 @@ public class DeathResolver {
         } else msgs = Messages.sortList(Messages.getPlayerDeathMessages().getStringList(cMode + "." + affiliation + ".Weapon"), pm.getPlayer(), mob);
         if (msgs.isEmpty()) return null;
         TextComponent tc = new TextComponent("");
-        if (addPrefix) tc.addExtra(bungee(Messages.getInstance().getConfig().getString("Prefix", "")));
+        if (addPrefix) tc.addExtra(parseBungee(Messages.getInstance().getConfig().getString("Prefix", "")));
         String msg = msgs.get(new Random().nextInt(msgs.size()));
         String[] sec = msg.split("::");
         String firstSection = msg.contains("::") ? (sec.length == 0 ? msg : sec[0]) : msg;
@@ -332,9 +337,9 @@ public class DeathResolver {
                 } else {
                     displayName = Messages.getCustomName(i, pm.getPlayer());
                 }
-                tc.addExtra(solveWeapon(splitMessage, i, displayName));
+                tc.addExtra(parseWeapon(splitMessage, i, displayName));
             } else {
-                TextComponent tx = bungee(playerDeathPlaceholders(lastColor + lastFont + splitMessage, pm, mob) + " ");
+                BaseComponent tx = parseBungee(playerDeathPlaceholders(lastColor + lastFont + splitMessage, pm, mob) + " ");
                 tc.addExtra(tx);
                 for (BaseComponent bs : tx.getExtra()) {
                     if (bs.getColor() != null) lastColor = bs.getColor().toString();
@@ -358,7 +363,7 @@ public class DeathResolver {
         if (msgs.isEmpty()) return null;
         boolean hasOwner = e instanceof Tameable && ((Tameable) e).getOwner() != null;
         TextComponent tc = new TextComponent("");
-        if (addPrefix) tc.addExtra(bungee(Messages.getInstance().getConfig().getString("Prefix", "")));
+        if (addPrefix) tc.addExtra(parseBungee(Messages.getInstance().getConfig().getString("Prefix", "")));
         String msg = msgs.get(new Random().nextInt(msgs.size()));
         String[] sec = msg.split("::");
         String firstSection = msg.contains("::") ? (sec.length == 0 ? msg : sec[0]) : msg;
@@ -378,9 +383,9 @@ public class DeathResolver {
                     }
                     displayName = Messages.getItemName(i, p);
                 } else displayName = Messages.getCustomName(i, p);
-                tc.addExtra(solveWeapon(splitMessage, i, displayName));
+                tc.addExtra(parseWeapon(splitMessage, i, displayName));
             } else {
-                TextComponent tx = bungee(entityDeathPlaceholders(lastColor + lastFont + splitMessage, p, e, hasOwner) + " ");
+                BaseComponent tx = parseBungee(entityDeathPlaceholders(lastColor + lastFont + splitMessage, p, e, hasOwner) + " ");
                 tc.addExtra(tx);
                 for (BaseComponent bs : tx.getExtra()) {
                     if (bs.getColor() != null) lastColor = bs.getColor().toString();
@@ -419,14 +424,14 @@ public class DeathResolver {
             return null;
         }
         TextComponent tc = new TextComponent("");
-        if (addPrefix) tc.addExtra(bungee(Messages.getInstance().getConfig().getString("Prefix", "")));
+        if (addPrefix) tc.addExtra(parseBungee(Messages.getInstance().getConfig().getString("Prefix", "")));
         String msg = msgs.get(new Random().nextInt(msgs.size()));
         String[] sec = msg.split("::");
         String firstSection = msg.contains("::") ? (sec.length == 0 ? msg : sec[0]) : msg;
         String lastColor = "";
         String lastFont = "";
         for (String splitMessage : firstSection.split(" ")) {
-            TextComponent tx = bungee(playerDeathPlaceholders(lastColor + lastFont + splitMessage, pm, mob) + " ");
+            BaseComponent tx = parseBungee(playerDeathPlaceholders(lastColor + lastFont + splitMessage, pm, mob) + " ");
             tc.addExtra(tx);
             for (BaseComponent bs : tx.getExtra()) {
                 if (bs.getColor() != null) {
@@ -449,7 +454,7 @@ public class DeathResolver {
         } else msgs = Messages.sortList(Messages.getPlayerDeathMessages().getStringList(cMode + "." + affiliation + "." + projectileDamage), pm.getPlayer(), mob);
         if (msgs.isEmpty()) return null;
         TextComponent tc = new TextComponent("");
-        if (addPrefix) tc.addExtra(bungee(Messages.getInstance().getConfig().getString("Prefix", "")));
+        if (addPrefix) tc.addExtra(parseBungee(Messages.getInstance().getConfig().getString("Prefix", "")));
         String msg = msgs.get(new Random().nextInt(msgs.size()));
         String[] sec = msg.split("::");
         String firstSection = msg.contains("::") ? (sec.length == 0 ? msg : sec[0]) : msg;
@@ -468,9 +473,9 @@ public class DeathResolver {
                 } else {
                     displayName = Messages.getCustomName(i, pm.getPlayer());
                 }
-                tc.addExtra(solveWeapon(splitMessage, i, displayName));
+                tc.addExtra(parseWeapon(splitMessage, i, displayName));
             } else {
-                TextComponent tx = bungee(playerDeathPlaceholders(lastColor + lastFont + splitMessage, pm, mob) + " ");
+                BaseComponent tx = parseBungee(playerDeathPlaceholders(lastColor + lastFont + splitMessage, pm, mob) + " ");
                 tc.addExtra(tx);
                 for (BaseComponent bs : tx.getExtra()) {
                     if (bs.getColor() != null) lastColor = bs.getColor().toString();
@@ -497,7 +502,7 @@ public class DeathResolver {
         Entity entity = em.getEntity();
         boolean hasOwner = entity instanceof Tameable && ((Tameable) entity).getOwner() != null;
         TextComponent tc = new TextComponent("");
-        if (addPrefix) tc.addExtra(bungee(Messages.getInstance().getConfig().getString("Prefix", "")));
+        if (addPrefix) tc.addExtra(parseBungee(Messages.getInstance().getConfig().getString("Prefix", "")));
         String msg = msgs.get(new Random().nextInt(msgs.size()));
         String[] sec = msg.split("::");
         String firstSection = msg.contains("::") ? (sec.length == 0 ? msg : sec[0]) : msg;
@@ -516,9 +521,9 @@ public class DeathResolver {
                 } else {
                     displayName = Messages.getCustomName(i, p);
                 }
-                tc.addExtra(solveWeapon(splitMessage, i, displayName));
+                tc.addExtra(parseWeapon(splitMessage, i, displayName));
             } else {
-                TextComponent tx = bungee(entityDeathPlaceholders(lastColor + lastFont + splitMessage, p, em.getEntity(), hasOwner) + " ");
+                BaseComponent tx = parseBungee(entityDeathPlaceholders(lastColor + lastFont + splitMessage, p, em.getEntity(), hasOwner) + " ");
                 tc.addExtra(tx);
                 for (BaseComponent bs : tx.getExtra()) {
                     if (bs.getColor() != null) {
@@ -555,14 +560,14 @@ public class DeathResolver {
 
         if (msgs.isEmpty()) return null;
         TextComponent tc = new TextComponent("");
-        if (addPrefix) tc.addExtra(bungee(Messages.getInstance().getConfig().getString("Prefix", "")));
+        if (addPrefix) tc.addExtra(parseBungee(Messages.getInstance().getConfig().getString("Prefix", "")));
         String msg = msgs.get(new Random().nextInt(msgs.size()));
         String[] sec = msg.split("::");
         String firstSection = msg.contains("::") ? (sec.length == 0 ? msg : sec[0]) : msg;
         String lastColor = "";
         String lastFont = "";
         for (String splitMessage : firstSection.split(" ")) {
-            TextComponent tx = bungee(entityDeathPlaceholders(lastColor + lastFont + splitMessage, player, entity, hasOwner) + " ");
+            BaseComponent tx = parseBungee(entityDeathPlaceholders(lastColor + lastFont + splitMessage, player, entity, hasOwner) + " ");
             tc.addExtra(tx);
             for (BaseComponent bs : tx.getExtra()) {
                 if (bs.getColor() != null) {
