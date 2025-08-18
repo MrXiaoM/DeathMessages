@@ -2,6 +2,7 @@ package dev.mrshawn.deathmessages.api.events;
 
 import dev.mrshawn.deathmessages.api.PlayerManager;
 import dev.mrshawn.deathmessages.enums.MessageType;
+import dev.mrshawn.deathmessages.utils.ComponentUtils;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -26,7 +27,7 @@ public class BroadcastEntityDeathMessageEvent extends Event implements Cancellab
         this.player = pm;
         this.entity = entity;
         this.messageType = messageType;
-        this.textComponent = textComponent;
+        this.textComponent = ComponentUtils.scanAndInheritStyle(textComponent);
         this.broadcastedWorlds = broadcastedWorlds;
     }
 

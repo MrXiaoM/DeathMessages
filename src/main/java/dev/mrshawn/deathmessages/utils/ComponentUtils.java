@@ -31,7 +31,12 @@ public class ComponentUtils {
         return is1_21_5;
     }
 
-    private static void scanAndInheritStyle(BaseComponent last, BaseComponent message) {
+    public static <T extends BaseComponent> T scanAndInheritStyle(T message) {
+        scanAndInheritStyle(null, message);
+        return message;
+    }
+
+    public static void scanAndInheritStyle(BaseComponent last, BaseComponent message) {
         inherit(message, last);
         List<BaseComponent> extra = message.getExtra();
         if (extra != null) for (BaseComponent baseComponent : extra) {
@@ -40,7 +45,7 @@ public class ComponentUtils {
         }
     }
 
-    private static void applyStyle(BaseComponent builder, BaseComponent component) {
+    public static void applyStyle(BaseComponent builder, BaseComponent component) {
         if (component.getColorRaw() != null) {
             builder.setColor(component.getColorRaw());
         }
@@ -67,7 +72,7 @@ public class ComponentUtils {
         }
     }
 
-    private static void inherit(BaseComponent component, BaseComponent last) {
+    public static void inherit(BaseComponent component, BaseComponent last) {
         if (component instanceof TranslatableComponent) {
             if (last != null) {
                 applyStyle(component, last);
@@ -76,11 +81,6 @@ public class ComponentUtils {
     }
 
     public static void send(CommandSender sender, BaseComponent... message) {
-        BaseComponent last = null;
-        for (BaseComponent baseComponent : message) {
-            scanAndInheritStyle(last, baseComponent);
-            last = baseComponent;
-        }
         if (supportAdventure) {
             // Paper 从 1.16 开始内置 adventure api
             if (AdventureUtils.send(sender, message)) return;
