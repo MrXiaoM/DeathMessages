@@ -182,10 +182,11 @@ public class AdventureUtils {
             }
         }
         try {
+            Class.forName("net.kyori.adventure.util.ARGBLike");
             if (bungee.getShadowColorRaw() != null) {
                 builder.shadowColor(bungee.getShadowColorRaw());
             }
-        } catch (LinkageError ignored) {
+        } catch (LinkageError | ReflectiveOperationException ignored) {
         }
         if (bungee.isBold()) builder.decorate(TextDecoration.BOLD);
         if (bungee.isItalic()) builder.decorate(TextDecoration.ITALIC);
