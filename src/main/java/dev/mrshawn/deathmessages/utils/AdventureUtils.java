@@ -27,6 +27,11 @@ import java.util.List;
 import java.util.UUID;
 
 public class AdventureUtils {
+    private static class A {
+        public static Component shadowColor(Component base, java.awt.Color color) {
+            return base.shadowColor(net.kyori.adventure.text.format.ShadowColor.shadowColor(color.getAlpha(), color.getRed(), color.getRed(), color.getBlue()));
+        }
+    }
     public static class Builder {
         private Component base;
         public Builder(Component component) {
@@ -42,7 +47,7 @@ public class AdventureUtils {
         }
 
         public void shadowColor(java.awt.Color color) {
-            base = base.shadowColor(net.kyori.adventure.text.format.ShadowColor.shadowColor(color.getAlpha(), color.getRed(), color.getRed(), color.getBlue()));
+            base = A.shadowColor(base, color);
         }
 
         public void decorate(TextDecoration decoration) {
