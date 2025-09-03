@@ -4,6 +4,10 @@
 # Disable the default messages from minecraft
 Disable-Default-Messages: true
 
+# 是否在支持 Adventure 的平台，使用 Adventure 发送消息。如果鼠标悬停显示异常，请关闭这个功能
+# Send message with Adventure if it is supported by platform. Please disable this option if hover item not works well.
+Use-Adventure: true
+
 # 是否在控制台显示死亡事件来源
 # Does a stacktrace of death event be shown in console
 Show-Death-Source: false

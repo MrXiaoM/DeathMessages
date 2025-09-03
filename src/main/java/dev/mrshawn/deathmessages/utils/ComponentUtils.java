@@ -14,6 +14,7 @@ import java.util.List;
 public class ComponentUtils {
     private static boolean is1_21_5;
     private static boolean supportAdventure;
+    private static boolean useAdventure;
     public static void init() {
         try {
             supportAdventure = Bukkit.getConsoleSender() instanceof Audience;
@@ -29,6 +30,14 @@ public class ComponentUtils {
 
     public static boolean is1_21_5() {
         return is1_21_5;
+    }
+
+    public static boolean isUseAdventure() {
+        return useAdventure;
+    }
+
+    public static void setUseAdventure(boolean useAdventure) {
+        ComponentUtils.useAdventure = useAdventure;
     }
 
     public static <T extends BaseComponent> T scanAndInheritStyle(T message) {
@@ -81,7 +90,7 @@ public class ComponentUtils {
     }
 
     public static void send(CommandSender sender, BaseComponent... message) {
-        if (supportAdventure) {
+        if (supportAdventure && useAdventure) {
             // Paper 从 1.16 开始内置 adventure api
             if (AdventureUtils.send(sender, message)) return;
         }

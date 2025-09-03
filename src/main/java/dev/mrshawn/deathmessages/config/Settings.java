@@ -2,6 +2,7 @@ package dev.mrshawn.deathmessages.config;
 
 import dev.mrshawn.deathmessages.DeathMessages;
 import dev.mrshawn.deathmessages.utils.CommentedConfiguration;
+import dev.mrshawn.deathmessages.utils.ComponentUtils;
 
 import java.io.File;
 import java.io.InputStream;
@@ -44,6 +45,7 @@ public class Settings {
         try {
             this.config = CommentedConfiguration.loadConfiguration(this.file);
             this.showDeathSource = config.getBoolean("Show-Death-Source", false);
+            ComponentUtils.setUseAdventure(config.getBoolean("Use-Adventure", true));
         } catch (Exception e) {
             warn(e);
             File f = new File(DeathMessages.getInstance().getDataFolder(), "Settings.broken." + new Date().getTime());
