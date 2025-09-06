@@ -98,6 +98,7 @@ public class ComponentUtils {
         // 兼容 1.8
         if (sender instanceof Player) {
             ((Player) sender).spigot().sendMessage(message);
+            return;
         }
         try {
             sender.spigot().sendMessage(message);
