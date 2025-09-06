@@ -2,19 +2,23 @@ package dev.mrshawn.deathmessages.utils;
 
 import de.tr7zw.nbtapi.utils.MinecraftVersion;
 import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.event.HoverEventSource;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
 public class ComponentUtils {
-    private static boolean is1_21_5;
+    private static boolean is1_20_5;
     private static boolean supportAdventure;
     private static boolean useAdventure;
+    private static boolean isItemSupportHoverSource;
     public static void init() {
         try {
             supportAdventure = Bukkit.getConsoleSender() instanceof Audience;
@@ -22,18 +26,27 @@ public class ComponentUtils {
             supportAdventure = false;
         }
         try {
-            is1_21_5 = MinecraftVersion.isAtLeastVersion(MinecraftVersion.MC1_21_R4);
+            is1_20_5 = MinecraftVersion.isAtLeastVersion(MinecraftVersion.MC1_20_R4);
         } catch (Throwable ignored) {
-            is1_21_5 = false;
+            is1_20_5 = false;
+        }
+        try {
+            isItemSupportHoverSource = new ItemStack(Material.STONE) instanceof HoverEventSource;
+        } catch (Throwable ignored) {
+            isItemSupportHoverSource = false;
         }
     }
 
-    public static boolean is1_21_5() {
-        return is1_21_5;
+    public static boolean is1_20_5() {
+        return is1_20_5;
     }
 
     public static boolean isUseAdventure() {
         return useAdventure;
+    }
+
+    public static boolean isItemSupportHoverSource() {
+        return isItemSupportHoverSource;
     }
 
     public static void setUseAdventure(boolean useAdventure) {
