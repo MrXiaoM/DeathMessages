@@ -28,6 +28,8 @@ public class HoverShowItemResolver {
             NBTCompound components = getComponent(nbt, "components");
             NBTCompound tag = getComponent(nbt, "tag");
 
+            String id = nbt.getString("id");
+            int count = nbt.getInteger("count");
             ItemTag itemTag;
             if (components != null) { // 1.21.5+
                 // Paper 上的 BungeeCord chat api 不支持新版本格式，最终发送时，应使用 adventure 接口替代
@@ -38,11 +40,7 @@ public class HoverShowItemResolver {
                 itemTag = ItemTag.ofNbt("{}");
             }
 
-            return new HoverEvent(HoverEvent.Action.SHOW_ITEM, new Item(
-                    nbt.getString("id"),
-                    nbt.getInteger("count"),
-                    itemTag
-            ));
+            return new HoverEvent(HoverEvent.Action.SHOW_ITEM, new Item(id, count, itemTag));
         } catch (LinkageError e) {
             useLegacyMethod = true;
             return toHoverEventLegacy(item);
