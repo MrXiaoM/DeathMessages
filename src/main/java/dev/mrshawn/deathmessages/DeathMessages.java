@@ -2,6 +2,7 @@ package dev.mrshawn.deathmessages;
 
 import com.tcoded.folialib.FoliaLib;
 import com.tcoded.folialib.impl.PlatformScheduler;
+import dev.mrshawn.deathmessages.api.INameAdapter;
 import dev.mrshawn.deathmessages.api.PlayerManager;
 import dev.mrshawn.deathmessages.command.CommandManager;
 import dev.mrshawn.deathmessages.command.impl.CommandToggle;
@@ -25,14 +26,18 @@ import org.bukkit.World;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -52,6 +57,7 @@ public class DeathMessages extends JavaPlugin {
     public static boolean bungeeInit = false;
     private static EventPriority eventPriority = EventPriority.HIGH;
     private static int savedVersion = 0;
+    private final List<INameAdapter> nameAdapters = new ArrayList<>();
     private final FoliaLib foliaLib = new FoliaLib(this);
 
     public static void warn(Throwable t) {
@@ -85,6 +91,32 @@ public class DeathMessages extends JavaPlugin {
         HandlerList.unregisterAll(this);
         getScheduler().cancelAllTasks();
         instance = null;
+    }
+
+    @NotNull
+    public String getPlayerName(@NotNull Player player) {
+        for (INameAdapter adapter : nameAdapters) {
+            String name = adapter.getName(player);
+            if (name != null) {
+                return name;
+            }
+        }
+        return player.getName();
+    }
+
+    public void registerNameAdapter(@NotNull INameAdapter adapter) {
+        this.nameAdapters.add(adapter);
+        this.nameAdapters.sort(Comparator.comparingInt(INameAdapter::priority));
+    }
+
+    public void unregisterNameAdapter(@NotNull INameAdapter adapter) {
+        this.nameAdapters.remove(adapter);
+        this.nameAdapters.sort(Comparator.comparingInt(INameAdapter::priority));
+    }
+
+    public void unregisterNameAdapter(@NotNull Class<? extends INameAdapter> type) {
+        this.nameAdapters.removeIf(it -> it.getClass().equals(type));
+        this.nameAdapters.sort(Comparator.comparingInt(INameAdapter::priority));
     }
 
     public static int majorVersion() {

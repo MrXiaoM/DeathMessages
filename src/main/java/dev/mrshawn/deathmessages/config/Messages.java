@@ -347,11 +347,13 @@ public class Messages {
     }
 
     public static String getPlayerNameWithPlaceholder(Player player) {
-        String msg = config().getString("PlayerName", "%player_name%");
-        if (DeathMessages.getInstance().placeholderAPIEnabled) {
+        DeathMessages plugin = DeathMessages.getInstance();
+        String playerName = plugin.getPlayerName(player);
+        String msg = config().getString("PlayerName", "%player_name%")
+                .replace("%player%", playerName)
+                .replace("%player_name%", playerName);
+        if (plugin.placeholderAPIEnabled) {
             msg = PlaceholderAPI.setPlaceholders(player,  msg);
-        } else {
-            msg = msg.replace("%player_name%", player.getName());
         }
         return ChatColor.translateAlternateColorCodes('&', msg);
     }
