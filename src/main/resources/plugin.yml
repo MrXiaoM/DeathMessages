@@ -10,6 +10,7 @@ softdepend:
   - WorldEdit
   - WorldGuard
   - LangUtils
+  - LibsDisguise
 authors: [ Joshb_, MrShawn, MrXiaoM ]
 folia-supported: true
 commands:

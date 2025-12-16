@@ -36,6 +36,12 @@ Hooks:
   LangUtils:
     Enabled: true
 
+  # 若找到 LibsDisguises (11.x)，添加玩家名适配器。死亡消息中的玩家名将会替换为伪装中的实体自定义名字
+  # If LibsDisguises is found, enable the hook. Player name in death messages will be replaced with CustomName of disguised entity.
+  # Enable/Disable LibsDisguises hook
+  LibsDisguises:
+    Enable: true
+
   # 若找到 WorldGuard 7.x，启用插件联动
   # If WorldGuard 7.x is found, enable the hook
   # 这将会创建以下自定义区域权限，所有权限默认设为 允许

@@ -3,6 +3,7 @@ package dev.mrshawn.deathmessages;
 import com.tcoded.folialib.FoliaLib;
 import com.tcoded.folialib.impl.PlatformScheduler;
 import dev.mrshawn.deathmessages.api.INameAdapter;
+import dev.mrshawn.deathmessages.api.LibsDisguisesNameAdapter;
 import dev.mrshawn.deathmessages.api.PlayerManager;
 import dev.mrshawn.deathmessages.command.CommandManager;
 import dev.mrshawn.deathmessages.command.impl.CommandToggle;
@@ -220,6 +221,10 @@ public class DeathMessages extends JavaPlugin {
         if (Bukkit.getPluginManager().getPlugin("LangUtils") != null && config.getBoolean(Config.HOOKS_LANGUTILS_ENABLED)) {
             langUtilsEnabled = true;
             getLogger().info("LangUtils Hook Enabled!");
+        }
+        if (Bukkit.getPluginManager().getPlugin("LibsDisguises") != null && config.getBoolean(Config.HOOKS_LIBSDISGUISES_ENABLED)) {
+            registerNameAdapter(new LibsDisguisesNameAdapter());
+            getLogger().info("LibsDisguises Hook Enabled!");
         }
         if (config.getBoolean(Config.HOOKS_BUNGEE_ENABLED)) {
             Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");

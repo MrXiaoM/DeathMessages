@@ -38,6 +38,9 @@ dependencies {
     compileOnly("io.lumine:Mythic:5.6.2")
     compileOnly("io.lumine:LumineUtils:1.20-SNAPSHOT")
 
+    // Lib's Disguises
+    compileOnly("LibsDisguises:LibsDisguises:11.0.9")
+
     // LangUtils (legacy)
     compileOnly("com.github.MascusJeoraly:LanguageUtils:1.9")
 

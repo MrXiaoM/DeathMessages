@@ -7,6 +7,7 @@ public enum Config implements ConfigEnum {
     ADD_PREFIX_TO_ALL_MESSAGES("Add-Prefix-To-All-Messages", true),
     HOOKS_MYTHICMOBS_ENABLED("Hooks.MythicMobs.Enabled", true),
     HOOKS_LANGUTILS_ENABLED("Hooks.LangUtils.Enabled", true),
+    HOOKS_LIBSDISGUISES_ENABLED("Hooks.LibsDisguises.Enabled", true),
     HOOKS_WORLDGUARD_ENABLED("Hooks.WorldGuard.Enabled", true),
     HOOKS_BUNGEE_ENABLED("Hooks.Bungee.Enabled", false),
     HOOKS_BUNGEE_SERVER_NAME_GET_FROM_BUNGEE("Hooks.Bungee.Server-Name.Get-From-Bungee", false),
