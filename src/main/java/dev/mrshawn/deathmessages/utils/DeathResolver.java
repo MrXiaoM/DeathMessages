@@ -33,10 +33,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -608,7 +605,9 @@ public class DeathResolver {
             msg2 = msg2.replace("%biome%", "Unknown");
         }
         if (DeathMessages.getInstance().placeholderAPIEnabled) {
-            msg2 = PlaceholderAPI.setPlaceholders(player, msg2);
+            Map<String, Player> contexts = new HashMap<>();
+            contexts.put("killer", player);
+            msg2 = PlaceholderUtils.setPlaceholders(player, contexts, msg2);
         }
         return msg2;
     }
@@ -672,7 +671,12 @@ public class DeathResolver {
             }
         }
         if (DeathMessages.getInstance().placeholderAPIEnabled) {
-            msg2 = PlaceholderAPI.setPlaceholders(pm.getPlayer(), msg2);
+            Map<String, Player> contexts = new HashMap<>();
+            contexts.put("killed", pm.getPlayer());
+            if (mob instanceof Player) {
+                contexts.put("killer", (Player) mob);
+            }
+            msg2 = PlaceholderUtils.setPlaceholders(pm.getPlayer(), contexts, msg2);
         }
         return msg2;
     }
