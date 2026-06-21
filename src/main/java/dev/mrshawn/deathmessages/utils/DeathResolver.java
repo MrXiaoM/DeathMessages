@@ -12,7 +12,6 @@ import dev.mrshawn.deathmessages.enums.MobType;
 import dev.mrshawn.deathmessages.enums.PDMode;
 import dev.mrshawn.deathmessages.files.Config;
 import dev.mrshawn.deathmessages.files.FileSettings;
-import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
