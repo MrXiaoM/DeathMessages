@@ -2,7 +2,7 @@ import java.util.Locale
 
 plugins {
     id("java")
-    id("com.github.johnrengelman.shadow") version "7.0.0"
+    id("com.gradleup.shadow") version "9.3.0"
 }
 
 group = "dev.mrshawn"
@@ -25,13 +25,13 @@ repositories {
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
     compileOnly("net.md-5:bungeecord-serializer:1.21-R0.3")
-    compileOnly("net.kyori:adventure-api:4.22.0")
+    compileOnly("net.kyori:adventure-api:4.25.0")
 
     // NBT API
-    compileOnly("de.tr7zw:item-nbt-api-plugin:2.15.0")
+    compileOnly("de.tr7zw:item-nbt-api-plugin:2.15.7")
 
     // PlaceholderAPI
-    compileOnly("me.clip:placeholderapi:2.11.6")
+    compileOnly("me.clip:placeholderapi:2.12.2")
 
     // MythicMobs 4 and 5
     compileOnly("io.lumine:Mythic-Dist:4.13.0")
@@ -57,16 +57,18 @@ java {
 
 tasks {
     shadowJar {
+        configurations.add(project.configurations.runtimeClasspath.get())
         mapOf(
             "com.tcoded.folialib" to "folialib",
         ).forEach { (original,target) ->
             relocate(original, "dev.mrshawn.deathmessages.libs.$target")
         }
     }
-    val copyTask = create<Copy>("copyBuildArtifact") {
+    val jarName = "${project.name}-$version.jar"
+    val copyTask = register<Copy>("copyBuildArtifact") {
         dependsOn(shadowJar)
         from(shadowJar.get().outputs)
-        rename { "${project.name}-$version.jar" }
+        rename { jarName }
         into(rootProject.file("out"))
     }
     build {
