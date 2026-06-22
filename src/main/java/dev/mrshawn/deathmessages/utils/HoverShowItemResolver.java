@@ -4,6 +4,7 @@ import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTContainer;
 import de.tr7zw.nbtapi.NBTReflectionUtil;
 import de.tr7zw.nbtapi.utils.nmsmappings.ReflectionMethod;
+import net.kyori.adventure.text.event.HoverEventSource;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.ItemTag;
@@ -13,12 +14,19 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
 
 public class HoverShowItemResolver {
+
     private static boolean useLegacyMethod = false;
     private static NBTCompound getComponent(NBTCompound nbt, String key) {
         return nbt.hasTag(key) ? nbt.getCompound(key) : null;
     }
     @ApiStatus.Experimental
     public static HoverEvent toHoverEvent(ItemStack item) {
+        if (item instanceof HoverEventSource<?> && ComponentUtils.isUseAdventure() && ComponentUtils.isItemSupportHoverSource()) {
+            try {
+                return toHoverEventModern((HoverEventSource<?>) item);
+            } catch (Throwable ignored) {
+            }
+        }
         if (useLegacyMethod) {
             return toHoverEventLegacy(item);
         }
@@ -54,6 +62,30 @@ public class HoverShowItemResolver {
         NBTContainer nbt = NBTReflectionUtil.convertNMSItemtoNBTCompound(nmsItem);
         BaseComponent[] hoverEventComponents = { new TextComponent(nbt.getCompound().toString()) };
         return new HoverEvent(HoverEvent.Action.SHOW_ITEM, hoverEventComponents);
+    }
+
+    @SuppressWarnings("deprecation")
+    public static HoverEvent toHoverEventModern(HoverEventSource<?> item) {
+        ItemComponent hoverEvent = new ItemComponent(item);
+        return new HoverEvent(HoverEvent.Action.SHOW_ITEM, new BaseComponent[] { hoverEvent });
+    }
+
+    public static class ItemComponent extends BaseComponent {
+        private final HoverEventSource<?> item;
+        ItemComponent(HoverEventSource<?> item) {
+            //noinspection deprecation
+            super();
+            this.item = item;
+        }
+
+        public HoverEventSource<?> item() {
+            return item;
+        }
+
+        @Override
+        public BaseComponent duplicate() {
+            return this;
+        }
     }
 
 }

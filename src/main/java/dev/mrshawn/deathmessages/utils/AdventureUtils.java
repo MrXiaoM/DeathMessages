@@ -94,36 +94,49 @@ public class AdventureUtils {
                 } else if (!hoverEvent.getContents().isEmpty()) {
                     switch (hoverEvent.getAction()) {
                         case SHOW_ITEM: {
-                            Item impl = (Item) hoverEvent.getContents().get(0);
-                            // 如果服务端是 Paper 衍生端，支持将物品视为 HoverEventSource
-                            if (ComponentUtils.isItemSupportHoverSource()) {
-                                // 新建一个物品，通过 NBT-API 还原 NMS 物品
-                                Object nmsItem = ReflectionMethod.ITEMSTACK_NMSCOPY.run(null, new ItemStack(Material.STONE));
-                                NBTContainer nbt = NBTReflectionUtil.convertNMSItemtoNBTCompound(nmsItem);
-                                nbt.setString("id", impl.getId());
-                                nbt.setInteger("count", Math.max(1, impl.getCount()));
-                                if (ComponentUtils.is1_20_5()) {
-                                    // 1.20.5+ 使用物品堆叠组件
-                                    NBTCompound components = nbt.getOrCreateCompound("components");
-                                    components.mergeCompound(NBT.parseNBT(impl.getTag().getNbt()));
-                                } else {
-                                    // 低版本使用 NBT
-                                    NBTCompound tag = nbt.getOrCreateCompound("tag");
-                                    tag.mergeCompound(NBT.parseNBT(impl.getTag().getNbt()));
+                            Content content = hoverEvent.getContents().get(0);
+                            if (ComponentUtils.isItemSupportHoverSource() && content instanceof Text) {
+                                Object value = ((Text) content).getValue();
+                                if (value instanceof BaseComponent[]) {
+                                    BaseComponent first = ((BaseComponent[]) value)[0];
+                                    if (first instanceof HoverShowItemResolver.ItemComponent) {
+                                        base = base.hoverEvent(((HoverShowItemResolver.ItemComponent) first).item());
+                                    }
                                 }
-                                Object newItem = NBTReflectionUtil.convertNBTCompoundtoNMSItem(nbt);
-                                // 转换为 BukkitAPI 的 ItemStack，并应用到文本组件
-                                Object hover = ReflectionMethod.ITEMSTACK_BUKKITMIRROR.run(null, newItem);
-                                if (hover instanceof HoverEventSource) {
-                                    base = base.hoverEvent((HoverEventSource<?>) hover);
-                                    break;
-                                }
+                                break;
                             }
-                            // 旧版通用方法
-                            Key key = Key.key(impl.getId(), ':');
-                            int count = impl.getCount();
-                            BinaryTagHolder nbt = BinaryTagHolder.binaryTagHolder(impl.getTag().getNbt());
-                            base = base.hoverEvent(HoverEvent.showItem(key, count, nbt));
+                            if (content instanceof Item) {
+                                Item impl = (Item) content;
+                                // 如果服务端是 Paper 衍生端，支持将物品视为 HoverEventSource
+                                if (ComponentUtils.isItemSupportHoverSource()) {
+                                    // 新建一个物品，通过 NBT-API 还原 NMS 物品
+                                    Object nmsItem = ReflectionMethod.ITEMSTACK_NMSCOPY.run(null, new ItemStack(Material.STONE));
+                                    NBTContainer nbt = NBTReflectionUtil.convertNMSItemtoNBTCompound(nmsItem);
+                                    nbt.setString("id", impl.getId());
+                                    nbt.setInteger("count", Math.max(1, impl.getCount()));
+                                    if (ComponentUtils.is1_20_5()) {
+                                        // 1.20.5+ 使用物品堆叠组件
+                                        NBTCompound components = nbt.getOrCreateCompound("components");
+                                        components.mergeCompound(NBT.parseNBT(impl.getTag().getNbt()));
+                                    } else {
+                                        // 低版本使用 NBT
+                                        NBTCompound tag = nbt.getOrCreateCompound("tag");
+                                        tag.mergeCompound(NBT.parseNBT(impl.getTag().getNbt()));
+                                    }
+                                    Object newItem = NBTReflectionUtil.convertNBTCompoundtoNMSItem(nbt);
+                                    // 转换为 BukkitAPI 的 ItemStack，并应用到文本组件
+                                    Object hover = ReflectionMethod.ITEMSTACK_BUKKITMIRROR.run(null, newItem);
+                                    if (hover instanceof HoverEventSource) {
+                                        base = base.hoverEvent((HoverEventSource<?>) hover);
+                                        break;
+                                    }
+                                }
+                                // 旧版通用方法
+                                Key key = Key.key(impl.getId(), ':');
+                                int count = impl.getCount();
+                                BinaryTagHolder nbt = BinaryTagHolder.binaryTagHolder(impl.getTag().getNbt());
+                                base = base.hoverEvent(HoverEvent.showItem(key, count, nbt));
+                            }
                             break;
                         }
                         case SHOW_TEXT: {
