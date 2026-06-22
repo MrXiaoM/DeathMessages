@@ -21,8 +21,12 @@ The plugin depends on [NBT API](https://www.spigotmc.org/resources/nbt-api.7939/
 * 添加 [LangUtils](https://github.com/NyaaCat/LanguageUtils) 支持（用于 1.19.4 以前）
 * 将 `/dm` 命令改为 `/dmsg`，避免与 [DeluxeMenus](https://www.spigotmc.org/resources/deluxemenus.11734/) 冲突
 * 添加 MythicMobs 5.x 支持
-* 添加 PAPI 变量上下文，格式为 `${上下文:变量内容}`，例如 `${killer:%player_level%}` 获取击杀者经验等级
+* 添加 PAPI 变量上下文，格式为 `${上下文:变量内容}`
+  - 示例: `${killer:%player_level%}` 获取击杀者经验等级
 * 添加 Adventure 消息支持，享受 Paper 本地实现的地道 Adventure 接口
+  - 为兼容性着想，从 BungeeCord 聊天组件转换而来，详见 [`ComponentUtils`](src/main/java/dev/mrshawn/deathmessages/utils/ComponentUtils.java)、[`AdventureUtils`](src/main/java/dev/mrshawn/deathmessages/utils/AdventureUtils.java)
+* 不想在类似红名对局的情况下，让玩家知道是谁造成击杀吗？对接本插件，注册 [`INameAdapter`](src/main/java/dev/mrshawn/deathmessages/api/INameAdapter.java)，覆盖掉玩家名字显示
+  - 示例: [`LibsDisguisesNameAdapter`](src/main/java/dev/mrshawn/deathmessages/api/LibsDisguisesNameAdapter.java)
 
 ## 前置插件
 
