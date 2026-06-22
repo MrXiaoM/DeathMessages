@@ -4,7 +4,7 @@ It is a fork of [HMJosh/DeathMessages](https://github.com/HMJosh/DeathMessages).
 Chinese default. You can use original `Messages.yml` from SpigotMC.  
 The plugin depends on [NBT API](https://www.spigotmc.org/resources/nbt-api.7939/) by tr7zw now.
 
-支持聊天栏显示物品和bc跨服的死亡信息插件！
+支持聊天栏显示物品和bc跨服的死亡消息插件！
 
 [![GitHub Downloads](https://img.shields.io/github/downloads/MrXiaoM/DeathMessages/total)](https://github.com/MrXiaoM/DeathMessages/releases)
 
@@ -18,9 +18,11 @@ The plugin depends on [NBT API](https://www.spigotmc.org/resources/nbt-api.7939/
 * 默认使用中文语言文件
 * 移除 Discord 支持，因为这个功能我用不到，懒得导包
 * 关闭插件使用统计
-* 添加 [LangUtils](https://github.com/NyaaCat/LanguageUtils) 支持
+* 添加 [LangUtils](https://github.com/NyaaCat/LanguageUtils) 支持（用于 1.19.4 以前）
 * 将 `/dm` 命令改为 `/dmsg`，避免与 [DeluxeMenus](https://www.spigotmc.org/resources/deluxemenus.11734/) 冲突
 * 添加 MythicMobs 5.x 支持
+* 添加 PAPI 变量上下文，格式为 `${上下文:变量内容}`，例如 `${killer:%player_level%}` 获取击杀者经验等级
+* 添加 Adventure 消息支持，享受 Paper 本地实现的地道 Adventure 接口
 
 ## 前置插件
 
@@ -42,7 +44,7 @@ The plugin depends on [NBT API](https://www.spigotmc.org/resources/nbt-api.7939/
 <pre><code>./gradlew clean build</code></pre>
 </details>
 
-原帖 1.4.15 的帖子说支持 `1.7-1.19`，本插件仅保证在 `1.20.4` 可用，其他版本请自行尝试。
+原帖 1.4.15 的帖子说支持 `1.7-1.19`，本插件仅保证在 `1.21.11` 可用，其他版本请自行尝试。
 
 请前往 [Releases](https://github.com/MrXiaoM/DeathMessages/releases) 下载插件。
 
@@ -50,7 +52,7 @@ The plugin depends on [NBT API](https://www.spigotmc.org/resources/nbt-api.7939/
 
 > 以下是插件介绍
 
-**请注意，2023年了，不要用 CraftBukkit 服务端了，请使用 Spigot 或 Paper 等 Spigot 衍生服务端，本插件需要 Spigot 自带的 BungeeCord API 来生成带鼠标悬停提示(hover)的消息。**
+**请注意，2026年了，不要用 CraftBukkit 服务端了，请使用 Spigot 或 Paper 等 Spigot 衍生服务端，本插件需要 Spigot 自带的 BungeeCord API 来生成带鼠标悬停提示(hover)的消息。**
 
 ## 命令和权限
 | 命令    | 说明   | 权限                                  |
@@ -58,7 +60,7 @@ The plugin depends on [NBT API](https://www.spigotmc.org/resources/nbt-api.7939/
 | /dmsg | 插件命令 | deathmessages.command.deathmessages |
 | TODO  | TODO | TODO                                |
 
-若要修改死亡信息，不推荐使用 `/dmsg edit`，推荐在配置文件修改后执行 `/dmsg reload` 重载
+若要修改死亡消息，不推荐使用 `/dmsg edit`，推荐在配置文件修改后执行 `/dmsg reload` 重载
 
 ## 插件联动
 
