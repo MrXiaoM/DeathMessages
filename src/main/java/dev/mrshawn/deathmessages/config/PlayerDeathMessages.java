@@ -41,7 +41,7 @@ public class PlayerDeathMessages {
 
     public void reload() {
         try {
-            this.config = CommentedConfiguration.loadConfiguration(this.file);
+            this.load();
         } catch (Exception e) {
             File f = new File(DeathMessages.getInstance().getDataFolder(), "PlayerDeathMessages.broken." + new Date().getTime());
             DeathMessages.getInstance().getLogger().severe("Could not save: PlayerDeathMessages.yml");
@@ -59,11 +59,15 @@ public class PlayerDeathMessages {
             this.file.getParentFile().mkdirs();
             copy(DeathMessages.getInstance().getResource("PlayerDeathMessages.yml"), this.file);
         }
-        this.config = CommentedConfiguration.loadConfiguration(this.file);
+        this.load();
         try {
             this.config.syncWithConfig(this.file, DeathMessages.getInstance().getResource("PlayerDeathMessages.yml"), "Mobs");
         } catch (Exception ignored) {
         }
+    }
+
+    private void load() {
+        this.config = CommentedConfiguration.loadConfiguration(this.file);
     }
 
     private void copy(InputStream in, File file) {

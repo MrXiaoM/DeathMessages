@@ -66,7 +66,7 @@ public class Messages {
 
     public void reload() {
         try {
-            this.config = CommentedConfiguration.loadConfiguration(this.file);
+            this.load();
         } catch (Exception e) {
             File f = new File(DeathMessages.getInstance().getDataFolder(), "Messages.broken." + new Date().getTime());
             DeathMessages.getInstance().getLogger().severe("Could not reload: Messages.yml");
@@ -83,12 +83,16 @@ public class Messages {
             this.file.getParentFile().mkdirs();
             copy(DeathMessages.getInstance().getResource("Messages.yml"), this.file);
         }
-        this.config = CommentedConfiguration.loadConfiguration(this.file);
+        this.load();
         try {
             this.config.syncWithConfig(this.file, DeathMessages.getInstance().getResource("Messages.yml"), "none");
         } catch (Exception e) {
             warn(e);
         }
+    }
+
+    private void load() {
+        this.config = CommentedConfiguration.loadConfiguration(this.file);
     }
 
     private void copy(InputStream in, File file) {

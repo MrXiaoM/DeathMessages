@@ -43,9 +43,7 @@ public class Settings {
 
     public void reload() {
         try {
-            this.config = CommentedConfiguration.loadConfiguration(this.file);
-            this.showDeathSource = config.getBoolean("Show-Death-Source", false);
-            ComponentUtils.setUseAdventure(config.getBoolean("Use-Adventure", true));
+            this.load();
         } catch (Exception e) {
             warn(e);
             File f = new File(DeathMessages.getInstance().getDataFolder(), "Settings.broken." + new Date().getTime());
@@ -63,11 +61,17 @@ public class Settings {
             this.file.getParentFile().mkdirs();
             copy(DeathMessages.getInstance().getResource("Settings.yml"), this.file);
         }
-        this.config = CommentedConfiguration.loadConfiguration(this.file);
+        this.load();
         try {
             this.config.syncWithConfig(this.file, DeathMessages.getInstance().getResource("Settings.yml"), "none");
         } catch (Exception ignored) {
         }
+    }
+
+    private void load() {
+        this.config = CommentedConfiguration.loadConfiguration(this.file);
+        this.showDeathSource = config.getBoolean("Show-Death-Source", false);
+        ComponentUtils.setUseAdventure(config.getBoolean("Use-Adventure", true));
     }
 
     private void copy(InputStream in, File file) {

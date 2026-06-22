@@ -41,7 +41,7 @@ public class Gangs {
 
     public void reload() {
         try {
-            this.config = CommentedConfiguration.loadConfiguration(this.file);
+            this.load();
         } catch (Exception e) {
             File f = new File(DeathMessages.getInstance().getDataFolder(), "Gangs.broken." + new Date().getTime());
             DeathMessages.getInstance().getLogger().severe("Could not reload: Gangs.yml");
@@ -58,11 +58,15 @@ public class Gangs {
             this.file.getParentFile().mkdirs();
             copy(DeathMessages.getInstance().getResource("Gangs.yml"), this.file);
         }
-        this.config = CommentedConfiguration.loadConfiguration(this.file);
+        this.load();
         try {
             this.config.syncWithConfig(this.file, DeathMessages.getInstance().getResource("Gangs.yml"), "none");
         } catch (Exception ignored) {
         }
+    }
+
+    private void load() {
+        this.config = CommentedConfiguration.loadConfiguration(this.file);
     }
 
     private void copy(InputStream in, File file) {

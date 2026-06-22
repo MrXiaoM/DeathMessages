@@ -41,7 +41,7 @@ public class EntityDeathMessages {
 
     public void reload() {
         try {
-            this.config = CommentedConfiguration.loadConfiguration(this.file);
+            this.load();
         } catch (Exception e) {
             File f = new File(DeathMessages.getInstance().getDataFolder(), "EntityDeathMessages.broken." + new Date().getTime());
             DeathMessages.getInstance().getLogger().severe("Could not reload: EntityDeathMessages.yml");
@@ -58,11 +58,15 @@ public class EntityDeathMessages {
             this.file.getParentFile().mkdirs();
             copy(DeathMessages.getInstance().getResource("EntityDeathMessages.yml"), this.file);
         }
-        this.config = CommentedConfiguration.loadConfiguration(this.file);
+        this.load();
         try {
             this.config.syncWithConfig(this.file, DeathMessages.getInstance().getResource("EntityDeathMessages.yml"), "Entities", "Mythic-Mobs-Entities");
         } catch (Exception ignored) {
         }
+    }
+
+    private void load() {
+        this.config = CommentedConfiguration.loadConfiguration(this.file);
     }
 
     private void copy(InputStream in, File file) {
