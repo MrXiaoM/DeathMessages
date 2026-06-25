@@ -86,11 +86,25 @@ public class AdventureUtils {
             }
         }
 
+        private boolean isLegacy(net.md_5.bungee.api.chat.HoverEvent hoverEvent) {
+            try {
+                return hoverEvent.isLegacy();
+            } catch (LinkageError ignored) {
+                return true;
+            }
+        }
+
         public void hoverEvent(net.md_5.bungee.api.chat.HoverEvent hoverEvent) {
             if (hoverEvent != null) {
-                if (hoverEvent.isLegacy()) {
-                    Component component = convert((BaseComponent[]) ((Text) hoverEvent.getContents().get(0)).getValue());
-                    base = base.hoverEvent(component.asHoverEvent());
+                if (isLegacy(hoverEvent)) {
+                    Text text = (Text) hoverEvent.getContents().get(0);
+                    BaseComponent[] components = (BaseComponent[]) text.getValue();
+                    if (components[0] instanceof HoverShowItemResolver.ItemComponent) {
+                        base = base.hoverEvent(((HoverShowItemResolver.ItemComponent) components[0]).item());
+                    } else {
+                        Component component = convert(components);
+                        base = base.hoverEvent(component.asHoverEvent());
+                    }
                 } else if (!hoverEvent.getContents().isEmpty()) {
                     switch (hoverEvent.getAction()) {
                         case SHOW_ITEM: {
@@ -144,7 +158,12 @@ public class AdventureUtils {
                                 Text impl = (Text) content;
                                 Object value = impl.getValue();
                                 if (value instanceof BaseComponent[]) {
-                                    base = base.hoverEvent(HoverEvent.showText(convert((BaseComponent[]) value)));
+                                    BaseComponent first = ((BaseComponent[]) value)[0];
+                                    if (first instanceof HoverShowItemResolver.ItemComponent) {
+                                        base = base.hoverEvent(((HoverShowItemResolver.ItemComponent) first).item());
+                                    } else {
+                                        base = base.hoverEvent(HoverEvent.showText(convert((BaseComponent[]) value)));
+                                    }
                                 } else if (value instanceof BaseComponent) {
                                     Component convert = convert((BaseComponent) value);
                                     if (convert != null) {
