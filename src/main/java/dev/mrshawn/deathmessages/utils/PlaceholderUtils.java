@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import java.util.function.Function;
 
 public class PlaceholderUtils {
 
@@ -16,7 +17,7 @@ public class PlaceholderUtils {
     }
 
     @NotNull
-    public static String setPlaceholders(@NotNull Player player, @Nullable Map<String, Player> contexts, @NotNull String message) {
+    public static String setPlaceholders(@NotNull Player player, @Nullable Map<String, Function<String, String>> contexts, @NotNull String message) {
         if (!DeathMessages.getInstance().placeholderAPIEnabled) {
             return message;
         }
@@ -49,11 +50,11 @@ public class PlaceholderUtils {
                     String text = consumer.toString();
                     String[] split = text.split(":", 2);
                     consumer = null;
-                    Player p = contexts.get(split[0]);
-                    if (p == null || split.length != 2) {
+                    Function<String, String> pFunc = contexts.get(split[0]);
+                    if (pFunc == null || split.length != 2) {
                         sb.append("${").append(text).append("}");
                     } else {
-                        sb.append(PlaceholderAPI.setPlaceholders(p, split[1]));
+                        sb.append(pFunc.apply(split[1]));
                     }
                     continue;
                 }
@@ -67,5 +68,9 @@ public class PlaceholderUtils {
             sb.append("${").append(consumer);
         }
         return PlaceholderAPI.setPlaceholders(player, sb.toString());
+    }
+
+    public static Function<String, String> papi(Player player) {
+        return text -> PlaceholderAPI.setPlaceholders(player, text);
     }
 }

@@ -39,6 +39,7 @@ import java.util.regex.Pattern;
 
 import static dev.mrshawn.deathmessages.DeathMessages.majorVersion;
 import static dev.mrshawn.deathmessages.config.Messages.parseBungee;
+import static dev.mrshawn.deathmessages.utils.PlaceholderUtils.papi;
 import static org.bukkit.event.entity.EntityDamageEvent.DamageCause.*;
 
 public class DeathResolver {
@@ -604,8 +605,8 @@ public class DeathResolver {
             msg2 = msg2.replace("%biome%", "Unknown");
         }
         if (DeathMessages.getInstance().placeholderAPIEnabled) {
-            Map<String, Player> contexts = new HashMap<>();
-            contexts.put("killer", player);
+            Map<String, Function<String, String>> contexts = new HashMap<>();
+            contexts.put("killer", papi(player));
             msg2 = PlaceholderUtils.setPlaceholders(player, contexts, msg2);
         }
         return msg2;
@@ -670,10 +671,12 @@ public class DeathResolver {
             }
         }
         if (DeathMessages.getInstance().placeholderAPIEnabled) {
-            Map<String, Player> contexts = new HashMap<>();
-            contexts.put("killed", pm.getPlayer());
+            Map<String, Function<String, String>> contexts = new HashMap<>();
+            contexts.put("killed", papi(pm.getPlayer()));
             if (mob instanceof Player) {
-                contexts.put("killer", (Player) mob);
+                contexts.put("killer", papi((Player) mob));
+            } else {
+                contexts.put("killer", text -> "");
             }
             msg2 = PlaceholderUtils.setPlaceholders(pm.getPlayer(), contexts, msg2);
         }
