@@ -52,8 +52,8 @@ public class BroadcastPlayerDeathListener implements Listener {
                 }
                 plugin.getLogger().info(joiner.toString());
             }
-            if (!player.hasPermission(Permission.DEATHMESSAGES_HIDE_BYPASS)) {
-                if (player.hasPermission(Permission.DEATHMESSAGES_HIDE)) {
+            if (!player.hasPermission(Permission.DEATHMESSAGES_HIDE_BYPASS.getValue())) {
+                if (player.hasPermission(Permission.DEATHMESSAGES_HIDE.getValue())) {
                     return;
                 }
             }
