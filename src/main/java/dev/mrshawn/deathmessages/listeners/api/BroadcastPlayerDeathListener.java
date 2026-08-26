@@ -6,6 +6,7 @@ import dev.mrshawn.deathmessages.api.events.BroadcastDeathMessageEvent;
 import dev.mrshawn.deathmessages.config.Messages;
 import dev.mrshawn.deathmessages.config.Settings;
 import dev.mrshawn.deathmessages.enums.MessageType;
+import dev.mrshawn.deathmessages.enums.Permission;
 import dev.mrshawn.deathmessages.files.Config;
 import dev.mrshawn.deathmessages.files.FileSettings;
 import dev.mrshawn.deathmessages.listeners.PluginMessaging;
@@ -33,11 +34,12 @@ public class BroadcastPlayerDeathListener implements Listener {
     @EventHandler
     public void broadcastListener(BroadcastDeathMessageEvent e) {
         if (!e.isCancelled()) {
+            Player player = e.getPlayer();
             if (Messages.getInstance().getConfig().getBoolean("Console.Enabled")) {
-                String message = DeathResolver.playerDeathPlaceholders(Messages.getInstance().getConfig().getString("Console.Message"), PlayerManager.getPlayer(e.getPlayer()), e.getLivingEntity());
+                String message = DeathResolver.playerDeathPlaceholders(Messages.getInstance().getConfig().getString("Console.Message"), PlayerManager.getPlayer(player), e.getLivingEntity());
                 Bukkit.getConsoleSender().sendMessage(message.replaceAll("%message%", Matcher.quoteReplacement(e.getTextComponent().toLegacyText())));
             }
-            PlayerManager pm = PlayerManager.getPlayer(e.getPlayer());
+            PlayerManager pm = PlayerManager.getPlayer(player);
             if (pm.isInCooldown()) {
                 return;
             }
@@ -50,6 +52,11 @@ public class BroadcastPlayerDeathListener implements Listener {
                 }
                 plugin.getLogger().info(joiner.toString());
             }
+            if (!player.hasPermission(Permission.DEATHMESSAGES_HIDE_BYPASS)) {
+                if (player.hasPermission(Permission.DEATHMESSAGES_HIDE)) {
+                    return;
+                }
+            }
             boolean privatePlayer = config.getBoolean(Config.PRIVATE_MESSAGES_PLAYER);
             boolean privateMobs = config.getBoolean(Config.PRIVATE_MESSAGES_MOBS);
             boolean privateNatural = config.getBoolean(Config.PRIVATE_MESSAGES_NATURAL);
@@ -58,19 +65,19 @@ public class BroadcastPlayerDeathListener implements Listener {
                     for (Player pls : w.getPlayers()) {
                         PlayerManager pms = PlayerManager.getPlayer(pls);
                         if (e.getMessageType().equals(MessageType.PLAYER)) {
-                            if (privatePlayer && (e.getPlayer().getUniqueId().equals(pms.getUUID()) || e.getLivingEntity().getUniqueId().equals(pms.getUUID()))) {
+                            if (privatePlayer && (player.getUniqueId().equals(pms.getUUID()) || e.getLivingEntity().getUniqueId().equals(pms.getUUID()))) {
                                 normal(e, pms, pls, e.getBroadcastedWorlds());
                             } else if (!privatePlayer) {
                                 normal(e, pms, pls, e.getBroadcastedWorlds());
                             }
                         } else if (e.getMessageType().equals(MessageType.MOB)) {
-                            if (privateMobs && e.getPlayer().getUniqueId().equals(pms.getUUID())) {
+                            if (privateMobs && player.getUniqueId().equals(pms.getUUID())) {
                                 normal(e, pms, pls, e.getBroadcastedWorlds());
                             } else if (!privateMobs) {
                                 normal(e, pms, pls, e.getBroadcastedWorlds());
                             }
                         } else if (e.getMessageType().equals(MessageType.NATURAL)) {
-                            if (privateNatural && e.getPlayer().getUniqueId().equals(pms.getUUID())) {
+                            if (privateNatural && player.getUniqueId().equals(pms.getUUID())) {
                                 normal(e, pms, pls, e.getBroadcastedWorlds());
                             } else if (!privateNatural) {
                                 normal(e, pms, pls, e.getBroadcastedWorlds());
@@ -79,7 +86,7 @@ public class BroadcastPlayerDeathListener implements Listener {
                     }
                 }
             }
-            PluginMessaging.sendPluginMSG(e.getPlayer(), e.getTextComponent());
+            PluginMessaging.sendPluginMSG(player, e.getTextComponent());
         }
     }
 

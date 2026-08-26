@@ -8,7 +8,9 @@ public enum Permission {
     DEATHMESSAGES_COMMAND_BLACKLIST("deathmessages.command.deathmessages.blacklist"),
     DEATHMESSAGES_COMMAND_TOGGLE("deathmessages.command.deathmessages.toggle"),
     DEATHMESSAGES_COMMAND_RELOAD("deathmessages.command.deathmessages.reload"),
-    DEATHMESSAGES_COMMAND_VERSION("deathmessages.command.deathmessages.version");
+    DEATHMESSAGES_COMMAND_VERSION("deathmessages.command.deathmessages.version"),
+    DEATHMESSAGES_HIDE("deathmessages.hide"),
+    DEATHMESSAGES_HIDE_BYPASS("deathmessages.hide.bypass");
 
     private final String value;
 
