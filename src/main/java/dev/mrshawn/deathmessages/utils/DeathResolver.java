@@ -262,7 +262,7 @@ public class DeathResolver {
                     pm.setLastEntityDamager(null);
                     return getNaturalDeath(pm, Messages.getSimpleCause(SUFFOCATION));
                 }
-                tc.addExtra(mssa);
+                tc.addExtra(parseBungee(mssa));
                 lastColor = Messages.getColorOfString(lastColor + mssa);
             } else if (splitMessage.contains("%climbable%") && pm.getLastDamage().equals(FALL)) {
                 Material mat = pm.getLastClimbing();
@@ -272,7 +272,7 @@ public class DeathResolver {
                     pm.setLastClimbing(null);
                     return getNaturalDeath(pm, Messages.getSimpleCause(FALL));
                 }
-                tc.addExtra(mssa2);
+                tc.addExtra(parseBungee(mssa2));
                 lastColor = Messages.getColorOfString(lastColor + mssa2);
             } else if (pm.getLastDamage().equals(PROJECTILE) && splitMessage.contains("%weapon%") && equipment != null) {
                 ItemStack i = getItemInHand(equipment);
