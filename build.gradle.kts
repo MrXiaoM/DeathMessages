@@ -28,10 +28,10 @@ dependencies {
     compileOnly("net.kyori:adventure-api:4.25.0")
 
     // NBT API
-    compileOnly("de.tr7zw:item-nbt-api-plugin:2.15.7")
+    compileOnly("de.tr7zw:item-nbt-api-plugin:2.16.1")
 
     // PlaceholderAPI
-    compileOnly("me.clip:placeholderapi:2.12.2")
+    compileOnly("me.clip:placeholderapi:2.12.3")
 
     // MythicMobs 4 and 5
     compileOnly("io.lumine:Mythic-Dist:4.13.0")
