@@ -4,9 +4,11 @@ import dev.mrshawn.deathmessages.DeathMessages;
 import dev.mrshawn.deathmessages.api.EntityManager;
 import dev.mrshawn.deathmessages.api.PlayerManager;
 import dev.mrshawn.deathmessages.config.EntityDeathMessages;
+import dev.mrshawn.deathmessages.config.Messages;
 import dev.mrshawn.deathmessages.enums.MobType;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,8 +30,9 @@ public class EntityDamageByEntity implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void entityDamageByEntity(EntityDamageByEntityEvent e) {
         EntityManager em;
-        ConfigurationSection entitiesSection = EntityDeathMessages.getInstance().getConfig().getConfigurationSection("Entities");
-        ConfigurationSection mmEntitiesSection = EntityDeathMessages.getInstance().getConfig().getConfigurationSection("Mythic-Mobs-Entities");
+        FileConfiguration config = Messages.getEntityDeathMessages(e.getEntity().getWorld().getName());
+        ConfigurationSection entitiesSection = config.getConfigurationSection("Entities");
+        ConfigurationSection mmEntitiesSection = config.getConfigurationSection("Mythic-Mobs-Entities");
         if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
             if (Bukkit.getOnlinePlayers().contains(p)) {

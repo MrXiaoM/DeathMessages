@@ -30,7 +30,8 @@ public class MobDeath5 implements Listener {
 
     @EventHandler
     public void onMythicMobDeath(MythicMobDeathEvent e) {
-        ConfigurationSection mmEntitiesSection = getEntityDeathMessages().getConfigurationSection("Mythic-Mobs-Entities");
+        FileConfiguration config = Messages.getEntityDeathMessages(e.getEntity().getWorld().getName());
+        ConfigurationSection mmEntitiesSection = config.getConfigurationSection("Mythic-Mobs-Entities");
         Set<String> mmKeys = mmEntitiesSection == null ? null : mmEntitiesSection.getKeys(false);
         if (mmKeys == null || mmKeys.isEmpty()) return;
 
@@ -77,6 +78,7 @@ public class MobDeath5 implements Listener {
         return Bukkit.getWorlds();
     }
 
+    @Deprecated
     public static FileConfiguration getEntityDeathMessages() {
         return Messages.getEntityDeathMessages();
     }

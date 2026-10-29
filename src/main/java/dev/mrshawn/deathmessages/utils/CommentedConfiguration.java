@@ -24,6 +24,13 @@ public final class CommentedConfiguration extends YamlConfiguration {
             return;
         }
         CommentedConfiguration cfg = loadConfiguration(resource);
+        syncWithConfig(file, cfg, ignoredSections);
+    }
+
+    public void syncWithConfig(File file, CommentedConfiguration cfg, String... ignoredSections) throws IOException {
+        if (this.creationFailure) {
+            return;
+        }
         ConfigurationSection section = cfg.getConfigurationSection("");
         if (section != null && syncConfigurationSection(section, Arrays.asList(ignoredSections)) && file != null) {
             save(file);

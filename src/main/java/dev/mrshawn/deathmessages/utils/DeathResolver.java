@@ -5,7 +5,6 @@ import dev.mrshawn.deathmessages.api.EntityManager;
 import dev.mrshawn.deathmessages.api.ExplosionManager;
 import dev.mrshawn.deathmessages.api.PlayerManager;
 import dev.mrshawn.deathmessages.config.Messages;
-import dev.mrshawn.deathmessages.config.PlayerDeathMessages;
 import dev.mrshawn.deathmessages.config.Settings;
 import dev.mrshawn.deathmessages.enums.DeathAffiliation;
 import dev.mrshawn.deathmessages.enums.MobType;
@@ -242,7 +241,7 @@ public class DeathResolver {
     }
 
     public static TextComponent getNaturalDeath(PlayerManager pm, String damageCause, @Nullable String msgId) {
-        List<String> unsortedMessages = getStringList(Messages.getPlayerDeathMessages(), "Natural-Cause.", msgId, damageCause);
+        List<String> unsortedMessages = getStringList(Messages.getPlayerDeathMessages(pm.getPlayer().getWorld().getName()), "Natural-Cause.", msgId, damageCause);
         List<String> msgs = Messages.sortList(unsortedMessages, pm.getPlayer(), pm.getPlayer());
         if (msgs.isEmpty()) return null;
         TextComponent tc = new TextComponent("");
@@ -304,13 +303,13 @@ public class DeathResolver {
 
     public static TextComponent getWeapon(boolean gang, PlayerManager pm, LivingEntity mob) {
         List<String> msgs;
-        boolean basicMode = PlayerDeathMessages.getInstance().getConfig().getBoolean("Basic-Mode.Enabled");
+        boolean basicMode = Messages.getPlayerDeathMessages(mob.getWorld().getName()).getBoolean("Basic-Mode.Enabled");
         String cMode = basicMode ? PDMode.BASIC_MODE.getValue() : PDMode.MOBS.getValue() + "." + Messages.classSimple(mob);
         String affiliation = gang ? DeathAffiliation.GANG.getValue() : DeathAffiliation.SOLO.getValue();
         if (DeathMessages.getInstance().mythicmobsEnabled && DeathMessages.getInstance().mythicMobs.isMythicMob(mob.getUniqueId())) {
             String internalMobType = DeathMessages.getInstance().mythicMobs.getMobType(mob);
-            msgs = Messages.sortList(Messages.getPlayerDeathMessages().getStringList("Custom-Mobs.Mythic-Mobs." + internalMobType + "." + affiliation + ".Weapon"), pm.getPlayer(), mob);
-        } else msgs = Messages.sortList(Messages.getPlayerDeathMessages().getStringList(cMode + "." + affiliation + ".Weapon"), pm.getPlayer(), mob);
+            msgs = Messages.sortList(Messages.getPlayerDeathMessages(mob.getWorld().getName()).getStringList("Custom-Mobs.Mythic-Mobs." + internalMobType + "." + affiliation + ".Weapon"), pm.getPlayer(), mob);
+        } else msgs = Messages.sortList(Messages.getPlayerDeathMessages(mob.getWorld().getName()).getStringList(cMode + "." + affiliation + ".Weapon"), pm.getPlayer(), mob);
         if (msgs.isEmpty()) return null;
         TextComponent tc = new TextComponent("");
         if (addPrefix) tc.addExtra(parseBungee(Messages.getInstance().getConfig().getString("Prefix", "")));
@@ -355,8 +354,8 @@ public class DeathResolver {
             if (DeathMessages.getInstance().mythicmobsEnabled && DeathMessages.getInstance().mythicMobs.isMythicMob(e.getUniqueId())) {
                 internalMobType = DeathMessages.getInstance().mythicMobs.getMobType(e);
             }
-            msgs = Messages.sortList(Messages.getEntityDeathMessages().getStringList("Mythic-Mobs-Entities." + internalMobType + ".Weapon"), p, e);
-        } else msgs = Messages.sortList(Messages.getEntityDeathMessages().getStringList("Entities." + entityName + ".Weapon"), p, e);
+            msgs = Messages.sortList(Messages.getEntityDeathMessages(e.getWorld().getName()).getStringList("Mythic-Mobs-Entities." + internalMobType + ".Weapon"), p, e);
+        } else msgs = Messages.sortList(Messages.getEntityDeathMessages(e.getWorld().getName()).getStringList("Entities." + entityName + ".Weapon"), p, e);
         if (msgs.isEmpty()) return null;
         boolean hasOwner = e instanceof Tameable && ((Tameable) e).getOwner() != null;
         TextComponent tc = new TextComponent("");
@@ -408,13 +407,13 @@ public class DeathResolver {
 
     public static TextComponent get(boolean gang, PlayerManager pm, LivingEntity mob, String damageCause, String msgId) {
         List<String> msgs;
-        boolean basicMode = PlayerDeathMessages.getInstance().getConfig().getBoolean("Basic-Mode.Enabled");
+        boolean basicMode = Messages.getPlayerDeathMessages(mob.getWorld().getName()).getBoolean("Basic-Mode.Enabled");
         String cMode = basicMode ? PDMode.BASIC_MODE.getValue() : PDMode.MOBS.getValue() + "." + Messages.classSimple(mob);
         String affiliation = gang ? DeathAffiliation.GANG.getValue() : DeathAffiliation.SOLO.getValue();
         if (DeathMessages.getInstance().mythicmobsEnabled && DeathMessages.getInstance().mythicMobs.isMythicMob(mob.getUniqueId())) {
             String internalMobType = DeathMessages.getInstance().mythicMobs.getMobType(mob);
-            msgs = Messages.sortList(getStringList(Messages.getPlayerDeathMessages(),"Custom-Mobs.Mythic-Mobs." + internalMobType + "." + affiliation + ".", msgId, damageCause), pm.getPlayer(), mob);
-        } else msgs = Messages.sortList(getStringList(Messages.getPlayerDeathMessages(), cMode + "." + affiliation + ".", msgId, damageCause), pm.getPlayer(), mob);
+            msgs = Messages.sortList(getStringList(Messages.getPlayerDeathMessages(mob.getWorld().getName()),"Custom-Mobs.Mythic-Mobs." + internalMobType + "." + affiliation + ".", msgId, damageCause), pm.getPlayer(), mob);
+        } else msgs = Messages.sortList(getStringList(Messages.getPlayerDeathMessages(mob.getWorld().getName()), cMode + "." + affiliation + ".", msgId, damageCause), pm.getPlayer(), mob);
         if (msgs.isEmpty()) {
             if (config.getBoolean(Config.DEFAULT_NATURAL_DEATH_NOT_DEFINED)) return getNaturalDeath(pm, damageCause, msgId);
             if (config.getBoolean(Config.DEFAULT_MELEE_LAST_DAMAGE_NOT_DEFINED)) return get(gang, pm, mob, Messages.getSimpleCause(ENTITY_ATTACK), msgId);
@@ -442,13 +441,13 @@ public class DeathResolver {
 
     public static TextComponent getProjectile(boolean gang, PlayerManager pm, LivingEntity mob, String projectileDamage) {
         List<String> msgs;
-        boolean basicMode = PlayerDeathMessages.getInstance().getConfig().getBoolean("Basic-Mode.Enabled");
+        boolean basicMode = Messages.getPlayerDeathMessages(mob.getWorld().getName()).getBoolean("Basic-Mode.Enabled");
         String cMode = basicMode ? PDMode.BASIC_MODE.getValue() : PDMode.MOBS.getValue() + "." + Messages.classSimple(mob);
         String affiliation = gang ? DeathAffiliation.GANG.getValue() : DeathAffiliation.SOLO.getValue();
         if (DeathMessages.getInstance().mythicmobsEnabled && DeathMessages.getInstance().mythicMobs.isMythicMob(mob.getUniqueId())) {
             String internalMobType = DeathMessages.getInstance().mythicMobs.getMobType(mob);
-            msgs = Messages.sortList(Messages.getPlayerDeathMessages().getStringList("Custom-Mobs.Mythic-Mobs." + internalMobType + "." + affiliation + "." + projectileDamage), pm.getPlayer(), mob);
-        } else msgs = Messages.sortList(Messages.getPlayerDeathMessages().getStringList(cMode + "." + affiliation + "." + projectileDamage), pm.getPlayer(), mob);
+            msgs = Messages.sortList(Messages.getPlayerDeathMessages(mob.getWorld().getName()).getStringList("Custom-Mobs.Mythic-Mobs." + internalMobType + "." + affiliation + "." + projectileDamage), pm.getPlayer(), mob);
+        } else msgs = Messages.sortList(Messages.getPlayerDeathMessages(mob.getWorld().getName()).getStringList(cMode + "." + affiliation + "." + projectileDamage), pm.getPlayer(), mob);
         if (msgs.isEmpty()) return null;
         TextComponent tc = new TextComponent("");
         if (addPrefix) tc.addExtra(parseBungee(Messages.getInstance().getConfig().getString("Prefix", "")));
@@ -490,8 +489,8 @@ public class DeathResolver {
             String internalMobType = null;
             if (DeathMessages.getInstance().mythicmobsEnabled && DeathMessages.getInstance().mythicMobs.isMythicMob(em.getEntityUUID()))
                 internalMobType = DeathMessages.getInstance().mythicMobs.getMobType(em.getEntity());
-            msgs = Messages.sortList(Messages.getEntityDeathMessages().getStringList("Mythic-Mobs-Entities." + internalMobType + "." + projectileDamage), p, em.getEntity());
-        } else msgs = Messages.sortList(Messages.getEntityDeathMessages().getStringList("Entities." + entityName + "." + projectileDamage), p, em.getEntity());
+            msgs = Messages.sortList(Messages.getEntityDeathMessages(p.getWorld().getName()).getStringList("Mythic-Mobs-Entities." + internalMobType + "." + projectileDamage), p, em.getEntity());
+        } else msgs = Messages.sortList(Messages.getEntityDeathMessages(p.getWorld().getName()).getStringList("Entities." + entityName + "." + projectileDamage), p, em.getEntity());
         if (msgs.isEmpty()) {
             if (!config.getBoolean(Config.DEFAULT_MELEE_LAST_DAMAGE_NOT_DEFINED)) return null;
             return getEntityDeath(p, em.getEntity(), Messages.getSimpleCause(ENTITY_ATTACK), mobType);
@@ -547,13 +546,13 @@ public class DeathResolver {
         boolean hasOwner = entity instanceof Tameable && ((Tameable) entity).getOwner() != null;
         List<String> msgs;
         if (hasOwner) {
-            msgs = Messages.sortList(Messages.getEntityDeathMessages().getStringList("Entities." + Messages.classSimple(entity) + ".Tamed"), player, entity);
+            msgs = Messages.sortList(Messages.getEntityDeathMessages(entity.getWorld().getName()).getStringList("Entities." + Messages.classSimple(entity) + ".Tamed"), player, entity);
         } else if (mobType.equals(MobType.MYTHIC_MOB)) {
             String internalMobType = null;
             if (DeathMessages.getInstance().mythicmobsEnabled && DeathMessages.getInstance().mythicMobs.isMythicMob(entity.getUniqueId()))
                 internalMobType = DeathMessages.getInstance().mythicMobs.getMobType(entity);
-            msgs = Messages.sortList(getStringList(Messages.getEntityDeathMessages(), "Mythic-Mobs-Entities." + internalMobType + ".", msgId, damageCause), player, entity);
-        } else msgs = Messages.sortList(getStringList(Messages.getEntityDeathMessages(), "Entities." + Messages.classSimple(entity) + ".", msgId, damageCause), player, entity);
+            msgs = Messages.sortList(getStringList(Messages.getEntityDeathMessages(entity.getWorld().getName()), "Mythic-Mobs-Entities." + internalMobType + ".", msgId, damageCause), player, entity);
+        } else msgs = Messages.sortList(getStringList(Messages.getEntityDeathMessages(entity.getWorld().getName()), "Entities." + Messages.classSimple(entity) + ".", msgId, damageCause), player, entity);
 
         if (msgs.isEmpty()) return null;
         TextComponent tc = new TextComponent("");

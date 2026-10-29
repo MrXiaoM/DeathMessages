@@ -284,12 +284,22 @@ public class Messages {
         }
     }
 
+    @Deprecated
     public static FileConfiguration getPlayerDeathMessages() {
         return PlayerDeathMessages.getInstance().getConfig();
     }
 
+    @Deprecated
     public static FileConfiguration getEntityDeathMessages() {
         return EntityDeathMessages.getInstance().getConfig();
+    }
+
+    public static FileConfiguration getPlayerDeathMessages(String worldName) {
+        return PlayerDeathMessages.getInstance().getConfig(worldName);
+    }
+
+    public static FileConfiguration getEntityDeathMessages(String worldName) {
+        return EntityDeathMessages.getInstance().getConfig(worldName);
     }
 
     public static String getColorOfString(String input) {

@@ -8,12 +8,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import static dev.mrshawn.deathmessages.DeathMessages.warn;
 
 
 public class EntityDeathMessages {
-    public final String fileName = "EntityDeathMessages";
+    public final String fileName = "EntityDeathMessages.yml";
+    private final Map<String, CommentedConfiguration> byWorlds = new HashMap<>();
     CommentedConfiguration config;
     File file;
     private static final EntityDeathMessages instance = new EntityDeathMessages();
@@ -22,8 +25,16 @@ public class EntityDeathMessages {
         return instance;
     }
 
+    @Deprecated
     public CommentedConfiguration getConfig() {
-        return this.config;
+        return config;
+    }
+
+    public CommentedConfiguration getConfig(String worldName) {
+        if (worldName == null) {
+            return config;
+        }
+        return byWorlds.getOrDefault(worldName, config);
     }
 
     public void save() {
@@ -31,7 +42,7 @@ public class EntityDeathMessages {
             this.config.save(this.file);
         } catch (Exception e) {
             File f = new File(DeathMessages.getInstance().getDataFolder(), "EntityDeathMessages.broken." + new Date().getTime());
-            DeathMessages.getInstance().getLogger().severe("Could not save: EntityDeathMessages.yml");
+            DeathMessages.getInstance().getLogger().severe("Could not save: " + fileName);
             DeathMessages.getInstance().getLogger().severe("Regenerating file and renaming the current file to: " + f.getName());
             DeathMessages.getInstance().getLogger().severe("You can try fixing the file with a yaml parser online!");
             this.file.renameTo(f);
@@ -44,7 +55,7 @@ public class EntityDeathMessages {
             this.load();
         } catch (Exception e) {
             File f = new File(DeathMessages.getInstance().getDataFolder(), "EntityDeathMessages.broken." + new Date().getTime());
-            DeathMessages.getInstance().getLogger().severe("Could not reload: EntityDeathMessages.yml");
+            DeathMessages.getInstance().getLogger().severe("Could not reload: " + fileName);
             DeathMessages.getInstance().getLogger().severe("Regenerating file and renaming the current file to: " + f.getName());
             DeathMessages.getInstance().getLogger().severe("You can try fixing the file with a yaml parser online!");
             this.file.renameTo(f);
@@ -53,20 +64,42 @@ public class EntityDeathMessages {
     }
 
     public void initialize() {
-        this.file = new File(DeathMessages.getInstance().getDataFolder(), "EntityDeathMessages.yml");
+        this.file = new File(DeathMessages.getInstance().getDataFolder(), fileName);
         if (!this.file.exists()) {
             this.file.getParentFile().mkdirs();
-            copy(DeathMessages.getInstance().getResource("EntityDeathMessages.yml"), this.file);
+            copy(DeathMessages.getInstance().getResource(fileName), this.file);
         }
         this.load();
         try {
-            this.config.syncWithConfig(this.file, DeathMessages.getInstance().getResource("EntityDeathMessages.yml"), "Entities", "Mythic-Mobs-Entities");
+            DeathMessages plugin = DeathMessages.getInstance();
+            File worldsFolder = new File(plugin.getDataFolder(), "worlds");
+            CommentedConfiguration cfg = CommentedConfiguration.loadConfiguration(plugin.getResource(fileName));
+            this.config.syncWithConfig(this.file, cfg, "Entities", "Mythic-Mobs-Entities");
+            for (Map.Entry<String, CommentedConfiguration> entry : byWorlds.entrySet()) {
+                String world = entry.getKey();
+                CommentedConfiguration config = entry.getValue();
+                File file = new File(worldsFolder, world + "/" + fileName);
+                config.syncWithConfig(file, cfg, "Entities", "Mythic-Mobs-Entities");
+            }
         } catch (Exception ignored) {
         }
     }
 
     private void load() {
+        DeathMessages plugin = DeathMessages.getInstance();
+        File worldsFolder = new File(plugin.getDataFolder(), "worlds");
+        if (!worldsFolder.exists()) {
+            worldsFolder.mkdirs();
+        }
         this.config = CommentedConfiguration.loadConfiguration(this.file);
+        this.byWorlds.clear();
+        File[] files = worldsFolder.listFiles();
+        if (files != null) for (File worldFolder : files) {
+            File file = new File(worldFolder, fileName);
+            if (file.exists()) {
+                this.byWorlds.put(worldFolder.getName(), CommentedConfiguration.loadConfiguration(file));
+            }
+        }
     }
 
     private void copy(InputStream in, File file) {
